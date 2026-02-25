@@ -24,7 +24,7 @@ export async function validatePublish(cwd: string): Promise<string[]> {
 
   // 2. Find skills/<name>/SKILL.md
   const skillsDir = join(cwd, 'skills');
-  let skillSubdirs: string[] = [];
+  let skillSubdirs: string[];
   try {
     skillSubdirs = await readdir(skillsDir);
   } catch {
