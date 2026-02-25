@@ -4,7 +4,7 @@
   "description": "npm for Agent Skills",
   "type": "module",
   "bin": {
-    "skillpm": "./dist/cli.js"
+    "skillpm": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
