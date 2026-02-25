@@ -30,3 +30,31 @@ jobs:
         run: python scripts/generate-registry.py
 
       - run: mkdocs gh-deploy --force
+
+      - name: Submit to IndexNow
+        run: |
+          SITE_URL="https://skillpm.dev"
+          KEY="f6f647f7326d482da8f9bcfe19a2b687"
+          # Build URL list from sitemap
+          URLS=$(python3 -c "
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('site/sitemap.xml')
+          ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          for loc in tree.findall('.//s:loc', ns):
+              print(loc.text)
+          ")
+          # Build JSON payload
+          JSON=$(python3 -c "
+          import json, sys
+          urls = [u for u in sys.stdin.read().strip().split('\n') if u]
+          print(json.dumps({
+              'host': 'skillpm.dev',
+              'key': '$KEY',
+              'urlList': urls
+          }))
+          " <<< "$URLS")
+          echo "Submitting $(echo "$URLS" | wc -l) URLs to IndexNow"
+          curl -s -o /dev/null -w "IndexNow response: %{http_code}\n" \
+            -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "$JSON"
