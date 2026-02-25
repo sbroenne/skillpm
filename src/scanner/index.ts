@@ -49,13 +49,13 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
   const pkg = await readPackageJson(pkgDir);
   if (!pkg) return null;
 
-  // Look for skills/*/SKILL.md
+  // Preferred: look for skills/*/SKILL.md
   const skillsDir = join(pkgDir, 'skills');
   let skillSubdirs: string[];
   try {
     skillSubdirs = await readdir(skillsDir);
   } catch {
-    return null;
+    skillSubdirs = [];
   }
 
   for (const sub of skillSubdirs) {
@@ -76,7 +76,22 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
     };
   }
 
-  return null;
+  // Fallback: root SKILL.md (legacy format)
+  try {
+    await access(join(pkgDir, 'SKILL.md'));
+  } catch {
+    return null;
+  }
+
+  const skillpm = parseSkillpmField(pkg);
+  return {
+    name: pkg.name,
+    version: pkg.version,
+    path: pkgDir,
+    skillDir: pkgDir,
+    mcpServers: skillpm?.mcpServers ?? [],
+    legacy: true,
+  };
 }
 
 /**

@@ -87,7 +87,7 @@ describe('scanNodeModules', () => {
     expect(result[0].mcpServers).toEqual(['@anthropic/mcp-server-filesystem']);
   });
 
-  it('ignores packages with root SKILL.md but no skills/ dir', async () => {
+  it('detects root SKILL.md as legacy skill', async () => {
     const pkgDir = join(tmpDir, 'node_modules', 'old-skill');
     await mkdir(pkgDir, { recursive: true });
     await writeFile(
@@ -97,7 +97,27 @@ describe('scanNodeModules', () => {
     await writeFile(join(pkgDir, 'SKILL.md'), '---\nname: old-skill\n---\n');
 
     const result = await scanNodeModules(tmpDir);
-    expect(result).toEqual([]);
+    expect(result).toHaveLength(1);
+    expect(result[0].name).toBe('old-skill');
+    expect(result[0].skillDir).toBe(pkgDir);
+    expect(result[0].legacy).toBe(true);
+  });
+
+  it('prefers skills/<name>/SKILL.md over root SKILL.md', async () => {
+    const pkgDir = join(tmpDir, 'node_modules', 'dual-skill');
+    const skillDir = join(pkgDir, 'skills', 'dual-skill');
+    await mkdir(skillDir, { recursive: true });
+    await writeFile(
+      join(pkgDir, 'package.json'),
+      JSON.stringify({ name: 'dual-skill', version: '1.0.0' }),
+    );
+    await writeFile(join(pkgDir, 'SKILL.md'), '---\nname: dual-skill\n---\n');
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: dual-skill\n---\n');
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].skillDir).toBe(skillDir);
+    expect(result[0].legacy).toBeUndefined();
   });
 });
 

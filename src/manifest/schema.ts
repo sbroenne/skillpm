@@ -21,7 +21,9 @@ export interface SkillInfo {
   name: string;
   version: string;
   path: string;
-  /** Path to the skills/<name>/ subdirectory containing SKILL.md */
+  /** Path to the directory containing SKILL.md */
   skillDir: string;
   mcpServers: string[];
+  /** True if SKILL.md is at package root instead of skills/<name>/ */
+  legacy?: boolean;
 }

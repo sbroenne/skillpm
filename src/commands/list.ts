@@ -15,7 +15,8 @@ export async function list(cwd: string): Promise<void> {
   for (const skill of skills) {
     const frontmatter = await readSkillMd(skill.skillDir);
     const description = frontmatter?.description ?? '';
-    console.log(`  ${log.skill(skill.name, skill.version)}`);
+    const legacyTag = skill.legacy ? ' (legacy)' : '';
+    console.log(`  ${log.skill(skill.name, skill.version)}${legacyTag}`);
     if (description) {
       console.log(`    ${description}`);
     }
