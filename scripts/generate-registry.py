@@ -82,7 +82,7 @@ def build_card(obj):
 
 def generate():
     packages, total = fetch_packages()
-    packages.sort(key=lambda o: o.get("downloads", {}).get("weekly", 0), reverse=True)
+    # Keep npm's default sort order (search score: popularity + quality + maintenance)
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
