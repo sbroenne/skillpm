@@ -1,0 +1,172 @@
+/* Skill Registry page styles */
+
+.registry-header {
+  margin-bottom: 1.5rem;
+}
+
+.registry-search-bar {
+  margin-bottom: 0.75rem;
+}
+
+#registry-search {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#registry-search:focus {
+  border-color: var(--md-primary-fg-color);
+}
+
+.registry-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.registry-filter-btn {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 1rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color--light);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.registry-filter-btn:hover {
+  border-color: var(--md-primary-fg-color);
+  color: var(--md-primary-fg-color);
+}
+
+.registry-filter-btn.active {
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  border-color: var(--md-primary-fg-color);
+}
+
+.registry-meta {
+  font-size: 0.85rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Card grid */
+.registry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.registry-card {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: var(--md-default-bg-color);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.registry-card:hover {
+  border-color: var(--md-primary-fg-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.registry-card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.registry-card-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--md-primary-fg-color);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.registry-card-name:hover {
+  text-decoration: underline;
+}
+
+.registry-card-version {
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+  white-space: nowrap;
+}
+
+.registry-card-desc {
+  font-size: 0.85rem;
+  color: var(--md-default-fg-color--light);
+  margin: 0 0 0.5rem;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Keyword tags */
+.registry-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.registry-tag {
+  padding: 0.15rem 0.45rem;
+  font-size: 0.7rem;
+  border-radius: 0.75rem;
+  background: var(--md-code-bg-color);
+  color: var(--md-default-fg-color--light);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.registry-tag:hover {
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+
+.registry-tag.active {
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+
+/* Card footer */
+.registry-card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--lighter);
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Empty state */
+.registry-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--md-default-fg-color--light);
+  font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .registry-grid {
+    grid-template-columns: 1fr;
+  }
+}
