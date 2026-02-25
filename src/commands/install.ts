@@ -42,7 +42,7 @@ export async function wireSkills(cwd: string): Promise<void> {
     }
     if (skill.legacy) {
       log.warn(
-        `${skill.name}: SKILL.md is at package root. Move to skills/<name>/SKILL.md for full compatibility. See https://sbroenne.github.io/skillpm/creating-skills/`,
+        `${skill.name}: SKILL.md is at package root. Move to skills/<name>/SKILL.md for full compatibility. See https://skillpm.dev/creating-skills/`,
       );
     }
   }
