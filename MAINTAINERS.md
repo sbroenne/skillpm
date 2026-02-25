@@ -14,7 +14,7 @@ This guide covers one-time setup and ongoing release operations for skillpm main
 2. Click **"Generate New Token"** → select **"Granular Access Token"**
 3. Configure:
    - **Token name:** `skillpm-github-actions`
-   - **Expiration:** 90 days (set a calendar reminder to rotate)
+   - **Expiration:** 365 days (set a calendar reminder to rotate)
    - **Packages and scopes:** Select **"Only select packages"** → `skillpm`
    - **Permissions:** **Read and write**
 4. Copy the token (you won't see it again)
@@ -93,7 +93,7 @@ The release uses `--provenance` for supply chain security. This links the npm pa
 
 ## Token rotation
 
-The npm token expires after 90 days. When it expires:
+The npm token expires after 365 days. When it expires:
 
 1. Generate a new token (same steps as above)
 2. Update the `NPM_TOKEN` secret in GitHub (same name, new value)
