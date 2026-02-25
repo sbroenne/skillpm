@@ -1,3 +1,7 @@
+---
+description: Set up a development environment for contributing to skillpm. Includes project structure, conventions, and testing.
+---
+
 # Contributing
 
 ## Development setup

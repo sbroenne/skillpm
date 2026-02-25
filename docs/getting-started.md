@@ -1,3 +1,7 @@
+---
+description: Install skillpm and start using agent skills in your projects. Works with npx or as a global install.
+---
+
 # Getting Started
 
 ## Installation
@@ -51,6 +55,6 @@ This adds the skills as standard npm dependencies in `package.json`. Anyone who 
 
 ## What's next?
 
-- [Skill Registry](registry.md) — browse available skills
+- [Agent Skills Registry](registry.md) — browse available skills
 - [Commands](commands.md) — full reference for all skillpm commands
 - [Creating Skills](creating-skills.md) — build and publish your own skill package

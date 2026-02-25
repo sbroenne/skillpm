@@ -1,3 +1,7 @@
+---
+description: How to create, package, validate, and publish an agent skill to npm. Includes the SKILL.md format, package structure, and publishing checklist.
+---
+
 # Creating Skills
 
 Skills follow the open [Agent Skills spec](https://agentskills.io/specification). skillpm adds npm packaging conventions on top.
@@ -137,5 +141,5 @@ npx skills-ref validate skills/<name>
 
 - [Agent Skills spec](https://agentskills.io/specification) — the open standard for SKILL.md format
 - [Example skills](https://github.com/anthropics/skills) — official examples from Anthropic
-- [Skill Registry](registry.md) — browse published skills for inspiration
+- [Agent Skills Registry](registry.md) — browse published skills for inspiration
 - [skillpm Commands](commands.md) — full CLI reference

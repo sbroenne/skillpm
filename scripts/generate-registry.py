@@ -105,9 +105,10 @@ def generate():
     md = f"""---
 hide:
   - navigation
+description: Browse and search all agent skills published on npm. Find skills for Claude, Cursor, VS Code, Codex, and other AI agents.
 ---
 
-# Skill Registry
+# Agent Skills Registry
 
 Browse agent skills published on npm with the `agent-skill` keyword.
 

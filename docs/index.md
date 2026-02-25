@@ -1,3 +1,7 @@
+---
+description: "skillpm — npm for Agent Skills. Install, manage, and publish agent skills with full dependency resolution, agent wiring, and MCP server configuration."
+---
+
 # skillpm
 
 **npm for Agent Skills.**
@@ -47,7 +51,7 @@ That's it. Agents see the full skill tree with MCP servers configured.
 
 ## Browse skills
 
-Explore available skills in the [Skill Registry](registry.md), or search directly on [npmjs.org](https://www.npmjs.com/search?q=keywords:agent-skill).
+Explore available skills in the [Agent Skills Registry](registry.md), or search directly on [npmjs.org](https://www.npmjs.com/search?q=keywords:agent-skill).
 
 ## Why skillpm?
 

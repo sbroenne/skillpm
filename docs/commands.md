@@ -1,3 +1,7 @@
+---
+description: Full reference for all skillpm CLI commands — install, uninstall, list, init, publish, sync, and MCP server configuration.
+---
+
 # Commands
 
 ## `skillpm install [skill...]`
@@ -73,7 +77,7 @@ skillpm publish
 skillpm publish --access public    # for scoped packages
 ```
 
-Validates that `"agent-skill"` is present in `package.json` `keywords`, runs [`skills-ref validate`](https://github.com/agentskills/agentskills/tree/main/skills-ref) against the [Agent Skills spec](https://agentskills.io/specification), then delegates to `npm publish`. Your skill will appear in the [Skill Registry](registry.md) and on [npmjs.org](https://www.npmjs.com/search?q=keywords:agent-skill).
+Validates that `"agent-skill"` is present in `package.json` `keywords`, runs [`skills-ref validate`](https://github.com/agentskills/agentskills/tree/main/skills-ref) against the [Agent Skills spec](https://agentskills.io/specification), then delegates to `npm publish`. Your skill will appear in the [Agent Skills Registry](registry.md) and on [npmjs.org](https://www.npmjs.com/search?q=keywords:agent-skill).
 
 ---
 
