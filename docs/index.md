@@ -6,9 +6,9 @@ description: "skillpm — Package manager for Agent Skills. Built on npm. ~630 l
 
 **Package manager for Agent Skills. Built on npm.**
 
-The [Agent Skills spec](https://agentskills.io) defines what a skill is — but not how to publish, install, version, or share them. There's no registry, no dependency management, no way for one skill to build on another.
+The [Agent Skills spec](https://agentskills.io) defines what a skill is — but not how to publish, install, version, or share them. There's no registry, no dependency management, no way for one skill to build on another. Without dependencies, skills become monoliths — authors duplicate instructions because there's no way to reuse another skill.
 
-**skillpm** fills that gap. It's a lightweight orchestration layer — ~630 lines of code, 3 runtime dependencies — that maps Agent Skills onto npm's ecosystem. Skills become packages you can publish, install, version, and depend on — just like any other npm package.
+**skillpm** fills that gap. It's a lightweight orchestration layer — ~630 lines of code, 3 runtime dependencies — that maps Agent Skills onto npm's ecosystem. Skills become packages you can publish, install, version, and depend on — just like any other npm package. Small skills that compose, not monoliths that overlap.
 
 <div class="grid cards" markdown>
 
@@ -54,6 +54,22 @@ That's it. Agents see the full skill tree with MCP servers configured.
 Explore available skills in the [Agent Skills Registry](registry.md), or search directly on [npmjs.org](https://www.npmjs.com/search?q=keywords:agent-skill).
 
 ## Why skillpm?
+
+Without dependency management, skills become monoliths. Authors duplicate instructions because there's no way to say "just depend on that other skill." A fullstack React skill ends up copy-pasting TypeScript best practices, testing guidelines, and React patterns — all in one massive SKILL.md.
+
+skillpm lets skills compose. Instead of duplicating, depend:
+
+```json
+{
+  "dependencies": {
+    "react-patterns": "^2.0.0",
+    "typescript-best-practices": "^1.3.0",
+    "testing-with-vitest": "^1.0.0"
+  }
+}
+```
+
+Each skill stays small and focused. Updates propagate. No duplication. No bloat.
 
 The [Agent Skills spec](https://agentskills.io) defines what a skill is — but not how to publish, install, version, or share them.
 

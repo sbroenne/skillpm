@@ -63,6 +63,23 @@ Step-by-step guide for the agent...
 
 ## Adding dependencies
 
+Instead of duplicating instructions, depend on other skills. A fullstack React skill doesn't need 200 lines about TypeScript best practices — it just depends on one:
+
+```json
+{
+  "name": "fullstack-react",
+  "version": "1.0.0",
+  "keywords": ["agent-skill"],
+  "dependencies": {
+    "react-patterns": "^2.0.0",
+    "typescript-best-practices": "^1.3.0",
+    "testing-with-vitest": "^1.0.0"
+  }
+}
+```
+
+Each skill stays small and focused. `skillpm install fullstack-react` resolves the entire tree in one step.
+
 Skill dependencies go in standard `package.json` `dependencies`:
 
 ```json
