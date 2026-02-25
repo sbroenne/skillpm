@@ -43,7 +43,7 @@ skillpm list
 skillpm ls      # alias
 ```
 
-Shows each skill's name, version, description (from SKILL.md), and MCP server requirements.
+Shows each skill's name, version (from `package.json`), description (from SKILL.md), and MCP server requirements.
 
 ---
 

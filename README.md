@@ -29,13 +29,14 @@ A skill is just an npm package with a `SKILL.md` inside a `skills/<name>/` subdi
 
 ```
 refactor-react/
-├── package.json                 # Standard npm package.json
+├── package.json                 # keywords: ["agent-skill"], deps, skillpm.mcpServers
 ├── README.md
 └── skills/
     └── refactor-react/
         ├── SKILL.md             # Skill definition
         ├── scripts/             # Optional scripts
-        └── references/          # Optional docs
+        ├── references/          # Optional docs
+        └── assets/              # Optional templates/data
 ```
 
 ## Commands

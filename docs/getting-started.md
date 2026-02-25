@@ -39,7 +39,7 @@ npm init -y
 skillpm install react-patterns typescript-best-practices
 ```
 
-This creates a standard `package.json` with the skills as dependencies. Anyone who clones the project can run `skillpm install` to get the same skill set.
+This adds the skills as standard npm dependencies in `package.json`. Anyone who clones the project can run `skillpm install` to get the same skill set wired into their agents.
 
 ## What's next?
 
