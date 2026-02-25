@@ -73,73 +73,7 @@ mkdir my-skill && cd my-skill
 skillpm init
 ```
 
-This creates a `package.json` (with the `"agent-skill"` keyword) and `skills/<name>/SKILL.md`. Edit the SKILL.md to define your skill.
-
-A skill is just an npm package with a `SKILL.md` inside a `skills/<name>/` subdirectory:
-
-```
-my-skill/
-├── package.json                 # keywords: ["agent-skill"], deps, skillpm.mcpServers
-├── README.md
-└── skills/
-    └── my-skill/
-        ├── SKILL.md             # Skill definition
-        ├── scripts/             # Optional scripts
-        ├── references/          # Optional docs
-        └── assets/              # Optional templates/data
-```
-
-### Skill dependencies
-
-Skill dependencies go in standard `package.json` `dependencies` — npm handles everything:
-
-```json
-{
-  "name": "my-skill",
-  "version": "1.0.0",
-  "keywords": ["agent-skill"],
-  "dependencies": {
-    "some-other-skill": "^1.0.0"
-  },
-  "skillpm": {
-    "mcpServers": ["@anthropic/mcp-server-filesystem"]
-  }
-}
-```
-
-| Field | Purpose | Resolved by |
-|---|---|---|
-| `dependencies` | Skill packages on npm | npm (semver, lockfile, `node_modules/`) |
-| `skillpm.mcpServers[]` | MCP servers to configure | `add-mcp` |
-
-### SKILL.md format
-
-```yaml
----
-name: my-skill
-description: What this skill does and when to use it.
-license: MIT
-allowed-tools: Bash Read
----
-
-# My Skill
-
-## When to use this skill
-...
-
-## Instructions
-...
-```
-
-Version comes from `package.json` — don't duplicate it in SKILL.md.
-
-### Publishing
-
-```bash
-skillpm publish
-```
-
-This validates the `"agent-skill"` keyword is present, then delegates to `npm publish`. Your skill will be discoverable on npmjs.org via [`keywords:agent-skill`](https://www.npmjs.com/search?q=keywords:agent-skill).
+See the full [Creating Skills](https://skillpm.dev/creating-skills/) guide for package structure, SKILL.md format, dependencies, and publishing.
 
 ## What are Agent Skills?
 

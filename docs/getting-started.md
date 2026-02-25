@@ -26,12 +26,7 @@ Requires Node.js 18 or later.
 skillpm install <skill-name>
 ```
 
-This will:
-
-1. Install the skill (and all its dependencies) via npm
-2. Scan for skill packages in `node_modules/`
-3. Link each skill into agent directories via [`skills`](https://www.npmjs.com/package/skills) (Claude, Cursor, VS Code, Codex, and many more)
-4. Configure any MCP servers declared by the skills via [`add-mcp`](https://github.com/neondatabase/add-mcp)
+skillpm handles everything: npm resolution, scanning for skills, wiring into agent directories, and configuring MCP servers. See [How it works](index.md#how-it-works) for details.
 
 ## Verify it worked
 
