@@ -5,9 +5,9 @@
 Install one or more skills and wire them into agent directories.
 
 ```bash
-skillpm install refactor-react           # install a specific skill
-skillpm install                          # install all deps from package.json
-skillpm i react-patterns ts-best-practices  # alias, multiple skills
+skillpm install my-skill                   # install a specific skill
+skillpm install                            # install all deps from package.json
+skillpm i skill-a skill-b                  # alias, multiple skills
 ```
 
 **What happens:**
@@ -25,9 +25,9 @@ skillpm i react-patterns ts-best-practices  # alias, multiple skills
 Remove one or more skills and clean up agent directories.
 
 ```bash
-skillpm uninstall refactor-react
-skillpm rm react-patterns        # alias
-skillpm remove old-skill         # alias
+skillpm uninstall my-skill
+skillpm rm old-skill             # alias
+skillpm remove another-skill     # alias
 ```
 
 Runs `npm uninstall`, then re-wires agent directories to remove stale links.

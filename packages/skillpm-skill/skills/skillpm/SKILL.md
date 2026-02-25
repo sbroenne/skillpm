@@ -1,7 +1,8 @@
 ---
 name: skillpm
 description: Manage Agent Skill packages and their dependency trees using skillpm — npm for Agent Skills.
-allowed-tools: Bash Read
+license: MIT
+allowed-tools: Bash Read Write Edit
 ---
 
 # skillpm — Agent Skill Package Manager
@@ -27,10 +28,12 @@ Use this skill when the user wants to:
 
 ## Commands
 
+All commands can be run without global install via `npx skillpm <command>`.
+
 ### Install a skill
 
 ```bash
-skillpm install <skill-name>
+npx skillpm install <skill-name>
 # Aliases: skillpm i
 ```
 
@@ -39,7 +42,7 @@ This runs `npm install`, scans `node_modules/` for skill packages, links them in
 ### Install all dependencies
 
 ```bash
-skillpm install
+npx skillpm install
 ```
 
 Reads `package.json`, installs all dependencies, and wires discovered skills.
@@ -47,14 +50,14 @@ Reads `package.json`, installs all dependencies, and wires discovered skills.
 ### Uninstall a skill
 
 ```bash
-skillpm uninstall <skill-name>
+npx skillpm uninstall <skill-name>
 # Aliases: skillpm rm, skillpm remove
 ```
 
 ### List installed skills
 
 ```bash
-skillpm list
+npx skillpm list
 # Aliases: skillpm ls
 ```
 
@@ -63,23 +66,23 @@ Shows all installed skill packages with descriptions and MCP server requirements
 ### Scaffold a new skill
 
 ```bash
-skillpm init
+npx skillpm init
 ```
 
-Creates `package.json` (with `"agent-skill"` keyword) and `skills/<name>/SKILL.md`. Edit the SKILL.md to define the skill.
+Creates `package.json` (with `"agent-skill"` keyword) and `skills/<name>/SKILL.md` in the current directory. Edit the SKILL.md to define the skill.
 
 ### Publish a skill
 
 ```bash
-skillpm publish
+npx skillpm publish
 ```
 
-Validates the `"agent-skill"` keyword is present in `package.json`, then delegates to `npm publish`.
+Validates the package structure and SKILL.md against the Agent Skills spec (via `skills-ref validate`), then delegates to `npm publish`.
 
 ### Re-wire agent directories
 
 ```bash
-skillpm sync
+npx skillpm sync
 ```
 
 Re-scans `node_modules/` and re-links all skills into agent directories without reinstalling. Useful after manual changes.
@@ -87,13 +90,13 @@ Re-scans `node_modules/` and re-links all skills into agent directories without 
 ### Configure MCP servers
 
 ```bash
-skillpm mcp add <source>    # Add an MCP server (delegates to add-mcp)
-skillpm mcp list            # List configured MCP servers
+npx skillpm mcp add <source>    # Add an MCP server (delegates to add-mcp)
+npx skillpm mcp list            # List configured MCP servers
 ```
 
-## Skill package structure
+## Creating a skill package
 
-When creating a skill package, use this structure:
+### Package structure
 
 ```
 my-skill/
@@ -115,6 +118,10 @@ my-skill/
   "name": "my-skill",
   "version": "1.0.0",
   "keywords": ["agent-skill"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/user/repo.git"
+  },
   "dependencies": {
     "other-skill": "^1.0.0"
   },
@@ -127,6 +134,7 @@ my-skill/
 - Skill dependencies go in standard `dependencies` — npm handles resolution.
 - The `skillpm.mcpServers` array lists MCP servers that agents need for this skill.
 - The `"agent-skill"` keyword is required for publishing.
+- Use `git+https://` prefix for `repository.url` (npm requires this format).
 
 ### SKILL.md frontmatter
 
@@ -135,15 +143,69 @@ my-skill/
 name: my-skill
 description: What this skill does.
 license: MIT
-compatibility: Any requirements or constraints.
 allowed-tools: Bash Read
 ---
 ```
 
 Version comes from `package.json` — do not duplicate it in SKILL.md.
 
+## Creating a skill package
+
+### Scaffold from scratch
+
+```bash
+mkdir my-skill && cd my-skill
+npx skillpm init
+# Edit skills/my-skill/SKILL.md with instructions
+# Edit package.json to add dependencies and MCP servers
+npx skillpm publish
+```
+
+### Wrap an existing skill for npm
+
+If you already have a `skills/<name>/SKILL.md` (e.g. from `npx skills add`), add a `package.json` to make it publishable:
+
+```bash
+cd my-existing-skill/
+npm init -y
+```
+
+Then edit `package.json` to add the required keyword and optional MCP servers:
+
+```json
+{
+  "name": "my-existing-skill",
+  "version": "1.0.0",
+  "keywords": ["agent-skill"],
+  "skillpm": {
+    "mcpServers": ["@some/mcp-server"]
+  }
+}
+```
+
+Ensure the directory structure matches:
+
+```
+my-existing-skill/
+├── package.json                 # Must have "agent-skill" in keywords
+└── skills/
+    └── my-existing-skill/
+        └── SKILL.md             # Must have name and description in frontmatter
+```
+
+Then validate and publish:
+
+```bash
+npx skillpm publish
+```
+
+`skillpm publish` validates before publishing:
+- `package.json` exists with `"agent-skill"` keyword
+- `skills/<name>/SKILL.md` exists
+- SKILL.md validates against the Agent Skills spec (`skills-ref validate`): name format, required fields, directory naming
+
 ## Error handling
 
 - If `skillpm install` fails, check that npm can resolve the package: `npm view <skill-name>`
 - If `skillpm publish` fails with a keyword error, add `"agent-skill"` to the `keywords` array in `package.json`
-- If skills aren't appearing in agent directories after install, run `skillpm sync` to re-wire
+- If skills aren't appearing in agent directories after install, run `npx skillpm sync` to re-wire

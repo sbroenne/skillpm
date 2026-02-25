@@ -19,7 +19,6 @@
     "dist",
     "!dist/**/*.test.*",
     "!dist/**/*.map",
-    "skills",
     "README.md",
     "LICENSE"
   ],
@@ -33,13 +32,16 @@
   "homepage": "https://skillpm.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sbroenne/skillpm.git"
+    "url": "git+https://github.com/sbroenne/skillpm.git"
   },
   "bugs": {
     "url": "https://github.com/sbroenne/skillpm/issues"
   },
-  "author": "",
+  "author": "sbroenne",
   "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
   "engines": {
     "node": ">=18"
   },

@@ -1,0 +1,28 @@
+{
+  "name": "skillpm-skill",
+  "version": "0.0.1",
+  "description": "Agent Skill for managing skills with skillpm — install, publish, and wire Agent Skills into AI agent directories",
+  "keywords": [
+    "agent-skill",
+    "skillpm",
+    "agent-skills",
+    "ai-agents"
+  ],
+  "homepage": "https://skillpm.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbroenne/skillpm.git",
+    "directory": "packages/skillpm-skill"
+  },
+  "bugs": {
+    "url": "https://github.com/sbroenne/skillpm/issues"
+  },
+  "author": "sbroenne",
+  "license": "MIT",
+  "files": [
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {}
+}

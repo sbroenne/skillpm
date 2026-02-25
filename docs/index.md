@@ -19,22 +19,24 @@ The [Agent Skills spec](https://agentskills.io) defines what a skill is — but 
 
 ```bash
 # Install a skill (no global install needed)
-npx skillpm install refactor-react
+npx skillpm install <skill-name>
 
 # List installed skills
 npx skillpm list
+
+# Scaffold a new skill package
+npx skillpm init
 ```
 
 Or install globally for convenience:
 
 ```bash
 npm install -g skillpm
-skillpm install refactor-react
 ```
 
 ## How it works
 
-When you run `skillpm install refactor-react`:
+When you run `skillpm install <skill>`:
 
 1. **npm install** — npm handles resolution, download, lockfile, `node_modules/`
 2. **Scan** — skillpm scans `node_modules/` for packages containing `skills/*/SKILL.md`

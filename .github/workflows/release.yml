@@ -26,10 +26,11 @@ jobs:
       - run: npm run build
       - run: npm test
 
-      - name: Publish to npm
+      - name: Publish skillpm to npm
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish skillpm-skill to npm
+        run: npm publish -w packages/skillpm-skill --provenance --access public
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

@@ -17,6 +17,7 @@ The project is developed in TypeScript.
 | npm | CLI (shell out) | Package management, dependency resolution, registry, lockfiles, caching | All package operations — `skillpm install` calls `npm install` under the hood |
 | [`skills`](https://www.npmjs.com/package/skills) (Vercel) | CLI (shell out) | Links skills into 37+ agent directories | `npx skills add <path>` — wires npm-installed skills into agent dirs |
 | [`add-mcp`](https://github.com/neondatabase/add-mcp) | CLI (shell out) | Configures MCP servers across agents (Cursor, Claude, VS Code, Codex, etc.) | `npx add-mcp <source>` for MCP server configuration |
+| [`skills-ref`](https://www.npmjs.com/package/skills-ref) | CLI (shell out) | Validates SKILL.md against the Agent Skills spec | `npx skills-ref validate <path>` during `skillpm publish` |
 
 Before writing any new code, check whether one of these tools already does it.
 
@@ -41,7 +42,7 @@ my-skill/                        # npm package root
         └── assets/              # Optional: templates, images, data files
 ```
 
-One skill per npm package. The skill directory name must match the `name` field in SKILL.md frontmatter. All skill packages must include `"agent-skill"` in `package.json` `keywords` for discoverability on npmjs.org.
+One skill per npm package. The skill directory name must match the `name` field in SKILL.md frontmatter. All skill packages must include `"agent-skill"` in `package.json` `keywords` for discoverability on npmjs.org. Use `git+https://` prefix for `repository.url` in `package.json` (npm requires this format).
 
 ### Dependency model
 
@@ -121,23 +122,38 @@ When a user runs `skillpm install refactor-react`:
 
 ## Architecture
 
+skillpm is a monorepo with npm workspaces:
+
 ```
-src/
-├── cli.ts                  # Entry point — mirrors npm's command interface
-├── commands/               # One file per command, thin wrappers around npm + tools
-│   ├── install.ts          # npm install → scan for skills/*/SKILL.md → skills add → MCP config
-│   ├── uninstall.ts        # npm uninstall + cleanup
-│   ├── init.ts             # npm init + skills/<name>/SKILL.md scaffold + "agent-skill" keyword
-│   ├── publish.ts          # npm publish with "agent-skill" keyword validation
-│   ├── list.ts             # npm ls + skill tree annotation
-│   ├── sync.ts             # Re-run scan/link/MCP config without reinstalling
-│   └── mcp.ts              # Passthrough to add-mcp
-├── scanner/                # Scan node_modules/ for packages containing skills/*/SKILL.md
-├── postinstall/            # Walk tree, collect skillpm.mcpServers fields, delegate to add-mcp
-├── manifest/               # package.json `skillpm` field parsing + SKILL.md parsing
-├── config/                 # Config loading (supported agents, preferences)
-└── utils/                  # Shared helpers (logging, errors, child_process wrappers)
+skillpm/
+├── package.json              # Root — CLI tool + workspaces config
+├── src/                      # CLI source (TypeScript)
+│   ├── cli.ts                # Entry point — mirrors npm's command interface
+│   ├── commands/             # One file per command, thin wrappers around npm + tools
+│   │   ├── install.ts        # npm install → scan for skills/*/SKILL.md → skills add → MCP config
+│   │   ├── uninstall.ts      # npm uninstall + cleanup
+│   │   ├── init.ts           # npm init + skills/<name>/SKILL.md scaffold + "agent-skill" keyword
+│   │   ├── publish.ts        # Validates against Agent Skills spec (skills-ref), wraps npm publish
+│   │   ├── list.ts           # npm ls + skill tree annotation
+│   │   ├── sync.ts           # Re-run scan/link/MCP config without reinstalling
+│   │   └── mcp.ts            # Passthrough to add-mcp
+│   ├── scanner/              # Scan node_modules/ for packages containing skills/*/SKILL.md
+│   ├── postinstall/          # Walk tree, collect skillpm.mcpServers fields, delegate to add-mcp
+│   ├── manifest/             # package.json `skillpm` field parsing + SKILL.md parsing
+│   ├── config/               # Config loading (supported agents, preferences)
+│   └── utils/                # Shared helpers (logging, errors, child_process wrappers)
+└── packages/
+    └── skillpm-skill/        # Agent Skill package (published separately as "skillpm-skill")
+        ├── package.json      # keywords: ["agent-skill"], independent npm package
+        ├── README.md
+        └── skills/
+            └── skillpm/
+                └── SKILL.md  # Teaches agents how to use skillpm
 ```
+
+### Release strategy
+
+Both packages are released in **lockstep** — same version, single tag trigger (`v*`). The release workflow publishes `skillpm` first, then `skillpm-skill`.
 
 ## Build & Test
 
@@ -156,7 +172,7 @@ npm run lint          # lint
 - One file per CLI command under `src/commands/`.
 - Delegate to npm for all package management — do not reimplement registry, resolution, or caching.
 - skillpm's only custom code is: scanning `node_modules/` for `skills/*/SKILL.md`, reading `skillpm.mcpServers` fields, and orchestrating the tools above.
-- Shell out to `skills` CLI (for agent-directory linking) and `add-mcp` CLI (for MCP config).
+- Shell out to `skills` CLI (for agent-directory linking), `add-mcp` CLI (for MCP config), and `skills-ref` CLI (for spec validation).
 - Use **zod** for validating the `skillpm` field schema in `package.json`.
 - Use **gray-matter** for parsing YAML frontmatter from SKILL.md files.
 - Prefer explicit, actionable error messages — this is a CLI tool, not a library.
