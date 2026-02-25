@@ -164,6 +164,48 @@
   font-size: 1.1rem;
 }
 
+/* Pagination */
+.registry-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.registry-page-btn {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.85rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.35rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.registry-page-btn:hover:not(:disabled) {
+  border-color: var(--md-primary-fg-color);
+  color: var(--md-primary-fg-color);
+}
+
+.registry-page-btn.active {
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  border-color: var(--md-primary-fg-color);
+}
+
+.registry-page-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.registry-page-ellipsis {
+  padding: 0.4rem 0.3rem;
+  color: var(--md-default-fg-color--light);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .registry-grid {

@@ -3,20 +3,43 @@
 
 import json
 import urllib.request
+from collections import Counter
 from datetime import datetime, timezone
 from html import escape
 from pathlib import Path
 
-NPM_SEARCH_URL = "https://registry.npmjs.org/-/v1/search?text=keywords:agent-skill&size=250"
+NPM_SEARCH_URL = "https://registry.npmjs.org/-/v1/search"
+PAGE_SIZE = 250
 OUTPUT_PATH = Path(__file__).parent.parent / "docs" / "registry.md"
 EXCLUDED_KEYWORDS = {"agent-skill", "ai-skill", "oneskill", "skill", "skills"}
 
 
 def fetch_packages():
-    req = urllib.request.Request(NPM_SEARCH_URL, headers={"User-Agent": "skillpm-registry-generator"})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        data = json.loads(resp.read().decode())
-    return data["objects"], data["total"]
+    """Fetch all agent-skill packages, paginating through npm search API."""
+    all_packages = []
+    offset = 0
+    total = None
+
+    while True:
+        url = f"{NPM_SEARCH_URL}?text=keywords:agent-skill&size={PAGE_SIZE}&from={offset}"
+        req = urllib.request.Request(url, headers={"User-Agent": "skillpm-registry-generator"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode())
+
+        if total is None:
+            total = data["total"]
+
+        batch = data["objects"]
+        if not batch:
+            break
+
+        all_packages.extend(batch)
+        offset += len(batch)
+
+        if offset >= total:
+            break
+
+    return all_packages, total
 
 
 def format_downloads(n):
@@ -59,7 +82,6 @@ def build_card(obj):
 
 def generate():
     packages, total = fetch_packages()
-    # Sort by weekly downloads descending
     packages.sort(key=lambda o: o.get("downloads", {}).get("weekly", 0), reverse=True)
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
@@ -67,7 +89,6 @@ def generate():
     cards = "\n".join(build_card(obj) for obj in packages)
 
     # Collect top keywords for filter bar
-    from collections import Counter
     kw_counts = Counter()
     for obj in packages:
         for kw in obj["package"].get("keywords", []):
@@ -107,6 +128,8 @@ Browse agent skills published on npm with the `agent-skill` keyword.
 <div class="registry-empty" id="registry-empty" style="display:none">
   No skills match your search.
 </div>
+
+<div class="registry-pagination" id="registry-pagination"></div>
 """
 
     OUTPUT_PATH.write_text(md, encoding="utf-8")
