@@ -1,6 +1,6 @@
 site_name: skillpm
 site_url: https://skillpm.dev
-site_description: npm for Agent Skills
+site_description: "Package manager for Agent Skills. Built on npm."
 site_author: sbroenne
 
 repo_name: sbroenne/skillpm

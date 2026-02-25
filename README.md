@@ -1,4 +1,4 @@
-# skillpm — npm for Agent Skills
+# skillpm — Package manager for Agent Skills. Built on npm.
 
 [![npm](https://img.shields.io/npm/v/skillpm)](https://www.npmjs.com/package/skillpm)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -6,7 +6,7 @@
 
 The [Agent Skills spec](https://agentskills.io) defines what a skill is — but not how to publish, install, version, or share them. There's no registry, no dependency management, no way for one skill to build on another.
 
-**skillpm** fills that gap by mapping Agent Skills onto npm's ecosystem. Same `package.json`, same `node_modules/`, same registry. Skills become npm packages you can publish, install, version, and depend on — just like any other package.
+**skillpm** fills that gap. It's a lightweight orchestration layer — ~630 lines of code, 3 runtime dependencies — that maps Agent Skills onto npm's ecosystem. Same `package.json`, same `node_modules/`, same registry. Skills become npm packages you can publish, install, version, and depend on — just like any other package.
 
 ## Quick start
 
@@ -33,12 +33,14 @@ When you run `skillpm install <skill>`:
 
 1. **npm install** — npm handles resolution, download, lockfile, `node_modules/`
 2. **Scan** — skillpm scans `node_modules/` for packages containing `skills/*/SKILL.md`
-3. **Link** — for each skill found, skillpm calls [`skills`](https://www.npmjs.com/package/skills) to wire it into 37+ agent directories (Claude, Cursor, VS Code, Codex, etc.)
+3. **Link** — for each skill found, skillpm calls [`skills`](https://www.npmjs.com/package/skills) to wire it into agent directories (Claude, Cursor, VS Code, Codex, and many more)
 4. **MCP config** — skillpm collects `skillpm.mcpServers` from all skills (transitively) and configures each via [`add-mcp`](https://github.com/neondatabase/add-mcp)
 
 That's it. Agents see the full skill tree with MCP servers configured.
 
 ## What's missing from the spec — and what skillpm adds
+
+skillpm doesn't reinvent anything. It orchestrates three battle-tested tools: npm, [`skills`](https://www.npmjs.com/package/skills), and [`add-mcp`](https://github.com/neondatabase/add-mcp).
 
 | The spec doesn't define... | skillpm adds... |
 |---|---|
@@ -46,7 +48,7 @@ That's it. Agents see the full skill tree with MCP servers configured.
 | An install command | `skillpm install` resolves the full dependency tree |
 | Dependency management | Standard `package.json` `dependencies` — npm handles semver, lockfiles, audit |
 | Versioning | npm semver, `package-lock.json`, reproducible installs |
-| Agent wiring | Auto-links skills into 37+ agent directories via [`skills`](https://www.npmjs.com/package/skills) |
+| Agent wiring | Links skills into agent directories via [`skills`](https://www.npmjs.com/package/skills) |
 | MCP server config | Collects and configures MCP servers transitively via [`add-mcp`](https://github.com/neondatabase/add-mcp) |
 
 ## Commands

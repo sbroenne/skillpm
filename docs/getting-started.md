@@ -30,8 +30,8 @@ This will:
 
 1. Install the skill (and all its dependencies) via npm
 2. Scan for skill packages in `node_modules/`
-3. Link each skill into your agent directories (Claude, Cursor, VS Code, Codex, etc.)
-4. Configure any MCP servers declared by the skills
+3. Link each skill into agent directories via [`skills`](https://www.npmjs.com/package/skills) (Claude, Cursor, VS Code, Codex, and many more)
+4. Configure any MCP servers declared by the skills via [`add-mcp`](https://github.com/neondatabase/add-mcp)
 
 ## Verify it worked
 

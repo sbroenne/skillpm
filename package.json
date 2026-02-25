@@ -1,7 +1,7 @@
 {
   "name": "skillpm",
   "version": "0.0.1",
-  "description": "npm for Agent Skills",
+  "description": "Package manager for Agent Skills. Built on npm.",
   "type": "module",
   "bin": {
     "skillpm": "dist/cli.js"
