@@ -1,6 +1,6 @@
 {
   "name": "skillpm",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "npm for Agent Skills",
   "type": "module",
   "bin": {
