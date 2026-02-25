@@ -78,22 +78,7 @@ Instead of duplicating instructions, depend on other skills. A fullstack React s
 }
 ```
 
-Each skill stays small and focused. `skillpm install fullstack-react` resolves the entire tree in one step.
-
-Skill dependencies go in standard `package.json` `dependencies`:
-
-```json
-{
-  "name": "my-skill",
-  "version": "1.0.0",
-  "keywords": ["agent-skill"],
-  "dependencies": {
-    "some-other-skill": "^2.0.0"
-  }
-}
-```
-
-npm handles resolution, lockfile, audit, and caching — just like any npm package.
+Each skill stays small and focused. `skillpm install fullstack-react` resolves the entire tree in one step. npm handles resolution, lockfile, audit, and caching — just like any npm package.
 
 ## Declaring MCP servers
 
