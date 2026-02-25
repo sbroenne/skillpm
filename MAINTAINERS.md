@@ -1,0 +1,127 @@
+# Maintainer Guide
+
+This guide covers one-time setup and ongoing release operations for skillpm maintainers.
+
+## npm account setup
+
+1. Create an account at [npmjs.com/signup](https://www.npmjs.com/signup)
+2. Verify your email address
+3. Enable 2FA (required for publishing): [npmjs.com → Profile → Security](https://www.npmjs.com/settings/~/security)
+
+## npm access token
+
+1. Go to [npmjs.com → Access Tokens](https://www.npmjs.com/settings/~/tokens)
+2. Click **"Generate New Token"** → select **"Granular Access Token"**
+3. Configure:
+   - **Token name:** `skillpm-github-actions`
+   - **Expiration:** 90 days (set a calendar reminder to rotate)
+   - **Packages and scopes:** **All packages**
+   - **Permissions:** **Read and write**
+4. Copy the token (you won't see it again)
+
+## Add token to GitHub
+
+1. Go to [github.com/sbroenne/skillpm/settings/secrets/actions](https://github.com/sbroenne/skillpm/settings/secrets/actions)
+2. Click **"New repository secret"**
+3. Name: `NPM_TOKEN`
+4. Value: paste the token from step 2
+5. Click **"Add secret"**
+
+## Verify the setup
+
+Create a test release to confirm the pipeline works end-to-end:
+
+1. Create a release branch and bump the version:
+
+   ```bash
+   git checkout -b chore/test-release
+   npm version prerelease --preid=rc --no-git-tag-version
+   git add package.json package-lock.json
+   git commit -m "chore: test release"
+   git push -u origin chore/test-release
+   gh pr create --fill
+   ```
+
+2. Merge the PR, then tag and push from `main`:
+
+   ```bash
+   git checkout main && git pull
+   git tag v0.1.1-rc.0
+   git push origin v0.1.1-rc.0
+   ```
+
+3. Check the [Actions tab](https://github.com/sbroenne/skillpm/actions) to verify it publishes successfully.
+
+4. Clean up:
+
+   ```bash
+   npm unpublish skillpm@0.1.1-rc.0
+   git push origin --delete v0.1.1-rc.0
+   ```
+
+## Releasing
+
+Releases are automated via GitHub Actions. When a version tag is pushed, the [release workflow](.github/workflows/release.yml) runs lint, build, tests, publishes to npm, and creates a GitHub Release.
+
+### How to release
+
+1. **Create a release branch and bump the version:**
+
+   ```bash
+   git checkout -b chore/release-0.2.0
+   npm version minor --no-git-tag-version   # or patch, or major
+   ```
+
+2. **Update the `VERSION` constant** in `src/cli.ts` to match:
+
+   ```typescript
+   const VERSION = '0.2.0';  // must match package.json
+   ```
+
+3. **Commit, push, and merge via PR:**
+
+   ```bash
+   git add -A
+   git commit -m "chore: release v0.2.0"
+   git push -u origin chore/release-0.2.0
+   gh pr create --title "chore: release v0.2.0" --body ""
+   ```
+
+   Wait for CI, then squash merge.
+
+4. **Tag and push from `main`:**
+
+   ```bash
+   git checkout main && git pull
+   git tag v0.2.0
+   git push origin v0.2.0
+   ```
+
+5. **GitHub Actions does the rest:**
+   - Runs lint, build, and tests
+   - Publishes to npm with provenance
+   - Creates a GitHub Release with auto-generated release notes
+
+### Version policy
+
+- **Patch** (`0.1.x`): Bug fixes, dependency updates
+- **Minor** (`0.x.0`): New features, new commands
+- **Major** (`x.0.0`): Breaking changes to CLI interface or `skillpm` field schema
+
+## npm provenance
+
+The release uses `--provenance` for supply chain security. This links the npm package back to the exact GitHub commit and workflow that built it. No extra setup needed — the `id-token: write` permission is already configured in the workflow.
+
+## Token rotation
+
+The npm token expires after 90 days. When it expires:
+
+1. Generate a new token (same steps as above)
+2. Update the `NPM_TOKEN` secret in GitHub (same name, new value)
+
+## Revoking access
+
+To revoke publishing access immediately:
+
+1. Go to [npmjs.com → Access Tokens](https://www.npmjs.com/settings/~/tokens)
+2. Delete the `skillpm-github-actions` token

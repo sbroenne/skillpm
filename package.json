@@ -1,7 +1,7 @@
 {
   "name": "skillpm",
-  "version": "0.1.0",
-  "description": "The package manager for Agent Skills",
+  "version": "0.0.1",
+  "description": "npm for Agent Skills",
   "type": "module",
   "bin": {
     "skillpm": "./dist/cli.js"
@@ -17,7 +17,8 @@
   },
   "files": [
     "dist",
-    "skills",
+    "!dist/**/*.test.*",
+    "!dist/**/*.map",
     "README.md",
     "LICENSE"
   ],
@@ -31,20 +32,22 @@
   "homepage": "https://skillpm.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sbroenne/skillpm.git"
+    "url": "git+https://github.com/sbroenne/skillpm.git"
   },
   "bugs": {
     "url": "https://github.com/sbroenne/skillpm/issues"
   },
-  "author": "",
+  "author": "sbroenne",
   "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
     "picocolors": "^1.1.1",
-    "typescript": "^5.9.3",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -52,6 +55,7 @@
     "@types/node": "^25.3.0",
     "eslint": "^10.0.2",
     "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1",
     "vitest": "^4.0.18"
   }

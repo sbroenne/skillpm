@@ -42,6 +42,4 @@ src/
 
 ## Releasing
 
-See [CONTRIBUTING.md](https://github.com/sbroenne/skillpm/blob/main/CONTRIBUTING.md) in the repo for the full release process.
-
-**Quick version:** `npm version patch` → update `VERSION` in `src/cli.ts` → `git push origin main --follow-tags` → GitHub Actions publishes to npm automatically.
+See the [Maintainer Guide](https://github.com/sbroenne/skillpm/blob/main/MAINTAINERS.md) for the full release process and npm setup.

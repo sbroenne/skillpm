@@ -1,42 +1,53 @@
-# skillpm — Agent Skill Package Manager
+# skillpm — npm for Agent Skills
 
 [![npm](https://img.shields.io/npm/v/skillpm)](https://www.npmjs.com/package/skillpm)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Docs](https://img.shields.io/badge/docs-skillpm.dev-blue)](https://skillpm.dev)
 
-**skillpm** is the package manager for [Agent Skills](https://agentskills.io). Install skills with a single command — skillpm resolves the full dependency tree, wires everything into your agent directories, and configures any required MCP servers.
+The [Agent Skills spec](https://agentskills.io) defines what a skill is — but not how to publish, install, version, or share them. There's no registry, no dependency management, no way for one skill to build on another.
 
-skillpm works exactly like npm — same `package.json`, same `node_modules/`, same `package-lock.json`, same registry. skillpm only adds what npm can't do: scanning for skills, wiring them into agent directories, and configuring MCP servers.
+**skillpm** fills that gap by mapping Agent Skills onto npm's ecosystem. Same `package.json`, same `node_modules/`, same registry. Skills become npm packages you can publish, install, version, and depend on — just like any other package.
 
 ## Quick start
 
 ```bash
-# Install skillpm globally
-npm install -g skillpm
-
-# Install a skill (+ all transitive skill deps + MCP servers)
-skillpm install refactor-react
+# Install a skill (no global install needed)
+npx skillpm install <skill-name>
 
 # List installed skills
-skillpm list
+npx skillpm list
+
+# Scaffold a new skill package
+npx skillpm init
 ```
 
-## What are Agent Skills?
+Or install globally for convenience:
 
-Agent Skills are modular, reusable packages of instructions, scripts, and resources that AI agents can dynamically load to extend their capabilities. They follow an [open standard](https://agentskills.io) adopted by Claude, Codex, Cursor, Gemini CLI, Augment, and others.
-
-A skill is just an npm package with a `SKILL.md` inside a `skills/<name>/` subdirectory:
-
+```bash
+npm install -g skillpm
 ```
-refactor-react/
-├── package.json                 # Standard npm package.json
-├── README.md
-└── skills/
-    └── refactor-react/
-        ├── SKILL.md             # Skill definition
-        ├── scripts/             # Optional scripts
-        └── references/          # Optional docs
-```
+
+## How it works
+
+When you run `skillpm install <skill>`:
+
+1. **npm install** — npm handles resolution, download, lockfile, `node_modules/`
+2. **Scan** — skillpm scans `node_modules/` for packages containing `skills/*/SKILL.md`
+3. **Link** — for each skill found, skillpm calls [`skills`](https://www.npmjs.com/package/skills) to wire it into 37+ agent directories (Claude, Cursor, VS Code, Codex, etc.)
+4. **MCP config** — skillpm collects `skillpm.mcpServers` from all skills (transitively) and configures each via [`add-mcp`](https://github.com/neondatabase/add-mcp)
+
+That's it. Agents see the full skill tree with MCP servers configured.
+
+## What's missing from the spec — and what skillpm adds
+
+| The spec doesn't define... | skillpm adds... |
+|---|---|
+| A registry | Publish to npmjs.org with `skillpm publish` |
+| An install command | `skillpm install` resolves the full dependency tree |
+| Dependency management | Standard `package.json` `dependencies` — npm handles semver, lockfiles, audit |
+| Versioning | npm semver, `package-lock.json`, reproducible installs |
+| Agent wiring | Auto-links skills into 37+ agent directories via [`skills`](https://www.npmjs.com/package/skills) |
+| MCP server config | Collects and configures MCP servers transitively via [`add-mcp`](https://github.com/neondatabase/add-mcp) |
 
 ## Commands
 
@@ -53,17 +64,6 @@ refactor-react/
 
 Aliases: `i` for `install`, `rm`/`remove` for `uninstall`, `ls` for `list`.
 
-## How it works
-
-When you run `skillpm install refactor-react`:
-
-1. **npm install** — npm handles resolution, download, lockfile, `node_modules/`
-2. **Scan** — skillpm scans `node_modules/` for packages containing `skills/*/SKILL.md`
-3. **Link** — for each skill found, skillpm calls [`skills`](https://www.npmjs.com/package/skills) to wire it into 37+ agent directories (Claude, Cursor, VS Code, Codex, etc.)
-4. **MCP config** — skillpm collects `skillpm.mcpServers` from all skills (transitively) and configures each via [`add-mcp`](https://github.com/neondatabase/add-mcp)
-
-That's it. Agents see the full skill tree with MCP servers configured.
-
 ## Creating a skill
 
 ```bash
@@ -73,18 +73,31 @@ skillpm init
 
 This creates a `package.json` (with the `"agent-skill"` keyword) and `skills/<name>/SKILL.md`. Edit the SKILL.md to define your skill.
 
+A skill is just an npm package with a `SKILL.md` inside a `skills/<name>/` subdirectory:
+
+```
+my-skill/
+├── package.json                 # keywords: ["agent-skill"], deps, skillpm.mcpServers
+├── README.md
+└── skills/
+    └── my-skill/
+        ├── SKILL.md             # Skill definition
+        ├── scripts/             # Optional scripts
+        ├── references/          # Optional docs
+        └── assets/              # Optional templates/data
+```
+
 ### Skill dependencies
 
 Skill dependencies go in standard `package.json` `dependencies` — npm handles everything:
 
 ```json
 {
-  "name": "refactor-react",
+  "name": "my-skill",
   "version": "1.0.0",
   "keywords": ["agent-skill"],
   "dependencies": {
-    "react-patterns": "^2.0.0",
-    "typescript-best-practices": "^1.3.0"
+    "some-other-skill": "^1.0.0"
   },
   "skillpm": {
     "mcpServers": ["@anthropic/mcp-server-filesystem"]
@@ -101,13 +114,13 @@ Skill dependencies go in standard `package.json` `dependencies` — npm handles 
 
 ```yaml
 ---
-name: refactor-react
-description: Refactor React components using modern patterns.
+name: my-skill
+description: What this skill does and when to use it.
 license: MIT
 allowed-tools: Bash Read
 ---
 
-# Refactor React
+# My Skill
 
 ## When to use this skill
 ...
@@ -126,15 +139,9 @@ skillpm publish
 
 This validates the `"agent-skill"` keyword is present, then delegates to `npm publish`. Your skill will be discoverable on npmjs.org via [`keywords:agent-skill`](https://www.npmjs.com/search?q=keywords:agent-skill).
 
-## Why skillpm?
+## What are Agent Skills?
 
-Existing tools handle parts of the problem:
-
-- **npm** manages packages but doesn't know about skills or agent directories
-- **[`skills`](https://www.npmjs.com/package/skills)** wires skills into agent dirs but doesn't manage dependencies
-- **[`add-mcp`](https://github.com/neondatabase/add-mcp)** configures MCP servers but isn't connected to skill packages
-
-**skillpm** is the glue — it orchestrates all three so you get transitive skill dependency resolution with a single `skillpm install`.
+Agent Skills are modular, reusable packages of instructions, scripts, and resources that AI agents can dynamically load to extend their capabilities. They follow an [open standard](https://agentskills.io) adopted by Claude, Codex, Cursor, Gemini CLI, Augment, and others.
 
 ## Development
 

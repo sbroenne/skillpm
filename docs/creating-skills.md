@@ -61,12 +61,11 @@ Skill dependencies go in standard `package.json` `dependencies`:
 
 ```json
 {
-  "name": "refactor-react",
+  "name": "my-skill",
   "version": "1.0.0",
   "keywords": ["agent-skill"],
   "dependencies": {
-    "react-patterns": "^2.0.0",
-    "typescript-best-practices": "^1.3.0"
+    "some-other-skill": "^2.0.0"
   }
 }
 ```
@@ -79,7 +78,7 @@ If your skill requires MCP servers, declare them in the `skillpm` field:
 
 ```json
 {
-  "name": "refactor-react",
+  "name": "my-skill",
   "version": "1.0.0",
   "keywords": ["agent-skill"],
   "skillpm": {
