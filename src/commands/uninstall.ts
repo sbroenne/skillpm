@@ -1,10 +1,24 @@
-import { npm, log } from '../utils/index.js';
+import { npm, npx, log } from '../utils/index.js';
 import { wireSkills } from './install.js';
 
 export async function uninstall(args: string[], cwd: string): Promise<void> {
   if (args.length === 0) {
     log.error('Usage: skillpm uninstall <skill> [skill...]');
     process.exit(1);
+  }
+
+  // Clean up agents/prompts for removed packages before npm uninstall
+  for (const pkg of args) {
+    try {
+      await npx(['add-agent', '--remove-package', pkg], { cwd });
+    } catch {
+      // Ignore — package may not have had agents
+    }
+    try {
+      await npx(['add-prompt', '--remove-package', pkg], { cwd });
+    } catch {
+      // Ignore — package may not have had prompts
+    }
   }
 
   log.info(`Running npm uninstall ${args.join(' ')}`);

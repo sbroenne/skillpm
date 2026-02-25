@@ -4,6 +4,19 @@ import { readPackageJson, parseSkillpmField } from '../manifest/index.js';
 import type { SkillInfo } from '../manifest/schema.js';
 
 /**
+ * Scan a directory for .md files (used for agents/ and prompts/ dirs).
+ */
+async function scanMdFiles(dir: string): Promise<string[]> {
+  let entries: string[];
+  try {
+    entries = await readdir(dir);
+  } catch {
+    return [];
+  }
+  return entries.filter((e) => e.endsWith('.md')).map((e) => join(dir, e));
+}
+
+/**
  * Scan node_modules/ for packages that contain a skills/<name>/SKILL.md file.
  * Returns metadata for each discovered skill package.
  */
@@ -67,12 +80,16 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
     }
 
     const skillpm = parseSkillpmField(pkg);
+    const agents = await scanMdFiles(join(pkgDir, 'agents'));
+    const prompts = await scanMdFiles(join(pkgDir, 'prompts'));
     return {
       name: pkg.name,
       version: pkg.version,
       path: pkgDir,
       skillDir,
       mcpServers: skillpm?.mcpServers ?? [],
+      agents,
+      prompts,
     };
   }
 
@@ -84,6 +101,8 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
   }
 
   const skillpm = parseSkillpmField(pkg);
+  const agents = await scanMdFiles(join(pkgDir, 'agents'));
+  const prompts = await scanMdFiles(join(pkgDir, 'prompts'));
   return {
     name: pkg.name,
     version: pkg.version,
@@ -91,6 +110,8 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
     skillDir: pkgDir,
     mcpServers: skillpm?.mcpServers ?? [],
     legacy: true,
+    agents,
+    prompts,
   };
 }
 

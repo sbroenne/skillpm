@@ -124,10 +124,67 @@ describe('scanNodeModules', () => {
 describe('collectMcpServers', () => {
   it('deduplicates MCP servers across skills', () => {
     const skills = [
-      { name: 'a', version: '1.0.0', path: '/a', skillDir: '/a/skills/a', mcpServers: ['server-1', 'server-2'] },
-      { name: 'b', version: '1.0.0', path: '/b', skillDir: '/b/skills/b', mcpServers: ['server-2', 'server-3'] },
+      { name: 'a', version: '1.0.0', path: '/a', skillDir: '/a/skills/a', mcpServers: ['server-1', 'server-2'], agents: [], prompts: [] },
+      { name: 'b', version: '1.0.0', path: '/b', skillDir: '/b/skills/b', mcpServers: ['server-2', 'server-3'], agents: [], prompts: [] },
     ];
     const result = collectMcpServers(skills);
     expect(result).toEqual(['server-1', 'server-2', 'server-3']);
+  });
+});
+
+describe('agents and prompts scanning', () => {
+  let tmpDir: string;
+
+  beforeEach(async () => {
+    tmpDir = await mkdtemp(join(tmpdir(), 'skillpm-test-'));
+  });
+
+  afterEach(async () => {
+    await rm(tmpDir, { recursive: true, force: true });
+  });
+
+  it('detects agents/*.md files in skill package', async () => {
+    const pkgDir = join(tmpDir, 'node_modules', 'agent-skill');
+    const skillDir = join(pkgDir, 'skills', 'agent-skill');
+    const agentsDir = join(pkgDir, 'agents');
+    await mkdir(skillDir, { recursive: true });
+    await mkdir(agentsDir, { recursive: true });
+    await writeFile(join(pkgDir, 'package.json'), JSON.stringify({ name: 'agent-skill', version: '1.0.0' }));
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: agent-skill\n---\n');
+    await writeFile(join(agentsDir, 'reviewer.md'), '---\nname: reviewer\n---\n');
+    await writeFile(join(agentsDir, 'architect.md'), '---\nname: architect\n---\n');
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].agents).toHaveLength(2);
+    expect(result[0].agents.map(a => a.endsWith('.md'))).toEqual([true, true]);
+  });
+
+  it('detects prompts/*.md files in skill package', async () => {
+    const pkgDir = join(tmpDir, 'node_modules', 'prompt-skill');
+    const skillDir = join(pkgDir, 'skills', 'prompt-skill');
+    const promptsDir = join(pkgDir, 'prompts');
+    await mkdir(skillDir, { recursive: true });
+    await mkdir(promptsDir, { recursive: true });
+    await writeFile(join(pkgDir, 'package.json'), JSON.stringify({ name: 'prompt-skill', version: '1.0.0' }));
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: prompt-skill\n---\n');
+    await writeFile(join(promptsDir, 'conventions.md'), '---\ndescription: Coding conventions\n---\n');
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].prompts).toHaveLength(1);
+  });
+
+  it('returns empty arrays when no agents or prompts dirs exist', async () => {
+    const pkgDir = join(tmpDir, 'node_modules', 'plain-skill');
+    const skillDir = join(pkgDir, 'skills', 'plain-skill');
+    await mkdir(skillDir, { recursive: true });
+    await writeFile(join(pkgDir, 'package.json'), JSON.stringify({ name: 'plain-skill', version: '1.0.0' }));
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: plain-skill\n---\n');
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].agents).toEqual([]);
+    expect(result[0].prompts).toEqual([]);
   });
 });

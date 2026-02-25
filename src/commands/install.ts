@@ -62,4 +62,32 @@ export async function wireSkills(cwd: string): Promise<void> {
       }
     }
   }
+
+  // Wire agent definitions via add-agent
+  for (const skill of skills) {
+    for (const agentFile of skill.agents) {
+      log.info(`Wiring agent from ${log.skill(skill.name, skill.version)}`);
+      try {
+        await npx(['add-agent', agentFile, '--package', skill.name], { cwd });
+        log.success(`Wired agent ${agentFile}`);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        log.warn(`Failed to wire agent: ${msg}`);
+      }
+    }
+  }
+
+  // Wire prompts/instructions via add-prompt
+  for (const skill of skills) {
+    for (const promptFile of skill.prompts) {
+      log.info(`Wiring prompt from ${log.skill(skill.name, skill.version)}`);
+      try {
+        await npx(['add-prompt', promptFile, '--package', skill.name], { cwd });
+        log.success(`Wired prompt ${promptFile}`);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        log.warn(`Failed to wire prompt: ${msg}`);
+      }
+    }
+  }
 }
