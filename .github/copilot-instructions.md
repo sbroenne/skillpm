@@ -160,3 +160,10 @@ npm run lint          # lint
 - Use **zod** for validating the `skillpm` field schema in `package.json`.
 - Use **gray-matter** for parsing YAML frontmatter from SKILL.md files.
 - Prefer explicit, actionable error messages — this is a CLI tool, not a library.
+
+## Git workflow
+
+- **`main` is protected** — all changes go through pull requests with squash merge.
+- **CI must pass** before merging (lint, build, tests on Node 18/20/22).
+- Branch naming: `feat/`, `fix/`, `docs/`, `chore/`.
+- Never push directly to `main`.

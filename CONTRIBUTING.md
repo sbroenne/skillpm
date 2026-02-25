@@ -3,7 +3,7 @@
 ## Development
 
 ```bash
-git clone https://github.com/<owner>/skillpm.git
+git clone https://github.com/sbroenne/skillpm.git
 cd skillpm
 npm install
 npm run build
@@ -54,6 +54,49 @@ src/
 - Use `catch (err: unknown)` — never `any`
 - One file per CLI command under `src/commands/`
 - Delegate to npm/skills/add-mcp — don't reimplement
+
+## Workflow
+
+### Branch protection
+
+The `main` branch is protected:
+
+- **All changes go through pull requests** — no direct pushes to `main`
+- **Squash merge only** — every PR becomes a single clean commit on `main`
+- **CI must pass** — build and tests on Node 18, 20, and 22 are required before merging
+- **Branches are auto-deleted** after merge
+
+### Making changes
+
+1. Create a feature branch:
+
+   ```bash
+   git checkout -b feat/my-feature
+   ```
+
+2. Make your changes, ensure lint + tests pass:
+
+   ```bash
+   npm run lint && npm run build && npm test
+   ```
+
+3. Push and open a PR:
+
+   ```bash
+   git push -u origin feat/my-feature
+   gh pr create --fill
+   ```
+
+4. After CI passes, squash merge via GitHub.
+
+### Branch naming
+
+| Prefix | Use for |
+|---|---|
+| `feat/` | New features |
+| `fix/` | Bug fixes |
+| `docs/` | Documentation changes |
+| `chore/` | Maintenance, deps, CI |
 
 ## Releasing
 
