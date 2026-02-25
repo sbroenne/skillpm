@@ -16,14 +16,18 @@ Install skills with a single command — skillpm resolves the full dependency tr
 ## Quick start
 
 ```bash
-# Install skillpm globally
-npm install -g skillpm
-
-# Install a skill (+ all transitive skill deps + MCP servers)
-skillpm install refactor-react
+# Install a skill (no global install needed)
+npx skillpm install refactor-react
 
 # List installed skills
-skillpm list
+npx skillpm list
+```
+
+Or install globally for convenience:
+
+```bash
+npm install -g skillpm
+skillpm install refactor-react
 ```
 
 ## How it works

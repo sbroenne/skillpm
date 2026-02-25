@@ -2,6 +2,14 @@
 
 ## Installation
 
+You can use skillpm directly with `npx` (no install required):
+
+```bash
+npx skillpm install refactor-react
+```
+
+Or install globally for convenience:
+
 ```bash
 npm install -g skillpm
 ```

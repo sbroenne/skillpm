@@ -11,14 +11,18 @@ skillpm works exactly like npm — same `package.json`, same `node_modules/`, sa
 ## Quick start
 
 ```bash
-# Install skillpm globally
-npm install -g skillpm
-
-# Install a skill (+ all transitive skill deps + MCP servers)
-skillpm install refactor-react
+# Install a skill (no global install needed)
+npx skillpm install refactor-react
 
 # List installed skills
-skillpm list
+npx skillpm list
+```
+
+Or install globally for convenience:
+
+```bash
+npm install -g skillpm
+skillpm install refactor-react
 ```
 
 ## What are Agent Skills?
