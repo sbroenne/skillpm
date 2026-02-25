@@ -56,17 +56,19 @@ def build_card(obj):
     npm_url = pkg.get("links", {}).get("npm", f"https://www.npmjs.com/package/{pkg['name']}")
     publisher = escape(pkg.get("publisher", {}).get("username", ""))
     weekly = obj.get("downloads", {}).get("weekly", 0)
+    score = obj.get("score", {}).get("final", 0)
+    updated = pkg.get("date", "")
 
     keywords = [kw for kw in pkg.get("keywords", []) if kw.lower() not in EXCLUDED_KEYWORDS]
     keyword_html = ""
     if keywords:
         tags = "".join(
             f'<span class="registry-tag" data-keyword="{escape(kw)}">{escape(kw)}</span>'
-            for kw in keywords[:8]  # cap at 8 tags per card
+            for kw in keywords[:8]
         )
         keyword_html = f'<div class="registry-tags">{tags}</div>'
 
-    return f"""<div class="registry-card" data-name="{name}" data-description="{desc}" data-keywords="{escape(",".join(keywords))}">
+    return f"""<div class="registry-card" data-name="{name}" data-description="{desc}" data-keywords="{escape(",".join(keywords))}" data-downloads="{weekly}" data-updated="{escape(updated)}" data-score="{score}">
   <div class="registry-card-header">
     <a href="{npm_url}" target="_blank" rel="noopener" class="registry-card-name">{name}</a>
     <span class="registry-card-version">v{version}</span>
@@ -110,8 +112,18 @@ hide:
 Browse agent skills published on npm with the `agent-skill` keyword.
 
 <div class="registry-header">
-  <div class="registry-search-bar">
-    <input type="text" id="registry-search" placeholder="Search skills..." autocomplete="off" />
+  <div class="registry-controls">
+    <div class="registry-search-bar">
+      <input type="text" id="registry-search" placeholder="Search skills..." autocomplete="off" />
+    </div>
+    <div class="registry-sort">
+      <select id="registry-sort-select">
+        <option value="score">Relevance</option>
+        <option value="downloads">Downloads</option>
+        <option value="updated">Recently updated</option>
+        <option value="name">Name</option>
+      </select>
+    </div>
   </div>
   <div class="registry-filters" id="registry-filters">
     {filter_buttons}

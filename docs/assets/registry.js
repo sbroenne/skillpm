@@ -1,10 +1,11 @@
-/* Skill Registry — client-side search, keyword filtering, and pagination */
+/* Skill Registry — client-side search, keyword filtering, sorting, and pagination */
 (function () {
   "use strict";
 
   var CARDS_PER_PAGE = 24;
 
   var search = document.getElementById("registry-search");
+  var sortSelect = document.getElementById("registry-sort-select");
   var grid = document.getElementById("registry-grid");
   var empty = document.getElementById("registry-empty");
   var countEl = document.getElementById("registry-count");
@@ -13,13 +14,30 @@
   if (!search || !grid) return;
 
   var allCards = Array.prototype.slice.call(grid.querySelectorAll(".registry-card"));
+  // Preserve the original (npm score) order
+  allCards.forEach(function (card, i) { card._originalIndex = i; });
+
   var activeKeyword = null;
   var currentPage = 1;
   var filteredCards = allCards;
 
+  var sortFns = {
+    score: function (a, b) { return a._originalIndex - b._originalIndex; },
+    downloads: function (a, b) {
+      return (parseFloat(b.getAttribute("data-downloads")) || 0) -
+             (parseFloat(a.getAttribute("data-downloads")) || 0);
+    },
+    updated: function (a, b) {
+      return (b.getAttribute("data-updated") || "").localeCompare(a.getAttribute("data-updated") || "");
+    },
+    name: function (a, b) {
+      return (a.getAttribute("data-name") || "").localeCompare(b.getAttribute("data-name") || "");
+    }
+  };
+
   function getFilteredCards() {
     var query = search.value.toLowerCase().trim();
-    return allCards.filter(function (card) {
+    var result = allCards.filter(function (card) {
       var name = (card.getAttribute("data-name") || "").toLowerCase();
       var desc = (card.getAttribute("data-description") || "").toLowerCase();
       var keywords = (card.getAttribute("data-keywords") || "").toLowerCase();
@@ -27,6 +45,12 @@
       var matchesKeyword = !activeKeyword || keywords.split(",").indexOf(activeKeyword) !== -1;
       return matchesSearch && matchesKeyword;
     });
+
+    var sortKey = sortSelect ? sortSelect.value : "score";
+    var fn = sortFns[sortKey] || sortFns.score;
+    result.sort(fn);
+
+    return result;
   }
 
   function renderPage() {
@@ -39,6 +63,11 @@
 
     allCards.forEach(function (card) {
       card.style.display = pageCards.has(card) ? "" : "none";
+    });
+
+    // Re-order DOM to match sort
+    filteredCards.slice(start, end).forEach(function (card) {
+      grid.appendChild(card);
     });
 
     if (countEl) countEl.textContent = filteredCards.length + " skill" + (filteredCards.length !== 1 ? "s" : "");
@@ -57,7 +86,6 @@
     var html = '<button class="registry-page-btn" data-page="prev" ' +
       (currentPage <= 1 ? "disabled" : "") + '>&laquo; Prev</button>';
 
-    // Show page numbers with ellipsis for large ranges
     var pages = getPageRange(currentPage, totalPages);
     pages.forEach(function (p) {
       if (p === "...") {
@@ -112,6 +140,9 @@
 
   // Search input
   search.addEventListener("input", applyFilters);
+
+  // Sort dropdown
+  if (sortSelect) sortSelect.addEventListener("change", applyFilters);
 
   // Click delegation for filter buttons, tags, and pagination
   document.addEventListener("click", function (e) {
