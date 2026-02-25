@@ -1,5 +1,21 @@
 import { npm, npx, log } from '../utils/index.js';
 import { scanNodeModules, collectMcpServers } from '../scanner/index.js';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { dirname } from 'node:path';
+
+const execFileAsync = promisify(execFile);
+
+/**
+ * Resolve the root directory for scanning. For global installs, uses `npm root -g`.
+ */
+async function resolveNodeModulesRoot(args: string[], cwd: string): Promise<string> {
+  const isGlobal = args.includes('-g') || args.includes('--global');
+  if (!isGlobal) return cwd;
+
+  const { stdout } = await execFileAsync('npm', ['root', '-g']);
+  return dirname(stdout.trim());
+}
 
 export async function install(args: string[], cwd: string): Promise<void> {
   // Step 1: npm install
@@ -16,7 +32,8 @@ export async function install(args: string[], cwd: string): Promise<void> {
   }
 
   // Step 2: Scan for skills and wire them
-  await wireSkills(cwd);
+  const scanRoot = await resolveNodeModulesRoot(args, cwd);
+  await wireSkills(scanRoot);
 }
 
 export async function wireSkills(cwd: string): Promise<void> {
