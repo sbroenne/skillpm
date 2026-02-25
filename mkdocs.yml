@@ -49,10 +49,17 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - Skill Registry: registry.md
   - Getting Started: getting-started.md
   - Commands: commands.md
   - Creating Skills: creating-skills.md
   - Contributing: contributing.md
+
+extra_css:
+  - assets/registry.css
+
+extra_javascript:
+  - assets/registry.js
 
 extra:
   social:

@@ -6,6 +6,10 @@ on:
     paths:
       - 'docs/**'
       - 'mkdocs.yml'
+      - 'scripts/generate-registry.py'
+  schedule:
+    - cron: '15 * * * *'  # hourly at :15
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -21,5 +25,8 @@ jobs:
           python-version: '3.12'
 
       - run: pip install mkdocs-material
+
+      - name: Generate skill registry
+        run: python scripts/generate-registry.py
 
       - run: mkdocs gh-deploy --force
