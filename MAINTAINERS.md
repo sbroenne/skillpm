@@ -29,18 +29,35 @@ This guide covers one-time setup and ongoing release operations for skillpm main
 
 ## Verify the setup
 
-Push a test tag to confirm the pipeline works end-to-end:
+Create a test release to confirm the pipeline works end-to-end:
 
-```bash
-npm version prerelease --preid=rc   # creates e.g. v0.1.1-rc.0
-git push origin main --follow-tags
-```
+1. Create a release branch and bump the version:
 
-Check the [Actions tab](https://github.com/sbroenne/skillpm/actions) to verify it publishes successfully. You can unpublish the prerelease afterward:
+   ```bash
+   git checkout -b chore/test-release
+   npm version prerelease --preid=rc --no-git-tag-version
+   git add package.json package-lock.json
+   git commit -m "chore: test release"
+   git push -u origin chore/test-release
+   gh pr create --fill
+   ```
 
-```bash
-npm unpublish skillpm@0.1.1-rc.0
-```
+2. Merge the PR, then tag and push from `main`:
+
+   ```bash
+   git checkout main && git pull
+   git tag v0.1.1-rc.0
+   git push origin v0.1.1-rc.0
+   ```
+
+3. Check the [Actions tab](https://github.com/sbroenne/skillpm/actions) to verify it publishes successfully.
+
+4. Clean up:
+
+   ```bash
+   npm unpublish skillpm@0.1.1-rc.0
+   git push origin --delete v0.1.1-rc.0
+   ```
 
 ## Releasing
 
@@ -48,35 +65,39 @@ Releases are automated via GitHub Actions. When a version tag is pushed, the [re
 
 ### How to release
 
-1. **Update the version** in both `package.json` and `src/cli.ts`:
+1. **Create a release branch and bump the version:**
 
    ```bash
-   npm version patch   # or minor, or major
+   git checkout -b chore/release-0.2.0
+   npm version minor --no-git-tag-version   # or patch, or major
    ```
 
-   This updates `package.json` and creates a git commit + tag automatically.
-
-   Then update the `VERSION` constant in `src/cli.ts` to match:
+2. **Update the `VERSION` constant** in `src/cli.ts` to match:
 
    ```typescript
    const VERSION = '0.2.0';  // must match package.json
    ```
 
-   Amend the version commit if needed:
+3. **Commit, push, and merge via PR:**
 
    ```bash
-   git add src/cli.ts
-   git commit --amend --no-edit
-   git tag -f v0.2.0
+   git add -A
+   git commit -m "chore: release v0.2.0"
+   git push -u origin chore/release-0.2.0
+   gh pr create --title "chore: release v0.2.0" --body ""
    ```
 
-2. **Push the tag:**
+   Wait for CI, then squash merge.
+
+4. **Tag and push from `main`:**
 
    ```bash
-   git push origin main --follow-tags
+   git checkout main && git pull
+   git tag v0.2.0
+   git push origin v0.2.0
    ```
 
-3. **GitHub Actions does the rest:**
+5. **GitHub Actions does the rest:**
    - Runs lint, build, and tests
    - Publishes to npm with provenance
    - Creates a GitHub Release with auto-generated release notes
