@@ -1,6 +1,6 @@
 ---
 name: skillpm
-description: Manage Agent Skill packages and their dependency trees using skillpm, the package manager for Agent Skills.
+description: Manage Agent Skill packages and their dependency trees using skillpm — npm for Agent Skills.
 allowed-tools: Bash Read
 ---
 

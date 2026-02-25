@@ -1,10 +1,10 @@
-# skillpm — Agent Skill Package Manager
+# skillpm — npm for Agent Skills
 
 [![npm](https://img.shields.io/npm/v/skillpm)](https://www.npmjs.com/package/skillpm)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Docs](https://img.shields.io/badge/docs-skillpm.dev-blue)](https://skillpm.dev)
 
-**skillpm** is the package manager for [Agent Skills](https://agentskills.io). Install skills with a single command — skillpm resolves the full dependency tree, wires everything into your agent directories, and configures any required MCP servers.
+**skillpm** is npm for [Agent Skills](https://agentskills.io). Install skills with a single command — skillpm resolves the full dependency tree, wires everything into your agent directories, and configures any required MCP servers.
 
 skillpm works exactly like npm — same `package.json`, same `node_modules/`, same `package-lock.json`, same registry. skillpm only adds what npm can't do: scanning for skills, wiring them into agent directories, and configuring MCP servers.
 

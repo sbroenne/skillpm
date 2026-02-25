@@ -1,6 +1,6 @@
 # skillpm
 
-**The package manager for Agent Skills.**
+**npm for Agent Skills.**
 
 Install skills with a single command — skillpm resolves the full dependency tree, wires everything into your agent directories (Claude, Cursor, VS Code, Codex, and more), and configures any required MCP servers.
 
