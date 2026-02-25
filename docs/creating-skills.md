@@ -1,5 +1,7 @@
 # Creating Skills
 
+Skills follow the open [Agent Skills spec](https://agentskills.io/specification). skillpm adds npm packaging conventions on top.
+
 ## Package structure
 
 A skill is a standard npm package with the skill content in a `skills/<name>/` subdirectory:
@@ -120,3 +122,20 @@ skillpm publish --access public
 ```
 
 The skill directory name should be the unscoped name (e.g., `skills/my-skill/`).
+
+## Validate before publishing
+
+Use the [skills-ref](https://github.com/agentskills/agentskills/tree/main/skills-ref) validator to check your SKILL.md against the spec:
+
+```bash
+npx skills-ref validate skills/<name>
+```
+
+`skillpm publish` runs this automatically.
+
+## Resources
+
+- [Agent Skills spec](https://agentskills.io/specification) — the open standard for SKILL.md format
+- [Example skills](https://github.com/anthropics/skills) — official examples from Anthropic
+- [Skill Registry](registry.md) — browse published skills for inspiration
+- [skillpm Commands](commands.md) — full CLI reference

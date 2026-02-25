@@ -73,7 +73,7 @@ skillpm publish
 skillpm publish --access public    # for scoped packages
 ```
 
-Validates that `"agent-skill"` is present in `package.json` `keywords`, then delegates to `npm publish`. Your skill will be discoverable via [`keywords:agent-skill`](https://www.npmjs.com/search?q=keywords:agent-skill) on npmjs.org.
+Validates that `"agent-skill"` is present in `package.json` `keywords`, runs [`skills-ref validate`](https://github.com/agentskills/agentskills/tree/main/skills-ref) against the [Agent Skills spec](https://agentskills.io/specification), then delegates to `npm publish`. Your skill will appear in the [Skill Registry](registry.md) and on [npmjs.org](https://www.npmjs.com/search?q=keywords:agent-skill).
 
 ---
 

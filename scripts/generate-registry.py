@@ -142,6 +142,9 @@ Browse agent skills published on npm with the `agent-skill` keyword.
 </div>
 
 <div class="registry-pagination" id="registry-pagination"></div>
+
+!!! tip "Want to publish your own skill?"
+    See the [Creating Skills](creating-skills.md) guide for the full packaging spec, or run `skillpm init` to scaffold a new skill package in seconds. Skills follow the open [Agent Skills spec](https://agentskills.io/specification).
 """
 
     OUTPUT_PATH.write_text(md, encoding="utf-8")

@@ -45,6 +45,10 @@ When you run `skillpm install <skill>`:
 
 That's it. Agents see the full skill tree with MCP servers configured.
 
+## Browse skills
+
+Explore available skills in the [Skill Registry](registry.md), or search directly on [npmjs.org](https://www.npmjs.com/search?q=keywords:agent-skill).
+
 ## Why skillpm?
 
 The [Agent Skills spec](https://agentskills.io) defines what a skill is — but not how to publish, install, version, or share them.
@@ -57,3 +61,12 @@ The [Agent Skills spec](https://agentskills.io) defines what a skill is — but 
 | No versioning | npm semver, `package-lock.json`, reproducible installs |
 | No agent wiring | Auto-links skills into agent directories via [`skills`](https://www.npmjs.com/package/skills) |
 | No MCP server config | Collects and configures MCP servers transitively via [`add-mcp`](https://github.com/neondatabase/add-mcp) |
+
+## Create your own skill
+
+Ready to build and share a skill? See the [Creating Skills](creating-skills.md) guide — or just run:
+
+```bash
+mkdir my-skill && cd my-skill
+skillpm init
+```
