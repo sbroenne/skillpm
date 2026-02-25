@@ -15,12 +15,16 @@ my-skill/
 ├── package.json                 # npm metadata, deps, keywords: ["agent-skill"]
 ├── README.md                    # for humans on npmjs.org
 ├── LICENSE
-└── skills/
-    └── my-skill/                # spec-compliant skill directory
-        ├── SKILL.md             # skill definition (required)
-        ├── scripts/             # optional executable scripts
-        ├── references/          # optional reference docs
-        └── assets/              # optional templates/data
+├── skills/
+│   └── my-skill/                # spec-compliant skill directory
+│       ├── SKILL.md             # skill definition (required)
+│       ├── scripts/             # optional executable scripts
+│       ├── references/          # optional reference docs
+│       └── assets/              # optional templates/data
+├── agents/                      # optional custom agent definitions
+│   └── reviewer.md
+└── prompts/                     # optional prompt/instruction files
+    └── conventions.md
 ```
 
 One skill per npm package. The skill directory name must match the `name` field in SKILL.md frontmatter.
@@ -79,6 +83,62 @@ Instead of duplicating instructions, depend on other skills. A fullstack React s
 ```
 
 Each skill stays small and focused. `skillpm install fullstack-react` resolves the entire tree in one step. npm handles resolution, lockfile, audit, and caching — just like any npm package.
+
+## Bundling agents
+
+Skill packages can include custom agent definitions in an `agents/` directory. When installed, skillpm wires them into supported agent systems via [`add-agent`](https://github.com/sbroenne/add-agent).
+
+```
+my-skill/
+├── package.json
+├── skills/
+│   └── my-skill/
+│       └── SKILL.md
+└── agents/
+    └── code-reviewer.md         # agent definition
+```
+
+Agent files use YAML frontmatter (compatible with Claude Code and Cursor):
+
+```yaml
+---
+name: code-reviewer
+description: Reviews code for quality and security.
+---
+
+# Code Reviewer
+
+## When to activate
+Trigger when the user asks for code review...
+```
+
+`skillpm install` detects `agents/*.md` and runs `npx add-agent` to copy them into `.claude/agents/` and `.cursor/agents/`. `skillpm uninstall` cleans them up automatically.
+
+## Bundling prompts
+
+Skill packages can include prompt/instruction files in a `prompts/` directory. When installed, skillpm wires them into supported agent systems via [`add-prompt`](https://github.com/sbroenne/add-prompt).
+
+```
+my-skill/
+├── package.json
+├── skills/
+│   └── my-skill/
+│       └── SKILL.md
+└── prompts/
+    └── conventions.md           # prompt/instruction file
+```
+
+Prompt files are distributed to agents using two strategies:
+
+| Agent System | Method |
+|-------------|--------|
+| GitHub Copilot (`.github/instructions/`) | File copy |
+| Cursor (`.cursor/rules/`) | File copy |
+| Claude Code (`CLAUDE.md`) | Section markers |
+| Codex (`AGENTS.md`) | Section markers |
+| Gemini CLI (`GEMINI.md`) | Section markers |
+
+For single-file targets like `CLAUDE.md`, prompts are injected using HTML comment markers that allow clean updates and removal without disturbing existing content.
 
 ## Declaring MCP servers
 
