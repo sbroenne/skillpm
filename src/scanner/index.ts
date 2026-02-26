@@ -4,19 +4,6 @@ import { readPackageJson, parseSkillpmField } from '../manifest/index.js';
 import type { SkillInfo } from '../manifest/schema.js';
 
 /**
- * Scan a directory for .md files (used for agents/ and prompts/ dirs).
- */
-async function scanMdFiles(dir: string): Promise<string[]> {
-  let entries: string[];
-  try {
-    entries = await readdir(dir);
-  } catch {
-    return [];
-  }
-  return entries.filter((e) => e.endsWith('.md')).map((e) => join(dir, e));
-}
-
-/**
  * Scan node_modules/ for packages that contain a skills/<name>/SKILL.md file.
  * Returns metadata for each discovered skill package.
  */
@@ -58,9 +45,22 @@ export async function scanNodeModules(cwd: string): Promise<SkillInfo[]> {
   return skills;
 }
 
+async function hasDir(dir: string): Promise<boolean> {
+  try {
+    await access(dir);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
   const pkg = await readPackageJson(pkgDir);
   if (!pkg) return null;
+
+  // Check for wiring/ directory
+  const wiringDir = join(pkgDir, 'wiring');
+  const hasWiring = await hasDir(wiringDir);
 
   // Preferred: look for skills/*/SKILL.md
   const skillsDir = join(pkgDir, 'skills');
@@ -80,16 +80,13 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
     }
 
     const skillpm = parseSkillpmField(pkg);
-    const agents = await scanMdFiles(join(pkgDir, 'agents'));
-    const prompts = await scanMdFiles(join(pkgDir, 'prompts'));
     return {
       name: pkg.name,
       version: pkg.version,
       path: pkgDir,
       skillDir,
       mcpServers: skillpm?.mcpServers ?? [],
-      agents,
-      prompts,
+      wiringDir: hasWiring ? wiringDir : undefined,
     };
   }
 
@@ -101,8 +98,6 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
   }
 
   const skillpm = parseSkillpmField(pkg);
-  const agents = await scanMdFiles(join(pkgDir, 'agents'));
-  const prompts = await scanMdFiles(join(pkgDir, 'prompts'));
   return {
     name: pkg.name,
     version: pkg.version,
@@ -110,8 +105,7 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
     skillDir: pkgDir,
     mcpServers: skillpm?.mcpServers ?? [],
     legacy: true,
-    agents,
-    prompts,
+    wiringDir: hasWiring ? wiringDir : undefined,
   };
 }
 

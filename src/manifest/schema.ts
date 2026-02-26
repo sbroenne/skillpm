@@ -26,8 +26,6 @@ export interface SkillInfo {
   mcpServers: string[];
   /** True if SKILL.md is at package root instead of skills/<name>/ */
   legacy?: boolean;
-  /** Paths to agent definition .md files in agents/ */
-  agents: string[];
-  /** Paths to prompt/instruction .md files in prompts/ */
-  prompts: string[];
+  /** Path to wiring/ directory if present (mirrors workspace layout) */
+  wiringDir?: string;
 }

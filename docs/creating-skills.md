@@ -21,10 +21,16 @@ my-skill/
 │       ├── scripts/             # optional executable scripts
 │       ├── references/          # optional reference docs
 │       └── assets/              # optional templates/data
-├── agents/                      # optional custom agent definitions
-│   └── reviewer.md
-└── prompts/                     # optional prompt/instruction files
-    └── conventions.md
+└── wiring/                      # optional — mirrors workspace layout
+    ├── .claude/
+    │   ├── agents/reviewer.md
+    │   └── rules/conventions.md
+    ├── .cursor/
+    │   ├── agents/reviewer.md
+    │   └── rules/conventions.md
+    └── .github/
+        ├── agents/reviewer.md
+        └── instructions/conventions.instructions.md
 ```
 
 One skill per npm package. The skill directory name must match the `name` field in SKILL.md frontmatter.
@@ -84,39 +90,9 @@ Instead of duplicating instructions, depend on other skills. A fullstack React s
 
 Each skill stays small and focused. `skillpm install fullstack-react` resolves the entire tree in one step. npm handles resolution, lockfile, audit, and caching — just like any npm package.
 
-## Bundling agents
+## Wiring agents, rules, and prompts
 
-Skill packages can include custom agent definitions in an `agents/` directory. When installed, skillpm wires them into supported agent systems via [`add-agent`](https://github.com/sbroenne/add-agent).
-
-```
-my-skill/
-├── package.json
-├── skills/
-│   └── my-skill/
-│       └── SKILL.md
-└── agents/
-    └── code-reviewer.md         # agent definition
-```
-
-Agent files use YAML frontmatter (compatible with Claude Code and Cursor):
-
-```yaml
----
-name: code-reviewer
-description: Reviews code for quality and security.
----
-
-# Code Reviewer
-
-## When to activate
-Trigger when the user asks for code review...
-```
-
-`skillpm install` detects `agents/*.md` and runs `npx add-agent` to copy them into `.claude/agents/` and `.cursor/agents/`. `skillpm uninstall` cleans them up automatically.
-
-## Bundling prompts
-
-Skill packages can include prompt/instruction files in a `prompts/` directory. When installed, skillpm wires them into supported agent systems via [`add-prompt`](https://github.com/sbroenne/add-prompt).
+Skill packages can include a `wiring/` directory that mirrors the target workspace layout. skillpm copies these files directly — no transformation, no external tools. Each agent system gets files in its native format.
 
 ```
 my-skill/
@@ -124,21 +100,55 @@ my-skill/
 ├── skills/
 │   └── my-skill/
 │       └── SKILL.md
-└── prompts/
-    └── conventions.md           # prompt/instruction file
+└── wiring/
+    ├── .claude/
+    │   ├── agents/reviewer.md       # Claude subagent
+    │   └── rules/conventions.md     # Claude rules
+    ├── .cursor/
+    │   ├── agents/reviewer.md       # Cursor agent
+    │   └── rules/conventions.md     # Cursor rules
+    └── .github/
+        ├── agents/reviewer.md       # Copilot agent
+        └── instructions/conventions.instructions.md
 ```
 
-Prompt files are distributed to agents using two strategies:
+### How it works
 
-| Agent System | Method |
-|-------------|--------|
-| GitHub Copilot (`.github/instructions/`) | File copy |
-| Cursor (`.cursor/rules/`) | File copy |
-| Claude Code (`CLAUDE.md`) | Section markers |
-| Codex (`AGENTS.md`) | Section markers |
-| Gemini CLI (`GEMINI.md`) | Section markers |
+On `skillpm install`, files from `wiring/` are copied to the workspace root with an auto-prefix to prevent conflicts between skills:
 
-For single-file targets like `CLAUDE.md`, prompts are injected using HTML comment markers that allow clean updates and removal without disturbing existing content.
+| Source | Destination |
+|--------|-------------|
+| `wiring/.claude/agents/reviewer.md` | `.claude/agents/my-skill--reviewer.md` |
+| `wiring/.cursor/rules/conventions.md` | `.cursor/rules/my-skill--conventions.md` |
+| `wiring/.github/instructions/help.instructions.md` | `.github/instructions/my-skill--help.instructions.md` |
+
+On `skillpm uninstall`, all copied files are removed automatically using the manifest at `.skillpm/manifest.json`.
+
+### Supported targets
+
+Only include targets your skill supports — you don't need to support every agent system.
+
+| Directory | Agent System |
+|-----------|-------------|
+| `.claude/agents/` | Claude Code subagents |
+| `.claude/rules/` | Claude Code rules |
+| `.cursor/agents/` | Cursor agents |
+| `.cursor/rules/` | Cursor rules |
+| `.github/agents/` | GitHub Copilot agents |
+| `.github/instructions/` | GitHub Copilot instructions |
+
+### Including dotfiles in npm packages
+
+Since `wiring/` contains directories starting with `.`, you must list them in your `package.json` `files` field:
+
+```json
+{
+  "files": [
+    "skills/",
+    "wiring/"
+  ]
+}
+```
 
 ## Declaring MCP servers
 

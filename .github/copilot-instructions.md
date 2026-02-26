@@ -34,12 +34,22 @@ my-skill/                        # npm package root
 ├── package.json                 # npm metadata, deps, skillpm.mcpServers, keywords: ["agent-skill"]
 ├── README.md                    # for humans on npmjs.org
 ├── LICENSE
-└── skills/
-    └── my-skill/                # spec-compliant skill directory
-        ├── SKILL.md             # The skill definition (YAML frontmatter + Markdown body)
-        ├── scripts/             # Optional: executable code the skill references
-        ├── references/          # Optional: additional docs/resources
-        └── assets/              # Optional: templates, images, data files
+├── skills/
+│   └── my-skill/                # spec-compliant skill directory
+│       ├── SKILL.md             # The skill definition (YAML frontmatter + Markdown body)
+│       ├── scripts/             # Optional: executable code the skill references
+│       ├── references/          # Optional: additional docs/resources
+│       └── assets/              # Optional: templates, images, data files
+└── wiring/                      # Optional: mirrors workspace layout for agent/rule/prompt files
+    ├── .claude/
+    │   ├── agents/reviewer.md
+    │   └── rules/conventions.md
+    ├── .cursor/
+    │   ├── agents/reviewer.md
+    │   └── rules/conventions.md
+    └── .github/
+        ├── agents/reviewer.md
+        └── instructions/conventions.instructions.md
 ```
 
 One skill per npm package. The skill directory name must match the `name` field in SKILL.md frontmatter. All skill packages must include `"agent-skill"` in `package.json` `keywords` for discoverability on npmjs.org. Use `git+https://` prefix for `repository.url` in `package.json` (npm requires this format).
@@ -105,7 +115,8 @@ When a user runs `skillpm install refactor-react`:
 3. For each skill found, skillpm calls `npx skills add ./node_modules/<package>/skills/<name>/` to link it into agent directories
 4. skillpm reads the `skillpm` field from each installed skill's `package.json` (transitive walk):
    - `skillpm.mcpServers[]` → shells out to `npx add-mcp <source>` for each
-5. Done — agents see the full skill tree with MCP servers configured
+5. For each skill with a `wiring/` directory, skillpm copies files to the workspace root with package-name prefixed filenames (tracked in `.skillpm/manifest.json`)
+6. Done — agents see the full skill tree with MCP servers configured
 
 ### Core CLI commands
 
@@ -138,7 +149,7 @@ skillpm/
 │   │   ├── sync.ts           # Re-run scan/link/MCP config without reinstalling
 │   │   └── mcp.ts            # Passthrough to add-mcp
 │   ├── scanner/              # Scan node_modules/ for packages containing skills/*/SKILL.md
-│   ├── postinstall/          # Walk tree, collect skillpm.mcpServers fields, delegate to add-mcp
+│   ├── wiring/               # Copy wiring/ files to workspace, manifest tracking
 │   ├── manifest/             # package.json `skillpm` field parsing + SKILL.md parsing
 │   ├── config/               # Config loading (supported agents, preferences)
 │   └── utils/                # Shared helpers (logging, errors, child_process wrappers)
