@@ -198,7 +198,7 @@ npm run lint          # lint
 - Use **ESLint** and **Prettier** for linting and formatting.
 - One file per CLI command under `src/commands/`.
 - Delegate to npm for all package management — do not reimplement registry, resolution, or caching.
-- skillpm's only custom code is: scanning `node_modules/` for `skills/*/SKILL.md`, reading `skillpm.mcpServers` fields, and orchestrating the tools above.
+- skillpm's only custom code is: scanning `node_modules/` for `skills/*/SKILL.md`, reading `skillpm.mcpServers` fields, copying `configs/` files into the workspace, and orchestrating the tools above.
 - Shell out to `skills` CLI (for agent-directory linking), `add-mcp` CLI (for MCP config), and `skills-ref` CLI (for spec validation).
 - Use **zod** for validating the `skillpm` field schema in `package.json`.
 - Use **gray-matter** for parsing YAML frontmatter from SKILL.md files.
