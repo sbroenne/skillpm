@@ -1,6 +1,6 @@
 import { npm, npx, log } from '../utils/index.js';
 import { scanNodeModules, collectMcpServers } from '../scanner/index.js';
-import { copyWiring } from '../wiring/index.js';
+import { copyConfigs } from '../configs/index.js';
 
 export async function install(args: string[], cwd: string): Promise<void> {
   // Reject global installs — skillpm is workspace-only
@@ -71,16 +71,16 @@ export async function wireSkills(cwd: string): Promise<void> {
     }
   }
 
-  // Copy wiring/ files (agents, prompts, rules) into workspace
+  // Copy configs/ files (agents, prompts, rules) into workspace
   for (const skill of skills) {
-    if (skill.wiringDir) {
-      log.info(`Wiring files from ${log.skill(skill.name, skill.version)}`);
+    if (skill.configsDir) {
+      log.info(`Copying config files from ${log.skill(skill.name, skill.version)}`);
       try {
-        const copied = await copyWiring(skill.wiringDir, cwd, skill.name);
-        log.success(`Wired ${copied.length} file(s) from ${skill.name}`);
+        const copied = await copyConfigs(skill.configsDir, cwd, skill.name);
+        log.success(`Copied ${copied.length} config file(s) from ${skill.name}`);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
-        log.warn(`Failed to wire files from ${skill.name}: ${msg}`);
+        log.warn(`Failed to copy config files from ${skill.name}: ${msg}`);
       }
     }
   }

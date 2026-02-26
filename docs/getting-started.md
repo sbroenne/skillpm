@@ -1,5 +1,5 @@
 ---
-description: Install skillpm and start using agent skills in your projects. Works with npx or as a global install.
+description: Install skillpm and start using agent skills in your projects.
 ---
 
 # Getting Started
@@ -12,11 +12,13 @@ You can use skillpm directly with `npx` (no install required):
 npx skillpm install <skill-name>
 ```
 
-Or install globally for convenience:
+Or install the CLI globally:
 
 ```bash
 npm install -g skillpm
 ```
+
+> **Note:** Skills themselves are always workspace-local (per-project). The `-g` flag above installs the `skillpm` CLI tool globally — not skills.
 
 Requires Node.js 18 or later.
 

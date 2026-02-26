@@ -2,15 +2,15 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtemp, mkdir, writeFile, readFile, rm, access } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { copyWiring, removeWiring } from './index.js';
+import { copyConfigs, removeConfigs } from './index.js';
 
-describe('copyWiring', () => {
+describe('copyConfigs', () => {
   let cwd: string;
-  let wiringDir: string;
+  let configsDir: string;
 
   beforeEach(async () => {
-    cwd = await mkdtemp(join(tmpdir(), 'skillpm-wiring-'));
-    wiringDir = join(cwd, 'source-wiring');
+    cwd = await mkdtemp(join(tmpdir(), 'skillpm-configs-'));
+    configsDir = join(cwd, 'source-configs');
   });
 
   afterEach(async () => {
@@ -18,10 +18,10 @@ describe('copyWiring', () => {
   });
 
   it('copies files with package name prefix', async () => {
-    await mkdir(join(wiringDir, '.claude', 'agents'), { recursive: true });
-    await writeFile(join(wiringDir, '.claude', 'agents', 'reviewer.md'), '# Reviewer');
+    await mkdir(join(configsDir, '.claude', 'agents'), { recursive: true });
+    await writeFile(join(configsDir, '.claude', 'agents', 'reviewer.md'), '# Reviewer');
 
-    const copied = await copyWiring(wiringDir, cwd, 'my-skill');
+    const copied = await copyConfigs(configsDir, cwd, 'my-skill');
 
     expect(copied).toEqual(['.claude/agents/my-skill--reviewer.md']);
     const content = await readFile(join(cwd, '.claude', 'agents', 'my-skill--reviewer.md'), 'utf-8');
@@ -29,14 +29,14 @@ describe('copyWiring', () => {
   });
 
   it('handles multiple target directories', async () => {
-    await mkdir(join(wiringDir, '.claude', 'agents'), { recursive: true });
-    await mkdir(join(wiringDir, '.cursor', 'rules'), { recursive: true });
-    await mkdir(join(wiringDir, '.github', 'instructions'), { recursive: true });
-    await writeFile(join(wiringDir, '.claude', 'agents', 'bot.md'), 'claude agent');
-    await writeFile(join(wiringDir, '.cursor', 'rules', 'style.md'), 'cursor rule');
-    await writeFile(join(wiringDir, '.github', 'instructions', 'help.instructions.md'), 'copilot');
+    await mkdir(join(configsDir, '.claude', 'agents'), { recursive: true });
+    await mkdir(join(configsDir, '.cursor', 'rules'), { recursive: true });
+    await mkdir(join(configsDir, '.github', 'instructions'), { recursive: true });
+    await writeFile(join(configsDir, '.claude', 'agents', 'bot.md'), 'claude agent');
+    await writeFile(join(configsDir, '.cursor', 'rules', 'style.md'), 'cursor rule');
+    await writeFile(join(configsDir, '.github', 'instructions', 'help.instructions.md'), 'copilot');
 
-    const copied = await copyWiring(wiringDir, cwd, 'pkg');
+    const copied = await copyConfigs(configsDir, cwd, 'pkg');
 
     expect(copied).toHaveLength(3);
     expect(copied).toContain('.claude/agents/pkg--bot.md');
@@ -45,42 +45,42 @@ describe('copyWiring', () => {
   });
 
   it('writes manifest with copied files', async () => {
-    await mkdir(join(wiringDir, '.claude', 'agents'), { recursive: true });
-    await writeFile(join(wiringDir, '.claude', 'agents', 'a.md'), 'agent');
+    await mkdir(join(configsDir, '.claude', 'agents'), { recursive: true });
+    await writeFile(join(configsDir, '.claude', 'agents', 'a.md'), 'agent');
 
-    await copyWiring(wiringDir, cwd, 'test-pkg');
+    await copyConfigs(configsDir, cwd, 'test-pkg');
 
     const manifest = JSON.parse(await readFile(join(cwd, '.skillpm', 'manifest.json'), 'utf-8'));
     expect(manifest['test-pkg']).toEqual(['.claude/agents/test-pkg--a.md']);
   });
 
   it('updates manifest for multiple packages', async () => {
-    const wiring1 = join(cwd, 'wiring1');
-    const wiring2 = join(cwd, 'wiring2');
-    await mkdir(join(wiring1, '.claude', 'agents'), { recursive: true });
-    await mkdir(join(wiring2, '.cursor', 'rules'), { recursive: true });
-    await writeFile(join(wiring1, '.claude', 'agents', 'a.md'), 'a');
-    await writeFile(join(wiring2, '.cursor', 'rules', 'b.md'), 'b');
+    const configs1 = join(cwd, 'configs1');
+    const configs2 = join(cwd, 'configs2');
+    await mkdir(join(configs1, '.claude', 'agents'), { recursive: true });
+    await mkdir(join(configs2, '.cursor', 'rules'), { recursive: true });
+    await writeFile(join(configs1, '.claude', 'agents', 'a.md'), 'a');
+    await writeFile(join(configs2, '.cursor', 'rules', 'b.md'), 'b');
 
-    await copyWiring(wiring1, cwd, 'pkg-a');
-    await copyWiring(wiring2, cwd, 'pkg-b');
+    await copyConfigs(configs1, cwd, 'pkg-a');
+    await copyConfigs(configs2, cwd, 'pkg-b');
 
     const manifest = JSON.parse(await readFile(join(cwd, '.skillpm', 'manifest.json'), 'utf-8'));
     expect(manifest['pkg-a']).toEqual(['.claude/agents/pkg-a--a.md']);
     expect(manifest['pkg-b']).toEqual(['.cursor/rules/pkg-b--b.md']);
   });
 
-  it('returns empty array for empty wiring dir', async () => {
-    await mkdir(wiringDir, { recursive: true });
-    const copied = await copyWiring(wiringDir, cwd, 'empty-pkg');
+  it('returns empty array for empty configs dir', async () => {
+    await mkdir(configsDir, { recursive: true });
+    const copied = await copyConfigs(configsDir, cwd, 'empty-pkg');
     expect(copied).toEqual([]);
   });
 
   it('handles scoped package names in prefix', async () => {
-    await mkdir(join(wiringDir, '.claude', 'agents'), { recursive: true });
-    await writeFile(join(wiringDir, '.claude', 'agents', 'bot.md'), 'agent');
+    await mkdir(join(configsDir, '.claude', 'agents'), { recursive: true });
+    await writeFile(join(configsDir, '.claude', 'agents', 'bot.md'), 'agent');
 
-    const copied = await copyWiring(wiringDir, cwd, '@org/my-skill');
+    const copied = await copyConfigs(configsDir, cwd, '@org/my-skill');
 
     expect(copied).toEqual(['.claude/agents/@org/my-skill--bot.md']);
     const content = await readFile(join(cwd, '.claude', 'agents', '@org/my-skill--bot.md'), 'utf-8');
@@ -88,11 +88,11 @@ describe('copyWiring', () => {
   });
 });
 
-describe('removeWiring', () => {
+describe('removeConfigs', () => {
   let cwd: string;
 
   beforeEach(async () => {
-    cwd = await mkdtemp(join(tmpdir(), 'skillpm-wiring-'));
+    cwd = await mkdtemp(join(tmpdir(), 'skillpm-configs-'));
   });
 
   afterEach(async () => {
@@ -109,7 +109,7 @@ describe('removeWiring', () => {
       JSON.stringify({ 'my-skill': ['.claude/agents/my-skill--reviewer.md'] }),
     );
 
-    const removed = await removeWiring(cwd, 'my-skill');
+    const removed = await removeConfigs(cwd, 'my-skill');
 
     expect(removed).toEqual(['.claude/agents/my-skill--reviewer.md']);
     await expect(access(join(cwd, '.claude', 'agents', 'my-skill--reviewer.md'))).rejects.toThrow();
@@ -128,7 +128,7 @@ describe('removeWiring', () => {
     await mkdir(join(cwd, '.claude', 'agents'), { recursive: true });
     await writeFile(join(cwd, '.claude', 'agents', 'pkg-a--a.md'), 'a');
 
-    await removeWiring(cwd, 'pkg-a');
+    await removeConfigs(cwd, 'pkg-a');
 
     const manifest = JSON.parse(await readFile(join(cwd, '.skillpm', 'manifest.json'), 'utf-8'));
     expect(manifest).not.toHaveProperty('pkg-a');
@@ -136,7 +136,7 @@ describe('removeWiring', () => {
   });
 
   it('returns empty array when package not in manifest', async () => {
-    const removed = await removeWiring(cwd, 'nonexistent');
+    const removed = await removeConfigs(cwd, 'nonexistent');
     expect(removed).toEqual([]);
   });
 
@@ -148,16 +148,16 @@ describe('removeWiring', () => {
     );
 
     // File doesn't exist — should not throw
-    const removed = await removeWiring(cwd, 'ghost');
+    const removed = await removeConfigs(cwd, 'ghost');
     expect(removed).toEqual([]);
   });
 });
 
-describe('copyWiring + removeWiring roundtrip', () => {
+describe('copyConfigs + removeConfigs roundtrip', () => {
   let cwd: string;
 
   beforeEach(async () => {
-    cwd = await mkdtemp(join(tmpdir(), 'skillpm-wiring-'));
+    cwd = await mkdtemp(join(tmpdir(), 'skillpm-configs-'));
   });
 
   afterEach(async () => {
@@ -165,17 +165,17 @@ describe('copyWiring + removeWiring roundtrip', () => {
   });
 
   it('install then uninstall leaves no files behind', async () => {
-    const wiringDir = join(cwd, 'source');
-    await mkdir(join(wiringDir, '.claude', 'agents'), { recursive: true });
-    await mkdir(join(wiringDir, '.cursor', 'rules'), { recursive: true });
-    await writeFile(join(wiringDir, '.claude', 'agents', 'bot.md'), 'agent');
-    await writeFile(join(wiringDir, '.cursor', 'rules', 'style.md'), 'rule');
+    const configsDir = join(cwd, 'source');
+    await mkdir(join(configsDir, '.claude', 'agents'), { recursive: true });
+    await mkdir(join(configsDir, '.cursor', 'rules'), { recursive: true });
+    await writeFile(join(configsDir, '.claude', 'agents', 'bot.md'), 'agent');
+    await writeFile(join(configsDir, '.cursor', 'rules', 'style.md'), 'rule');
 
-    await copyWiring(wiringDir, cwd, 'my-skill');
+    await copyConfigs(configsDir, cwd, 'my-skill');
     // Verify files exist
     await expect(readFile(join(cwd, '.claude', 'agents', 'my-skill--bot.md'), 'utf-8')).resolves.toBe('agent');
 
-    const removed = await removeWiring(cwd, 'my-skill');
+    const removed = await removeConfigs(cwd, 'my-skill');
     expect(removed).toHaveLength(2);
 
     // Verify files are gone

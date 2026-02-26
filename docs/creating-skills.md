@@ -21,7 +21,7 @@ my-skill/
 │       ├── scripts/             # optional executable scripts
 │       ├── references/          # optional reference docs
 │       └── assets/              # optional templates/data
-└── wiring/                      # optional — mirrors workspace layout
+└── configs/                      # optional — mirrors workspace layout
     ├── .claude/
     │   ├── agents/reviewer.md
     │   └── rules/conventions.md
@@ -90,9 +90,9 @@ Instead of duplicating instructions, depend on other skills. A fullstack React s
 
 Each skill stays small and focused. `skillpm install fullstack-react` resolves the entire tree in one step. npm handles resolution, lockfile, audit, and caching — just like any npm package.
 
-## Wiring agents, rules, and prompts
+## Bundling agent configs, rules, and prompts
 
-Skill packages can include a `wiring/` directory that mirrors the target workspace layout. skillpm copies these files directly — no transformation, no external tools. Each agent system gets files in its native format.
+Skill packages can include a `configs/` directory that mirrors the target workspace layout. skillpm copies these files directly — no transformation, no external tools. Each agent system gets files in its native format.
 
 ```
 my-skill/
@@ -100,7 +100,7 @@ my-skill/
 ├── skills/
 │   └── my-skill/
 │       └── SKILL.md
-└── wiring/
+└── configs/
     ├── .claude/
     │   ├── agents/reviewer.md       # Claude subagent
     │   └── rules/conventions.md     # Claude rules
@@ -114,13 +114,13 @@ my-skill/
 
 ### How it works
 
-On `skillpm install`, files from `wiring/` are copied to the workspace root with an auto-prefix to prevent conflicts between skills:
+On `skillpm install`, files from `configs/` are copied to the workspace root with an auto-prefix to prevent conflicts between skills:
 
 | Source | Destination |
 |--------|-------------|
-| `wiring/.claude/agents/reviewer.md` | `.claude/agents/my-skill--reviewer.md` |
-| `wiring/.cursor/rules/conventions.md` | `.cursor/rules/my-skill--conventions.md` |
-| `wiring/.github/instructions/help.instructions.md` | `.github/instructions/my-skill--help.instructions.md` |
+| `configs/.claude/agents/reviewer.md` | `.claude/agents/my-skill--reviewer.md` |
+| `configs/.cursor/rules/conventions.md` | `.cursor/rules/my-skill--conventions.md` |
+| `configs/.github/instructions/help.instructions.md` | `.github/instructions/my-skill--help.instructions.md` |
 
 On `skillpm uninstall`, all copied files are removed automatically using the manifest at `.skillpm/manifest.json`.
 
@@ -139,13 +139,13 @@ Only include targets your skill supports — you don't need to support every age
 
 ### Including dotfiles in npm packages
 
-Since `wiring/` contains directories starting with `.`, you must list them in your `package.json` `files` field:
+Since `configs/` contains directories starting with `.`, you must list them in your `package.json` `files` field:
 
 ```json
 {
   "files": [
     "skills/",
-    "wiring/"
+    "configs/"
   ]
 }
 ```

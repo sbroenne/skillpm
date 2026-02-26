@@ -58,9 +58,9 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
   const pkg = await readPackageJson(pkgDir);
   if (!pkg) return null;
 
-  // Check for wiring/ directory
-  const wiringDir = join(pkgDir, 'wiring');
-  const hasWiring = await hasDir(wiringDir);
+  // Check for configs/ directory
+  const configsDir = join(pkgDir, 'configs');
+  const hasConfigs = await hasDir(configsDir);
 
   // Preferred: look for skills/*/SKILL.md
   const skillsDir = join(pkgDir, 'skills');
@@ -86,7 +86,7 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
       path: pkgDir,
       skillDir,
       mcpServers: skillpm?.mcpServers ?? [],
-      wiringDir: hasWiring ? wiringDir : undefined,
+      configsDir: hasConfigs ? configsDir : undefined,
     };
   }
 
@@ -105,7 +105,7 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
     skillDir: pkgDir,
     mcpServers: skillpm?.mcpServers ?? [],
     legacy: true,
-    wiringDir: hasWiring ? wiringDir : undefined,
+    configsDir: hasConfigs ? configsDir : undefined,
   };
 }
 

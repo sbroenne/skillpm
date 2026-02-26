@@ -1,6 +1,6 @@
 import { npm, log } from '../utils/index.js';
 import { wireSkills } from './install.js';
-import { removeWiring } from '../wiring/index.js';
+import { removeConfigs } from '../configs/index.js';
 
 export async function uninstall(args: string[], cwd: string): Promise<void> {
   if (args.length === 0) {
@@ -11,12 +11,12 @@ export async function uninstall(args: string[], cwd: string): Promise<void> {
   // Clean up wired files before npm uninstall
   for (const pkg of args) {
     try {
-      const removed = await removeWiring(cwd, pkg);
+      const removed = await removeConfigs(cwd, pkg);
       if (removed.length > 0) {
-        log.info(`Removed ${removed.length} wired file(s) from ${pkg}`);
+        log.info(`Removed ${removed.length} config file(s) from ${pkg}`);
       }
     } catch {
-      // Ignore — package may not have had wiring
+      // Ignore — package may not have had configs
     }
   }
 

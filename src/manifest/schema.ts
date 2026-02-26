@@ -26,6 +26,6 @@ export interface SkillInfo {
   mcpServers: string[];
   /** True if SKILL.md is at package root instead of skills/<name>/ */
   legacy?: boolean;
-  /** Path to wiring/ directory if present (mirrors workspace layout) */
-  wiringDir?: string;
+  /** Path to configs/ directory if present (mirrors workspace layout) */
+  configsDir?: string;
 }

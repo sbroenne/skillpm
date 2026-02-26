@@ -24,7 +24,7 @@ async function createTmpDir(): Promise<string> {
 async function setupSkillPackage(
   nodeModulesDir: string,
   name: string,
-  opts?: { wiring?: Record<string, string> },
+  opts?: { configs: Record<string, string> },
 ): Promise<void> {
   const pkgDir = join(nodeModulesDir, name);
   const skillDir = join(pkgDir, 'skills', name);
@@ -37,9 +37,9 @@ async function setupSkillPackage(
     join(skillDir, 'SKILL.md'),
     `---\nname: ${name}\ndescription: Test\n---\n# ${name}\n`,
   );
-  if (opts?.wiring) {
-    for (const [relPath, content] of Object.entries(opts.wiring)) {
-      const fullPath = join(pkgDir, 'wiring', relPath);
+  if (opts?.configs) {
+    for (const [relPath, content] of Object.entries(opts.configs)) {
+      const fullPath = join(pkgDir, 'configs', relPath);
       await mkdir(join(fullPath, '..'), { recursive: true });
       await writeFile(fullPath, content);
     }
@@ -69,9 +69,9 @@ describe('wireSkills', () => {
     expect(skillsAddCall![1]).toEqual({ cwd });
   });
 
-  it('copies wiring files with package name prefix', async () => {
+  it('copies config files with package name prefix', async () => {
     await setupSkillPackage(join(cwd, 'node_modules'), 'my-skill', {
-      wiring: {
+      configs: {
         '.claude/agents/reviewer.md': '# Reviewer agent',
         '.cursor/rules/conventions.md': '# Conventions',
       },
@@ -87,7 +87,7 @@ describe('wireSkills', () => {
 
   it('writes manifest tracking copied files', async () => {
     await setupSkillPackage(join(cwd, 'node_modules'), 'my-skill', {
-      wiring: { '.claude/agents/reviewer.md': '# Reviewer' },
+      configs: { '.claude/agents/reviewer.md': '# Reviewer' },
     });
     await wireSkills(cwd);
 
@@ -95,7 +95,7 @@ describe('wireSkills', () => {
     expect(manifest['my-skill']).toEqual(['.claude/agents/my-skill--reviewer.md']);
   });
 
-  it('skips wiring for skills without wiring/ directory', async () => {
+  it('skips configs for skills without configs/ directory', async () => {
     await setupSkillPackage(join(cwd, 'node_modules'), 'plain-skill');
     await wireSkills(cwd);
 

@@ -40,7 +40,7 @@ my-skill/                        # npm package root
 │       ├── scripts/             # Optional: executable code the skill references
 │       ├── references/          # Optional: additional docs/resources
 │       └── assets/              # Optional: templates, images, data files
-└── wiring/                      # Optional: mirrors workspace layout for agent/rule/prompt files
+└── configs/                      # Optional: mirrors workspace layout for agent/rule/prompt files
     ├── .claude/
     │   ├── agents/reviewer.md
     │   └── rules/conventions.md
@@ -104,6 +104,20 @@ allowed-tools: Bash Read      # optional, space-delimited tool whitelist
 
 Version comes from `package.json` — do not duplicate it in SKILL.md metadata.
 
+### Agent system terminology
+
+Each agent system uses different names for the same concepts. skillpm abstracts over all of them:
+
+| Agent system | "Agents" term | Agent directory | "Prompts/Rules" term | Prompt directory |
+|---|---|---|---|---|
+| **Claude Code** | Subagents | `.claude/agents/*.md` | Rules / CLAUDE.md | `.claude/rules/*.md` |
+| **Cursor** | Custom agents | `.cursor/agents/*.md` | Rules | `.cursor/rules/*.md` |
+| **GitHub Copilot** | Custom agents | `.github/agents/*.md` | Instructions | `.github/instructions/*.md` |
+| **Codex** | Agents | `AGENTS.md` (sections) | — | `AGENTS.md` (sections) |
+| **Gemini** | — | `GEMINI.md` (sections) | — | `GEMINI.md` (sections) |
+
+Skills are always per-workspace (backed by `package.json` and lockfile). Global skill installs (`-g`) are not supported — use `npx skills add <path>` for global skills.
+
 ## How skillpm works
 
 ### Install flow
@@ -115,7 +129,7 @@ When a user runs `skillpm install refactor-react`:
 3. For each skill found, skillpm calls `npx skills add ./node_modules/<package>/skills/<name>/` to link it into agent directories
 4. skillpm reads the `skillpm` field from each installed skill's `package.json` (transitive walk):
    - `skillpm.mcpServers[]` → shells out to `npx add-mcp <source>` for each
-5. For each skill with a `wiring/` directory, skillpm copies files to the workspace root with package-name prefixed filenames (tracked in `.skillpm/manifest.json`)
+5. For each skill with a `configs/` directory, skillpm copies files to the workspace root with package-name prefixed filenames (tracked in `.skillpm/manifest.json`)
 6. Done — agents see the full skill tree with MCP servers configured
 
 ### Core CLI commands
@@ -149,7 +163,7 @@ skillpm/
 │   │   ├── sync.ts           # Re-run scan/link/MCP config without reinstalling
 │   │   └── mcp.ts            # Passthrough to add-mcp
 │   ├── scanner/              # Scan node_modules/ for packages containing skills/*/SKILL.md
-│   ├── wiring/               # Copy wiring/ files to workspace, manifest tracking
+│   ├── configs/               # Copy configs/ files to workspace, manifest tracking
 │   ├── manifest/             # package.json `skillpm` field parsing + SKILL.md parsing
 │   ├── config/               # Config loading (supported agents, preferences)
 │   └── utils/                # Shared helpers (logging, errors, child_process wrappers)

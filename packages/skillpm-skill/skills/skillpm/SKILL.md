@@ -24,6 +24,7 @@ Use this skill when the user wants to:
 - **One skill per npm package.** The skill lives in `skills/<name>/SKILL.md` inside the package.
 - **Transitive dependency resolution.** skillpm walks the full dependency tree to discover all skills and MCP server requirements.
 - **Agent directory wiring.** skillpm uses the `skills` CLI to link installed skills into 37+ agent directories (Claude, Cursor, VS Code, Codex, Gemini CLI, etc.).
+- **Config files.** Skills can include a `configs/` directory that mirrors the workspace layout. skillpm copies these files (agents, rules, prompts) directly into the workspace with package-name prefixes to prevent conflicts.
 - **MCP server configuration.** Skills can declare MCP servers in `package.json` under `skillpm.mcpServers[]`. skillpm configures them via `add-mcp`.
 
 ## Commands
@@ -37,7 +38,7 @@ npx skillpm install <skill-name>
 # Aliases: skillpm i
 ```
 
-This runs `npm install`, scans `node_modules/` for skill packages, links them into agent directories, and configures any required MCP servers.
+This runs `npm install`, scans `node_modules/` for skill packages, links them into agent directories, copies config files, and configures any required MCP servers.
 
 ### Install all dependencies
 
@@ -103,12 +104,22 @@ my-skill/
 ├── package.json                 # keywords: ["agent-skill"], dependencies, skillpm.mcpServers
 ├── README.md
 ├── LICENSE
-└── skills/
-    └── my-skill/
-        ├── SKILL.md             # Skill definition (YAML frontmatter + Markdown body)
-        ├── scripts/             # Optional executable scripts
-        ├── references/          # Optional reference docs
-        └── assets/              # Optional templates/data
+├── skills/
+│   └── my-skill/
+│       ├── SKILL.md             # Skill definition (YAML frontmatter + Markdown body)
+│       ├── scripts/             # Optional executable scripts
+│       ├── references/          # Optional reference docs
+│       └── assets/              # Optional templates/data
+└── configs/                      # Optional — mirrors workspace layout
+    ├── .claude/
+    │   ├── agents/reviewer.md   # Claude subagent
+    │   └── rules/conventions.md # Claude rules
+    ├── .cursor/
+    │   ├── agents/reviewer.md   # Cursor agent
+    │   └── rules/conventions.md # Cursor rules
+    └── .github/
+        ├── agents/reviewer.md   # Copilot agent
+        └── instructions/conventions.instructions.md
 ```
 
 ### package.json for a skill
@@ -135,6 +146,26 @@ my-skill/
 - The `skillpm.mcpServers` array lists MCP servers that agents need for this skill.
 - The `"agent-skill"` keyword is required for publishing.
 - Use `git+https://` prefix for `repository.url` (npm requires this format).
+
+### Bundling agent configs, rules, and prompts
+
+Skills can include a `configs/` directory that mirrors the target workspace layout. On install, skillpm copies these files to the workspace root with an auto-prefix (package name) to prevent conflicts between skills.
+
+| Source in package | Destination in workspace |
+|---|---|
+| `configs/.claude/agents/reviewer.md` | `.claude/agents/my-skill--reviewer.md` |
+| `configs/.cursor/rules/conventions.md` | `.cursor/rules/my-skill--conventions.md` |
+| `configs/.github/instructions/help.instructions.md` | `.github/instructions/my-skill--help.instructions.md` |
+
+On uninstall, all copied files are removed automatically (tracked via `.skillpm/manifest.json`).
+
+Only include targets your skill supports — you don't need every agent system. Since `configs/` contains dotfile directories, add them to `package.json` `files`:
+
+```json
+{
+  "files": ["skills/", "configs/"]
+}
+```
 
 ### SKILL.md frontmatter
 

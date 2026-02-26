@@ -132,7 +132,7 @@ describe('collectMcpServers', () => {
   });
 });
 
-describe('wiring/ directory scanning', () => {
+describe('configs/ directory scanning', () => {
   let tmpDir: string;
 
   beforeEach(async () => {
@@ -143,22 +143,22 @@ describe('wiring/ directory scanning', () => {
     await rm(tmpDir, { recursive: true, force: true });
   });
 
-  it('detects wiring/ directory in skill package', async () => {
+  it('detects configs/ directory in skill package', async () => {
     const pkgDir = join(tmpDir, 'node_modules', 'wired-skill');
     const skillDir = join(pkgDir, 'skills', 'wired-skill');
-    const wiringDir = join(pkgDir, 'wiring', '.claude', 'agents');
+    const configsDir = join(pkgDir, 'configs', '.claude', 'agents');
     await mkdir(skillDir, { recursive: true });
-    await mkdir(wiringDir, { recursive: true });
+    await mkdir(configsDir, { recursive: true });
     await writeFile(join(pkgDir, 'package.json'), JSON.stringify({ name: 'wired-skill', version: '1.0.0' }));
     await writeFile(join(skillDir, 'SKILL.md'), '---\nname: wired-skill\n---\n');
-    await writeFile(join(wiringDir, 'reviewer.md'), '# Reviewer');
+    await writeFile(join(configsDir, 'reviewer.md'), '# Reviewer');
 
     const result = await scanNodeModules(tmpDir);
     expect(result).toHaveLength(1);
-    expect(result[0].wiringDir).toBe(join(pkgDir, 'wiring'));
+    expect(result[0].configsDir).toBe(join(pkgDir, 'configs'));
   });
 
-  it('returns undefined wiringDir when no wiring/ directory', async () => {
+  it('returns undefined configsDir when no configs/ directory', async () => {
     const pkgDir = join(tmpDir, 'node_modules', 'plain-skill');
     const skillDir = join(pkgDir, 'skills', 'plain-skill');
     await mkdir(skillDir, { recursive: true });
@@ -167,6 +167,6 @@ describe('wiring/ directory scanning', () => {
 
     const result = await scanNodeModules(tmpDir);
     expect(result).toHaveLength(1);
-    expect(result[0].wiringDir).toBeUndefined();
+    expect(result[0].configsDir).toBeUndefined();
   });
 });

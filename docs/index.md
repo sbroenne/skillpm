@@ -32,11 +32,13 @@ npx skillpm list
 npx skillpm init
 ```
 
-Or install globally for convenience:
+Or install the CLI globally:
 
 ```bash
 npm install -g skillpm
 ```
+
+> **Note:** Skills are always workspace-local. This installs the `skillpm` CLI — not skills.
 
 ## How it works
 

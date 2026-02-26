@@ -4,20 +4,20 @@ import { join, relative, dirname, basename } from 'node:path';
 const MANIFEST_DIR = '.skillpm';
 const MANIFEST_FILE = 'manifest.json';
 
-interface WiringManifest {
+interface ConfigsManifest {
   [packageName: string]: string[];
 }
 
-async function readManifest(cwd: string): Promise<WiringManifest> {
+async function readManifest(cwd: string): Promise<ConfigsManifest> {
   try {
     const raw = await readFile(join(cwd, MANIFEST_DIR, MANIFEST_FILE), 'utf-8');
-    return JSON.parse(raw) as WiringManifest;
+    return JSON.parse(raw) as ConfigsManifest;
   } catch {
     return {};
   }
 }
 
-async function writeManifest(cwd: string, manifest: WiringManifest): Promise<void> {
+async function writeManifest(cwd: string, manifest: ConfigsManifest): Promise<void> {
   const dir = join(cwd, MANIFEST_DIR);
   await mkdir(dir, { recursive: true });
   await writeFile(join(dir, MANIFEST_FILE), JSON.stringify(manifest, null, 2) + '\n');
@@ -59,20 +59,20 @@ function prefixFilename(relPath: string, packageName: string): string {
 }
 
 /**
- * Copy all files from a skill's wiring/ directory to the workspace,
+ * Copy all files from a skill's configs/ directory to the workspace,
  * auto-prefixing filenames with the package name.
  */
-export async function copyWiring(
-  wiringDir: string,
+export async function copyConfigs(
+  configsDir: string,
   cwd: string,
   packageName: string,
 ): Promise<string[]> {
-  const files = await walkDir(wiringDir);
+  const files = await walkDir(configsDir);
   const copied: string[] = [];
 
   for (const relPath of files) {
     const prefixed = prefixFilename(relPath, packageName);
-    const src = join(wiringDir, relPath);
+    const src = join(configsDir, relPath);
     const dest = join(cwd, prefixed);
     await mkdir(dirname(dest), { recursive: true });
     await copyFile(src, dest);
@@ -88,9 +88,9 @@ export async function copyWiring(
 }
 
 /**
- * Remove all wired files for a package using the manifest.
+ * Remove all config files for a package using the manifest.
  */
-export async function removeWiring(
+export async function removeConfigs(
   cwd: string,
   packageName: string,
 ): Promise<string[]> {
