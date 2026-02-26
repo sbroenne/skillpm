@@ -255,7 +255,8 @@ def main():
                 "version": pkg.get("version", ""),
             })
         json.dump(summary, sys.stdout, indent=2)
-        print(f"\n# {len(packages)} packages fetched ({total} total on npm)", file=sys.stderr)
+        sys.stdout.flush()
+        print(f"{len(packages)} packages fetched ({total} total on npm)", file=sys.stderr)
         return
 
     # Load packages
@@ -264,10 +265,10 @@ def main():
             raw = json.load(f)
         # raw can be either the full npm objects or our summary format
         # If it's full npm objects, use as-is; otherwise we need to re-fetch
-        if raw and "package" in raw[0]:
+        if raw and isinstance(raw[0], dict) and "package" in raw[0]:
             packages = raw
         else:
-            # Summary format — need full data for card building
+            # Summary format or empty — need full data for card building
             packages, _ = fetch_packages()
     else:
         packages, _ = fetch_packages()
