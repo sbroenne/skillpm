@@ -187,4 +187,45 @@ describe('agents and prompts scanning', () => {
     expect(result[0].agents).toEqual([]);
     expect(result[0].prompts).toEqual([]);
   });
+
+  it('finds multiple skill packages in node_modules', async () => {
+    const nm = join(tmpDir, 'node_modules');
+    for (const name of ['skill-a', 'skill-b', 'skill-c']) {
+      const pkgDir = join(nm, name);
+      const skillDir = join(pkgDir, 'skills', name);
+      await mkdir(skillDir, { recursive: true });
+      await writeFile(join(pkgDir, 'package.json'), JSON.stringify({ name, version: '1.0.0' }));
+      await writeFile(join(skillDir, 'SKILL.md'), `---\nname: ${name}\n---\n`);
+    }
+    // Also add a non-skill package
+    const libDir = join(nm, 'some-lib');
+    await mkdir(libDir, { recursive: true });
+    await writeFile(join(libDir, 'package.json'), JSON.stringify({ name: 'some-lib', version: '2.0.0' }));
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(3);
+    const names = result.map(s => s.name).sort();
+    expect(names).toEqual(['skill-a', 'skill-b', 'skill-c']);
+  });
+
+  it('ignores non-.md files in agents and prompts dirs', async () => {
+    const pkgDir = join(tmpDir, 'node_modules', 'mixed-skill');
+    const skillDir = join(pkgDir, 'skills', 'mixed-skill');
+    const agentsDir = join(pkgDir, 'agents');
+    const promptsDir = join(pkgDir, 'prompts');
+    await mkdir(skillDir, { recursive: true });
+    await mkdir(agentsDir, { recursive: true });
+    await mkdir(promptsDir, { recursive: true });
+    await writeFile(join(pkgDir, 'package.json'), JSON.stringify({ name: 'mixed-skill', version: '1.0.0' }));
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: mixed-skill\n---\n');
+    await writeFile(join(agentsDir, 'valid.md'), '---\nname: valid\n---\n');
+    await writeFile(join(agentsDir, 'readme.txt'), 'not an agent');
+    await writeFile(join(promptsDir, 'rules.md'), '---\ndescription: Rules\n---\n');
+    await writeFile(join(promptsDir, 'notes.json'), '{}');
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].agents).toHaveLength(1);
+    expect(result[0].prompts).toHaveLength(1);
+  });
 });
