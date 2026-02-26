@@ -36,46 +36,31 @@ async function setupSkillPackage(nodeModulesDir: string, name: string): Promise<
 }
 
 describe('wireSkills', () => {
-  let scanRoot: string;
-  let wireTarget: string;
+  let cwd: string;
 
   beforeEach(async () => {
-    scanRoot = await createTmpDir();
-    wireTarget = await createTmpDir();
+    cwd = await createTmpDir();
     mockNpx.mockReset();
     mockNpx.mockResolvedValue({ stdout: '', stderr: '' });
   });
 
   afterEach(async () => {
-    await rm(scanRoot, { recursive: true, force: true });
-    await rm(wireTarget, { recursive: true, force: true });
+    await rm(cwd, { recursive: true, force: true });
   });
 
-  it('uses wireTarget directory for skills add, not scanRoot', async () => {
-    await setupSkillPackage(join(scanRoot, 'node_modules'), 'test-skill');
-    await wireSkills(scanRoot, wireTarget);
-
-    // skills add should be called with wireTarget as cwd
-    const skillsAddCall = mockNpx.mock.calls.find(
-      (call) => call[0][0] === 'skills' && call[0][1] === 'add',
-    );
-    expect(skillsAddCall).toBeDefined();
-    expect(skillsAddCall![1]).toEqual({ cwd: wireTarget });
-  });
-
-  it('defaults wireTarget to scanRoot when not provided', async () => {
-    await setupSkillPackage(join(scanRoot, 'node_modules'), 'test-skill');
-    await wireSkills(scanRoot);
+  it('calls skills add with cwd', async () => {
+    await setupSkillPackage(join(cwd, 'node_modules'), 'test-skill');
+    await wireSkills(cwd);
 
     const skillsAddCall = mockNpx.mock.calls.find(
       (call) => call[0][0] === 'skills' && call[0][1] === 'add',
     );
     expect(skillsAddCall).toBeDefined();
-    expect(skillsAddCall![1]).toEqual({ cwd: scanRoot });
+    expect(skillsAddCall![1]).toEqual({ cwd });
   });
 
   it('wires agents and prompts via add-custom-agent and add-custom-prompt', async () => {
-    const nodeModules = join(scanRoot, 'node_modules');
+    const nodeModules = join(cwd, 'node_modules');
     const pkgDir = join(nodeModules, 'full-skill');
     const skillDir = join(pkgDir, 'skills', 'full-skill');
     const agentsDir = join(pkgDir, 'agents');
@@ -94,12 +79,7 @@ describe('wireSkills', () => {
     await writeFile(join(agentsDir, 'reviewer.md'), '---\nname: reviewer\n---\n');
     await writeFile(join(promptsDir, 'conventions.md'), '---\ndescription: Conventions\n---\n');
 
-    await wireSkills(scanRoot, wireTarget);
-
-    const skillsAddCall = mockNpx.mock.calls.find(
-      (call) => call[0][0] === 'skills' && call[0][1] === 'add',
-    );
-    expect(skillsAddCall).toBeDefined();
+    await wireSkills(cwd);
 
     const agentCall = mockNpx.mock.calls.find(
       (call) => call[0][0] === 'add-custom-agent',
@@ -111,7 +91,7 @@ describe('wireSkills', () => {
       '--package',
       'full-skill',
     ]);
-    expect(agentCall![1]).toEqual({ cwd: wireTarget });
+    expect(agentCall![1]).toEqual({ cwd });
 
     const promptCall = mockNpx.mock.calls.find(
       (call) => call[0][0] === 'add-custom-prompt',
@@ -123,11 +103,11 @@ describe('wireSkills', () => {
       '--package',
       'full-skill',
     ]);
-    expect(promptCall![1]).toEqual({ cwd: wireTarget });
+    expect(promptCall![1]).toEqual({ cwd });
   });
 
   it('configures MCP servers from skillpm.mcpServers', async () => {
-    const nodeModules = join(scanRoot, 'node_modules');
+    const nodeModules = join(cwd, 'node_modules');
     const pkgDir = join(nodeModules, 'mcp-skill');
     const skillDir = join(pkgDir, 'skills', 'mcp-skill');
     await mkdir(skillDir, { recursive: true });
@@ -144,18 +124,18 @@ describe('wireSkills', () => {
       '---\nname: mcp-skill\ndescription: Test\n---\n# mcp-skill\n',
     );
 
-    await wireSkills(scanRoot, wireTarget);
+    await wireSkills(cwd);
 
     const mcpCall = mockNpx.mock.calls.find(
       (call) => call[0][0] === 'add-mcp',
     );
     expect(mcpCall).toBeDefined();
     expect(mcpCall![0]).toEqual(['add-mcp', '@anthropic/mcp-server-filesystem', '-y']);
-    expect(mcpCall![1]).toEqual({ cwd: wireTarget });
+    expect(mcpCall![1]).toEqual({ cwd });
   });
 
   it('continues wiring agents/prompts even if skills add fails', async () => {
-    const nodeModules = join(scanRoot, 'node_modules');
+    const nodeModules = join(cwd, 'node_modules');
     const pkgDir = join(nodeModules, 'err-skill');
     const skillDir = join(pkgDir, 'skills', 'err-skill');
     const agentsDir = join(pkgDir, 'agents');
@@ -178,10 +158,8 @@ describe('wireSkills', () => {
       return { stdout: '', stderr: '' };
     });
 
-    // Should not throw
-    await expect(wireSkills(scanRoot, wireTarget)).resolves.toBeUndefined();
+    await expect(wireSkills(cwd)).resolves.toBeUndefined();
 
-    // Agent wiring should still have been attempted
     const agentCall = mockNpx.mock.calls.find(
       (call) => call[0][0] === 'add-custom-agent',
     );
@@ -190,13 +168,13 @@ describe('wireSkills', () => {
   });
 
   it('makes no npx calls when node_modules is empty', async () => {
-    await mkdir(join(scanRoot, 'node_modules'), { recursive: true });
-    await wireSkills(scanRoot, wireTarget);
+    await mkdir(join(cwd, 'node_modules'), { recursive: true });
+    await wireSkills(cwd);
     expect(mockNpx).not.toHaveBeenCalled();
   });
 
   it('finds and wires a legacy skill with SKILL.md at root', async () => {
-    const nodeModules = join(scanRoot, 'node_modules');
+    const nodeModules = join(cwd, 'node_modules');
     const pkgDir = join(nodeModules, 'legacy-skill');
     await mkdir(pkgDir, { recursive: true });
     await writeFile(
@@ -208,14 +186,13 @@ describe('wireSkills', () => {
       '---\nname: legacy-skill\ndescription: Legacy\n---\n# legacy-skill\n',
     );
 
-    await wireSkills(scanRoot, wireTarget);
+    await wireSkills(cwd);
 
     const skillsAddCall = mockNpx.mock.calls.find(
       (call) => call[0][0] === 'skills' && call[0][1] === 'add',
     );
     expect(skillsAddCall).toBeDefined();
-    // Legacy skill uses pkgDir as skillDir
     expect(skillsAddCall![0][2]).toBe(pkgDir);
-    expect(skillsAddCall![1]).toEqual({ cwd: wireTarget });
+    expect(skillsAddCall![1]).toEqual({ cwd });
   });
 });

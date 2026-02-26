@@ -112,7 +112,7 @@ Each agent system uses different names for the same concepts. skillpm abstracts 
 | **Codex** | Agents | `AGENTS.md` (sections) | — | `AGENTS.md` (sections) |
 | **Gemini** | — | `GEMINI.md` (sections) | — | `GEMINI.md` (sections) |
 
-Skills are always global or per-workspace. Agents and prompts are always per-workspace.
+Skills are always per-workspace (backed by `package.json` and lockfile). Agents and prompts are always per-workspace. Global skill installs (`-g`) are not supported — use `npx skills add <path>` for global skills.
 
 ## How skillpm works
 
