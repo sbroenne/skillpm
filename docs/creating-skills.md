@@ -92,15 +92,17 @@ Each skill stays small and focused. `skillpm install fullstack-react` resolves t
 
 ## Bundling agent configs, rules, and prompts
 
-Skill packages can include a `configs/` directory that mirrors the target workspace layout. skillpm copies these files directly — no transformation, no external tools. Each agent system gets files in its native format.
+A `SKILL.md` teaches agents *what to do* — it contains instructions that agents read at runtime. But some agent systems also use **config files** in specific directories: subagent definitions in `.claude/agents/`, rules in `.cursor/rules/`, instructions in `.github/instructions/`, etc.
+
+The `configs/` directory lets you bundle these config files with your skill. It mirrors the workspace layout — whatever directory structure you put inside `configs/` gets copied to the workspace root on install.
 
 ```
 my-skill/
 ├── package.json
 ├── skills/
 │   └── my-skill/
-│       └── SKILL.md
-└── configs/
+│       └── SKILL.md             # Instructions agents read at runtime
+└── configs/                      # Config files copied to workspace on install
     ├── .claude/
     │   ├── agents/reviewer.md       # Claude subagent
     │   └── rules/conventions.md     # Claude rules
@@ -111,6 +113,9 @@ my-skill/
         ├── agents/reviewer.md       # Copilot agent
         └── instructions/conventions.instructions.md
 ```
+
+!!! tip
+    Not every skill needs `configs/`. If your skill is just instructions (SKILL.md), you don't need it. Use `configs/` when you want to ship subagent definitions, rules, or instructions in the native format of each agent system.
 
 ### How it works
 

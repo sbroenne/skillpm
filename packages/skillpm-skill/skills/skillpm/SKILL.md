@@ -24,7 +24,7 @@ Use this skill when the user wants to:
 - **One skill per npm package.** The skill lives in `skills/<name>/SKILL.md` inside the package.
 - **Transitive dependency resolution.** skillpm walks the full dependency tree to discover all skills and MCP server requirements.
 - **Agent directory wiring.** skillpm uses the `skills` CLI to link installed skills into 37+ agent directories (Claude, Cursor, VS Code, Codex, Gemini CLI, etc.).
-- **Config files.** Skills can include a `configs/` directory that mirrors the workspace layout. skillpm copies these files (agents, rules, prompts) directly into the workspace with package-name prefixes to prevent conflicts.
+- **Config files.** Skills can include a `configs/` directory to ship native agent config files (subagent definitions, rules, prompts). The directory mirrors the workspace layout — files are copied on install with package-name prefixes to prevent conflicts.
 - **MCP server configuration.** Skills can declare MCP servers in `package.json` under `skillpm.mcpServers[]`. skillpm configures them via `add-mcp`.
 
 ## Commands
@@ -149,7 +149,7 @@ my-skill/
 
 ### Bundling agent configs, rules, and prompts
 
-Skills can include a `configs/` directory that mirrors the target workspace layout. On install, skillpm copies these files to the workspace root with an auto-prefix (package name) to prevent conflicts between skills.
+`SKILL.md` teaches agents *what to do* — instructions read at runtime. The `configs/` directory lets you also ship **config files** (subagent definitions, rules, instructions) in the native format of each agent system. It mirrors the workspace layout — files get copied to the workspace root on install, auto-prefixed with the package name to avoid conflicts.
 
 | Source in package | Destination in workspace |
 |---|---|
@@ -159,7 +159,7 @@ Skills can include a `configs/` directory that mirrors the target workspace layo
 
 On uninstall, all copied files are removed automatically (tracked via `.skillpm/manifest.json`).
 
-Only include targets your skill supports — you don't need every agent system. Since `configs/` contains dotfile directories, add them to `package.json` `files`:
+Not every skill needs `configs/` — only use it when you want to ship native agent config files. Since `configs/` contains dotfile directories, add them to `package.json` `files`:
 
 ```json
 {
