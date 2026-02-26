@@ -1,10 +1,22 @@
 #!/usr/bin/env python3
-"""Query npm registry for agent-skill packages and generate docs/registry.md."""
+"""Query npm registry for agent-skill packages and generate docs/registry.md.
 
+Usage:
+  # Fetch packages from npm and write JSON (for agentic workflow):
+  python generate-registry.py --fetch-only > packages.json
+
+  # Build registry.md using AI-generated categories:
+  python generate-registry.py --categories categories.json
+
+  # Build registry.md without categories (fallback):
+  python generate-registry.py
+"""
+
+import argparse
 import json
-import re
+import sys
 import urllib.request
-from collections import Counter, OrderedDict
+from collections import Counter
 from datetime import datetime, timezone
 from html import escape
 from pathlib import Path
@@ -14,111 +26,20 @@ PAGE_SIZE = 250
 OUTPUT_PATH = Path(__file__).parent.parent / "docs" / "registry.md"
 EXCLUDED_KEYWORDS = {"agent-skill", "ai-skill", "oneskill", "skill", "skills"}
 
-# Categories map a display name to a set of lowercase keyword/name tokens.
-# Skills are assigned to the category with the most token matches.
-CATEGORIES = OrderedDict([
-    ("AI & Agents", {
-        "icon": "🤖",
-        "tokens": {
-            "ai", "llm", "gpt", "claude", "openai", "chatbot", "nlp", "agent", "agents",
-            "copilot", "machine-learning", "deep-learning", "neural", "transformer",
-            "embedding", "rag", "generative-ai", "genai", "artificial-intelligence",
-            "prompt", "prompting", "mcp", "langchain", "anthropic",
-        },
-    }),
-    ("Code Quality", {
-        "icon": "✨",
-        "tokens": {
-            "lint", "linter", "linting", "format", "formatter", "formatting", "prettier",
-            "eslint", "code-review", "refactor", "refactoring", "clean-code",
-            "code-quality", "style", "static-analysis", "code-style", "best-practices",
-        },
-    }),
-    ("Testing", {
-        "icon": "🧪",
-        "tokens": {
-            "test", "testing", "jest", "vitest", "mocha", "unittest", "unit-test",
-            "e2e", "integration-test", "coverage", "tdd", "bdd", "cypress",
-            "playwright", "selenium", "qa", "quality-assurance",
-        },
-    }),
-    ("Documentation", {
-        "icon": "📚",
-        "tokens": {
-            "docs", "documentation", "readme", "markdown", "jsdoc", "typedoc",
-            "api-docs", "docstring", "wiki", "technical-writing", "changelog",
-        },
-    }),
-    ("Web Development", {
-        "icon": "🌐",
-        "tokens": {
-            "web", "react", "vue", "angular", "nextjs", "next", "frontend", "backend",
-            "api", "rest", "graphql", "html", "css", "javascript", "typescript", "node",
-            "nodejs", "express", "svelte", "tailwind", "webpack", "vite",
-        },
-    }),
-    ("DevOps & CI/CD", {
-        "icon": "🚀",
-        "tokens": {
-            "devops", "ci", "cd", "ci-cd", "cicd", "docker", "kubernetes", "k8s",
-            "deploy", "deployment", "infrastructure", "terraform", "github-actions",
-            "pipeline", "aws", "azure", "gcp", "cloud", "monitoring",
-        },
-    }),
-    ("Security", {
-        "icon": "🔒",
-        "tokens": {
-            "security", "vulnerability", "auth", "authentication", "authorization",
-            "encryption", "secure", "owasp", "pentest", "penetration-testing",
-            "cve", "audit", "compliance",
-        },
-    }),
-    ("Data & Databases", {
-        "icon": "📊",
-        "tokens": {
-            "data", "database", "sql", "nosql", "mongodb", "postgres", "postgresql",
-            "mysql", "redis", "analytics", "etl", "data-science", "pandas",
-            "visualization", "csv", "json", "xml", "parsing",
-        },
-    }),
-    ("Productivity", {
-        "icon": "⚡",
-        "tokens": {
-            "productivity", "automation", "workflow", "project-management", "tooling",
-            "cli", "terminal", "shell", "git", "github", "vscode", "editor",
-        },
-    }),
-])
+CATEGORY_ICONS = {
+    "AI & Agents": "🤖",
+    "Code Quality": "✨",
+    "Testing": "🧪",
+    "Documentation": "📚",
+    "Web Development": "🌐",
+    "DevOps & CI/CD": "🚀",
+    "Security": "🔒",
+    "Data & Databases": "📊",
+    "Productivity": "⚡",
+    "Other": "📦",
+}
 
-OTHER_CATEGORY = {"name": "Other", "icon": "📦"}
-
-
-def categorize_skill(obj):
-    """Return the best-matching category name for a skill package."""
-    pkg = obj["package"]
-    # Collect tokens from keywords + name parts
-    keywords = {kw.lower() for kw in pkg.get("keywords", [])}
-    # Split package name on / @ - to get tokens (e.g. @scope/react-testing -> react, testing)
-    name_parts = set(re.split(r"[@/\-_]", pkg.get("name", "").lower())) - {""}
-    desc_lower = pkg.get("description", "").lower()
-    tokens = keywords | name_parts
-
-    best_cat = None
-    best_score = 0
-
-    for cat_name, cat_def in CATEGORIES.items():
-        cat_tokens = cat_def["tokens"]
-        # Count direct token matches
-        score = len(tokens & cat_tokens)
-        # Bonus: check if any category token appears in the description
-        for t in cat_tokens:
-            if len(t) > 2 and t in desc_lower:
-                score += 0.5
-        if score > best_score:
-            best_score = score
-            best_cat = cat_name
-
-    return best_cat if best_cat else OTHER_CATEGORY["name"]
+CATEGORY_ORDER = list(CATEGORY_ICONS.keys())
 
 
 def fetch_packages():
@@ -155,7 +76,7 @@ def format_downloads(n):
     return str(n)
 
 
-def build_card(obj, category):
+def build_card(obj, category=None):
     pkg = obj["package"]
     name = escape(pkg["name"])
     desc = escape(pkg.get("description", ""))
@@ -175,11 +96,15 @@ def build_card(obj, category):
         )
         keyword_html = f'<div class="registry-tags">{tags}</div>'
 
-    # Category badge
-    cat_icon = CATEGORIES.get(category, {}).get("icon", OTHER_CATEGORY["icon"])
-    cat_badge = f'<span class="registry-card-category" title="{escape(category)}">{cat_icon} {escape(category)}</span>'
+    # Category badge and data attribute
+    cat_attr = ""
+    cat_badge = ""
+    if category:
+        cat_icon = CATEGORY_ICONS.get(category, "📦")
+        cat_badge = f'<span class="registry-card-category" title="{escape(category)}">{cat_icon} {escape(category)}</span>'
+        cat_attr = f' data-category="{escape(category)}"'
 
-    return f"""<div class="registry-card" data-name="{name}" data-description="{desc}" data-keywords="{escape(",".join(keywords))}" data-downloads="{weekly}" data-updated="{escape(updated)}" data-score="{score}" data-category="{escape(category)}">
+    return f"""<div class="registry-card" data-name="{name}" data-description="{desc}" data-keywords="{escape(",".join(keywords))}" data-downloads="{weekly}" data-updated="{escape(updated)}" data-score="{score}"{cat_attr}>
   <div class="registry-card-header">
     <a href="{npm_url}" target="_blank" rel="noopener" class="registry-card-name">{name}</a>
     <span class="registry-card-version">v{version}</span>
@@ -194,39 +119,45 @@ def build_card(obj, category):
 </div>"""
 
 
-def generate():
-    packages, total = fetch_packages()
-    # Keep npm's default sort order (search score: popularity + quality + maintenance)
-
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-
-    # Categorize each skill
-    pkg_categories = []
-    cat_counts = Counter()
-    for obj in packages:
-        cat = categorize_skill(obj)
-        pkg_categories.append(cat)
-        cat_counts[cat] += 1
-
-    cards = "\n".join(build_card(obj, cat) for obj, cat in zip(packages, pkg_categories))
-
-    # Build category filter buttons (only categories with skills, ordered by CATEGORIES)
-    cat_buttons = '<button class="registry-category-btn active" data-category="all">All</button>'
-    for cat_name in CATEGORIES:
-        if cat_counts.get(cat_name, 0) > 0:
-            icon = CATEGORIES[cat_name]["icon"]
-            count = cat_counts[cat_name]
-            cat_buttons += (
+def build_category_buttons(cat_counts):
+    """Build HTML for category filter buttons."""
+    buttons = '<button class="registry-category-btn active" data-category="all">All</button>'
+    for cat_name in CATEGORY_ORDER:
+        count = cat_counts.get(cat_name, 0)
+        if count > 0:
+            icon = CATEGORY_ICONS[cat_name]
+            buttons += (
                 f'<button class="registry-category-btn" data-category="{escape(cat_name)}">'
                 f'{icon} {escape(cat_name)} <span class="registry-category-count">{count}</span></button>'
             )
-    if cat_counts.get(OTHER_CATEGORY["name"], 0) > 0:
-        count = cat_counts[OTHER_CATEGORY["name"]]
-        cat_buttons += (
-            f'<button class="registry-category-btn" data-category="{escape(OTHER_CATEGORY["name"])}">'
-            f'{OTHER_CATEGORY["icon"]} {escape(OTHER_CATEGORY["name"])} '
-            f'<span class="registry-category-count">{count}</span></button>'
-        )
+    return buttons
+
+
+def generate(packages, categories=None):
+    """Generate registry.md from packages and optional category mapping."""
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
+    # Build cards with optional categories
+    has_categories = bool(categories)
+    cat_counts = Counter()
+
+    card_list = []
+    for obj in packages:
+        pkg_name = obj["package"]["name"]
+        cat = categories.get(pkg_name) if categories else None
+        if cat:
+            cat_counts[cat] += 1
+        card_list.append(build_card(obj, cat))
+
+    cards = "\n".join(card_list)
+
+    # Category filter bar (only if categories are provided)
+    cat_section = ""
+    if has_categories and cat_counts:
+        cat_buttons = build_category_buttons(cat_counts)
+        cat_section = f"""  <div class="registry-categories" id="registry-categories">
+    {cat_buttons}
+  </div>"""
 
     # Collect top keywords for filter bar
     kw_counts = Counter()
@@ -264,9 +195,7 @@ Browse agent skills published on npm with the `agent-skill` keyword.
       </select>
     </div>
   </div>
-  <div class="registry-categories" id="registry-categories">
-    {cat_buttons}
-  </div>
+{cat_section}
   <div class="registry-filters" id="registry-filters">
     {filter_buttons}
   </div>
@@ -290,9 +219,67 @@ Browse agent skills published on npm with the `agent-skill` keyword.
 """
 
     OUTPUT_PATH.write_text(md, encoding="utf-8")
-    print(f"Generated {OUTPUT_PATH} with {len(packages)} skills ({total} total on npm)")
-    print(f"Categories: {dict(cat_counts.most_common())}")
+    cat_info = f" Categories: {dict(cat_counts.most_common())}" if cat_counts else ""
+    print(f"Generated {OUTPUT_PATH} with {len(packages)} skills.{cat_info}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate the Agent Skills Registry page.")
+    parser.add_argument(
+        "--fetch-only",
+        action="store_true",
+        help="Fetch packages from npm and print JSON to stdout (for agentic workflow).",
+    )
+    parser.add_argument(
+        "--packages",
+        type=str,
+        help="Path to a JSON file with pre-fetched packages (skip npm fetch).",
+    )
+    parser.add_argument(
+        "--categories",
+        type=str,
+        help="Path to a JSON file mapping package names to categories.",
+    )
+    args = parser.parse_args()
+
+    if args.fetch_only:
+        packages, total = fetch_packages()
+        # Output compact JSON: list of {name, description, keywords, version}
+        summary = []
+        for obj in packages:
+            pkg = obj["package"]
+            summary.append({
+                "name": pkg["name"],
+                "description": pkg.get("description", ""),
+                "keywords": pkg.get("keywords", []),
+                "version": pkg.get("version", ""),
+            })
+        json.dump(summary, sys.stdout, indent=2)
+        print(f"\n# {len(packages)} packages fetched ({total} total on npm)", file=sys.stderr)
+        return
+
+    # Load packages
+    if args.packages:
+        with open(args.packages, encoding="utf-8") as f:
+            raw = json.load(f)
+        # raw can be either the full npm objects or our summary format
+        # If it's full npm objects, use as-is; otherwise we need to re-fetch
+        if raw and "package" in raw[0]:
+            packages = raw
+        else:
+            # Summary format — need full data for card building
+            packages, _ = fetch_packages()
+    else:
+        packages, _ = fetch_packages()
+
+    # Load categories
+    categories = None
+    if args.categories:
+        with open(args.categories, encoding="utf-8") as f:
+            categories = json.load(f)
+
+    generate(packages, categories)
 
 
 if __name__ == "__main__":
-    generate()
+    main()
