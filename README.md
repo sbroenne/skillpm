@@ -36,7 +36,8 @@ When you run `skillpm install <skill>`:
 1. **npm install** — npm handles resolution, download, lockfile, `node_modules/`
 2. **Scan** — skillpm scans `node_modules/` for packages containing `skills/*/SKILL.md`
 3. **Link** — for each skill found, skillpm calls [`skills`](https://www.npmjs.com/package/skills) to wire it into agent directories (Claude, Cursor, VS Code, Codex, and many more)
-4. **MCP config** — skillpm collects `skillpm.mcpServers` from all skills (transitively) and configures each via [`add-mcp`](https://github.com/neondatabase/add-mcp)
+4. **Configs** — for each skill with a `configs/` directory, skillpm copies agent definitions, rules, and prompts into the workspace (auto-prefixed to avoid conflicts)
+5. **MCP config** — skillpm collects `skillpm.mcpServers` from all skills (transitively) and configures each via [`add-mcp`](https://github.com/neondatabase/add-mcp)
 
 That's it. Agents see the full skill tree with MCP servers configured.
 
@@ -51,6 +52,7 @@ skillpm doesn't reinvent anything. It orchestrates three battle-tested tools: np
 | Dependency management | Standard `package.json` `dependencies` — npm handles semver, lockfiles, audit |
 | Versioning | npm semver, `package-lock.json`, reproducible installs |
 | Agent wiring | Links skills into agent directories via [`skills`](https://www.npmjs.com/package/skills) |
+| Config files | Copies agent definitions, rules, and prompts from `configs/` into the workspace |
 | MCP server config | Collects and configures MCP servers transitively via [`add-mcp`](https://github.com/neondatabase/add-mcp) |
 
 ## Commands

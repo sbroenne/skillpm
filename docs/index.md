@@ -17,6 +17,7 @@ Without dependency management, skills become monoliths. Authors duplicate instru
 | No install command | `skillpm install` resolves the full dependency tree |
 | No versioning | npm semver, `package-lock.json`, reproducible installs |
 | No agent wiring | Links skills into agent directories via [`skills`](https://www.npmjs.com/package/skills) |
+| No config file management | Copies agent definitions, rules, and prompts from `configs/` into the workspace |
 | No MCP server config | Configures MCP servers transitively via [`add-mcp`](https://github.com/neondatabase/add-mcp) |
 
 ## Quick start
@@ -47,7 +48,8 @@ When you run `skillpm install <skill>`:
 1. **npm install** — npm handles resolution, download, lockfile, `node_modules/`
 2. **Scan** — skillpm scans `node_modules/` for packages containing `skills/*/SKILL.md`
 3. **Link** — for each skill found, skillpm calls [`skills`](https://www.npmjs.com/package/skills) to wire it into agent directories
-4. **MCP config** — skillpm collects `skillpm.mcpServers` from all skills (transitively) and configures each via [`add-mcp`](https://github.com/neondatabase/add-mcp)
+4. **Configs** — for each skill with a `configs/` directory, skillpm copies agent definitions, rules, and prompts into the workspace (auto-prefixed to avoid conflicts)
+5. **MCP config** — skillpm collects `skillpm.mcpServers` from all skills (transitively) and configures each via [`add-mcp`](https://github.com/neondatabase/add-mcp)
 
 That's it. Agents see the full skill tree with MCP servers configured.
 
