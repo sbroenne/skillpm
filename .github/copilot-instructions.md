@@ -155,6 +155,8 @@ skillpm/
 
 Both packages are released in **lockstep** — same version, single tag trigger (`v*`). The release workflow publishes `skillpm` first, then `skillpm-skill`.
 
+**npm publishing uses OIDC trusted publishing** — no `NPM_TOKEN` secret. The workflow needs `id-token: write` permission. Trusted publishers must be configured on npmjs.com for both `skillpm` and `skillpm-skill` packages (Settings → Trusted Publisher → GitHub Actions, workflow: `release.yml`). Provenance attestations are generated automatically. Do not use stored npm tokens.
+
 ## Build & Test
 
 ```bash
@@ -180,6 +182,8 @@ npm run lint          # lint
 ## Git workflow
 
 - **`main` is protected** — all changes go through pull requests with squash merge.
+- **Never commit directly to `main`** — always create a branch, push it, and create a PR.
+- **Never auto-merge PRs** — push the branch, create the PR, then stop. The user reviews and merges manually.
 - **CI must pass** before merging (lint, build, tests on Node 18/20/22).
 - Branch naming: `feat/`, `fix/`, `docs/`, `chore/`.
 - Never push directly to `main`.
