@@ -86,7 +86,7 @@ Each skill stays small and focused. `skillpm install fullstack-react` resolves t
 
 ## Bundling agents
 
-Skill packages can include custom agent definitions in an `agents/` directory. When installed, skillpm wires them into supported agent systems via [`add-custom-agent`](https://github.com/sbroenne/add-agent).
+Skill packages can include custom agent definitions in an `agents/` directory. When installed, skillpm wires them into supported agent systems via [`add-custom-agent`](https://github.com/sbroenne/add-custom-agent).
 
 ```
 my-skill/
@@ -116,7 +116,7 @@ Trigger when the user asks for code review...
 
 ## Bundling prompts
 
-Skill packages can include prompt/instruction files in a `prompts/` directory. When installed, skillpm wires them into supported agent systems via [`add-custom-prompt`](https://github.com/sbroenne/add-prompt).
+Skill packages can include prompt/instruction files in a `prompts/` directory. When installed, skillpm wires them into supported agent systems via [`add-custom-prompt`](https://github.com/sbroenne/add-custom-prompt).
 
 ```
 my-skill/

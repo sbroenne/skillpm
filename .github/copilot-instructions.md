@@ -18,8 +18,8 @@ The project is developed in TypeScript.
 | [`skills`](https://www.npmjs.com/package/skills) (Vercel) | CLI (shell out) | Links skills into 37+ agent directories | `npx skills add <path>` — wires npm-installed skills into agent dirs |
 | [`add-mcp`](https://github.com/neondatabase/add-mcp) | CLI (shell out) | Configures MCP servers across agents (Cursor, Claude, VS Code, Codex, etc.) | `npx add-mcp <source>` for MCP server configuration |
 | [`skills-ref`](https://www.npmjs.com/package/skills-ref) | CLI (shell out) | Validates SKILL.md against the Agent Skills spec | `npx skills-ref validate <path>` during `skillpm publish` |
-| [`add-custom-agent`](https://github.com/sbroenne/add-agent) | CLI (shell out) | Wires subagent definitions into agent directories | `npx add-custom-agent <file> --package <name>` for `.claude/agents/`, `.cursor/agents/` |
-| [`add-custom-prompt`](https://github.com/sbroenne/add-prompt) | CLI (shell out) | Wires prompts/rules/instructions into agent config | `npx add-custom-prompt <file> --package <name>` for `.github/instructions/`, `.cursor/rules/`, `CLAUDE.md`, etc. |
+| [`add-custom-agent`](https://github.com/sbroenne/add-custom-agent) | CLI (shell out) | Wires subagent definitions into agent directories | `npx add-custom-agent <file> --package <name>` for `.claude/agents/`, `.cursor/agents/` |
+| [`add-custom-prompt`](https://github.com/sbroenne/add-custom-prompt) | CLI (shell out) | Wires prompts/rules/instructions into agent config | `npx add-custom-prompt <file> --package <name>` for `.github/instructions/`, `.cursor/rules/`, `CLAUDE.md`, etc. |
 
 Before writing any new code, check whether one of these tools already does it.
 
