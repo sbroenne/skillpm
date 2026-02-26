@@ -18,6 +18,8 @@ The project is developed in TypeScript.
 | [`skills`](https://www.npmjs.com/package/skills) (Vercel) | CLI (shell out) | Links skills into 37+ agent directories | `npx skills add <path>` — wires npm-installed skills into agent dirs |
 | [`add-mcp`](https://github.com/neondatabase/add-mcp) | CLI (shell out) | Configures MCP servers across agents (Cursor, Claude, VS Code, Codex, etc.) | `npx add-mcp <source>` for MCP server configuration |
 | [`skills-ref`](https://www.npmjs.com/package/skills-ref) | CLI (shell out) | Validates SKILL.md against the Agent Skills spec | `npx skills-ref validate <path>` during `skillpm publish` |
+| [`add-custom-agent`](https://github.com/sbroenne/add-agent) | CLI (shell out) | Wires subagent definitions into agent directories | `npx add-custom-agent <file> --package <name>` for `.claude/agents/`, `.cursor/agents/` |
+| [`add-custom-prompt`](https://github.com/sbroenne/add-prompt) | CLI (shell out) | Wires prompts/rules/instructions into agent config | `npx add-custom-prompt <file> --package <name>` for `.github/instructions/`, `.cursor/rules/`, `CLAUDE.md`, etc. |
 
 Before writing any new code, check whether one of these tools already does it.
 
@@ -27,19 +29,23 @@ Agent Skills are modular, reusable packages of instructions, scripts, and resour
 
 ### Skill package structure
 
-A skill is a standard npm package with the skill content in a `skills/<name>/` subdirectory:
+A skill is a standard npm package with the skill content in a `skills/<name>/` subdirectory. Optionally, packages may also include **subagents** (in `agents/`) and **prompts/rules** (in `prompts/`):
 
 ```
 my-skill/                        # npm package root
 ├── package.json                 # npm metadata, deps, skillpm.mcpServers, keywords: ["agent-skill"]
 ├── README.md                    # for humans on npmjs.org
 ├── LICENSE
-└── skills/
-    └── my-skill/                # spec-compliant skill directory
-        ├── SKILL.md             # The skill definition (YAML frontmatter + Markdown body)
-        ├── scripts/             # Optional: executable code the skill references
-        ├── references/          # Optional: additional docs/resources
-        └── assets/              # Optional: templates, images, data files
+├── skills/
+│   └── my-skill/                # spec-compliant skill directory
+│       ├── SKILL.md             # The skill definition (YAML frontmatter + Markdown body)
+│       ├── scripts/             # Optional: executable code the skill references
+│       ├── references/          # Optional: additional docs/resources
+│       └── assets/              # Optional: templates, images, data files
+├── agents/                      # Optional: subagent definitions (.md files)
+│   └── code-reviewer.md         # Wired into .claude/agents/ and .cursor/agents/
+└── prompts/                     # Optional: prompt/instruction/rule files (.md files)
+    └── coding-standards.md      # Wired into .github/instructions/, .cursor/rules/, CLAUDE.md, etc.
 ```
 
 One skill per npm package. The skill directory name must match the `name` field in SKILL.md frontmatter. All skill packages must include `"agent-skill"` in `package.json` `keywords` for discoverability on npmjs.org. Use `git+https://` prefix for `repository.url` in `package.json` (npm requires this format).
@@ -94,6 +100,20 @@ allowed-tools: Bash Read      # optional, space-delimited tool whitelist
 
 Version comes from `package.json` — do not duplicate it in SKILL.md metadata.
 
+### Agent system terminology
+
+Each agent system uses different names for the same concepts. skillpm abstracts over all of them:
+
+| Agent system | "Agents" term | Agent directory | "Prompts/Rules" term | Prompt directory |
+|---|---|---|---|---|
+| **Claude Code** | Subagents | `.claude/agents/*.md` | Rules / CLAUDE.md | `.claude/rules/*.md` |
+| **Cursor** | Custom agents | `.cursor/agents/*.md` | Rules | `.cursor/rules/*.md` |
+| **GitHub Copilot** | Custom agents | `.github/agents/*.md` | Instructions | `.github/instructions/*.md` |
+| **Codex** | Agents | `AGENTS.md` (sections) | — | `AGENTS.md` (sections) |
+| **Gemini** | — | `GEMINI.md` (sections) | — | `GEMINI.md` (sections) |
+
+Skills are always global or per-workspace. Agents and prompts are always per-workspace.
+
 ## How skillpm works
 
 ### Install flow
@@ -103,9 +123,11 @@ When a user runs `skillpm install refactor-react`:
 1. skillpm runs `npm install refactor-react` — npm handles resolution, download, lockfile, `node_modules/`
 2. skillpm scans `node_modules/` for installed packages containing `skills/*/SKILL.md`
 3. For each skill found, skillpm calls `npx skills add ./node_modules/<package>/skills/<name>/` to link it into agent directories
-4. skillpm reads the `skillpm` field from each installed skill's `package.json` (transitive walk):
+4. For each `agents/*.md` found, calls `npx add-custom-agent <file> --package <name>` to wire subagents
+5. For each `prompts/*.md` found, calls `npx add-custom-prompt <file> --package <name>` to wire prompts/rules
+6. skillpm reads the `skillpm` field from each installed skill's `package.json` (transitive walk):
    - `skillpm.mcpServers[]` → shells out to `npx add-mcp <source>` for each
-5. Done — agents see the full skill tree with MCP servers configured
+7. Done — agents see the full skill tree with subagents, prompts, and MCP servers configured
 
 ### Core CLI commands
 

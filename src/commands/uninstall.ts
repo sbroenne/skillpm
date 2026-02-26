@@ -10,12 +10,12 @@ export async function uninstall(args: string[], cwd: string): Promise<void> {
   // Clean up agents/prompts for removed packages before npm uninstall
   for (const pkg of args) {
     try {
-      await npx(['add-agent', '--remove-package', pkg], { cwd });
+      await npx(['add-custom-agent', '--remove-package', pkg], { cwd });
     } catch {
       // Ignore — package may not have had agents
     }
     try {
-      await npx(['add-prompt', '--remove-package', pkg], { cwd });
+      await npx(['add-custom-prompt', '--remove-package', pkg], { cwd });
     } catch {
       // Ignore — package may not have had prompts
     }

@@ -87,12 +87,12 @@ export async function wireSkills(scanRoot: string, wireTarget?: string): Promise
     }
   }
 
-  // Wire agent definitions via add-agent
+  // Wire agent definitions via add-custom-agent
   for (const skill of skills) {
     for (const agentFile of skill.agents) {
       log.info(`Wiring agent from ${log.skill(skill.name, skill.version)}`);
       try {
-        await npx(['add-agent', agentFile, '--package', skill.name], { cwd: wireCwd });
+        await npx(['add-custom-agent', agentFile, '--package', skill.name], { cwd: wireCwd });
         log.success(`Wired agent ${agentFile}`);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
@@ -101,12 +101,12 @@ export async function wireSkills(scanRoot: string, wireTarget?: string): Promise
     }
   }
 
-  // Wire prompts/instructions via add-prompt
+  // Wire prompts/instructions via add-custom-prompt
   for (const skill of skills) {
     for (const promptFile of skill.prompts) {
       log.info(`Wiring prompt from ${log.skill(skill.name, skill.version)}`);
       try {
-        await npx(['add-prompt', promptFile, '--package', skill.name], { cwd: wireCwd });
+        await npx(['add-custom-prompt', promptFile, '--package', skill.name], { cwd: wireCwd });
         log.success(`Wired prompt ${promptFile}`);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
