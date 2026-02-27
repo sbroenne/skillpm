@@ -1,10 +1,25 @@
-import { readdir, access } from 'node:fs/promises';
+import { readdir, access, lstat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { readPackageJson, parseSkillpmField } from '../manifest/index.js';
 import type { SkillInfo } from '../manifest/schema.js';
 
 /**
+ * Return true if the given path is a symbolic link (or on Windows, a junction).
+ * Does NOT follow the link — uses lstat so the link itself is inspected.
+ */
+async function isSymlink(p: string): Promise<boolean> {
+  try {
+    const s = await lstat(p);
+    return s.isSymbolicLink();
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Scan node_modules/ for packages that contain a skills/<name>/SKILL.md file.
+ * Also follows symlinks — npm workspace packages appear as symlinks inside
+ * node_modules/ and are flagged with `workspace: true` on the returned SkillInfo.
  * Returns metadata for each discovered skill package.
  */
 export async function scanNodeModules(cwd: string): Promise<SkillInfo[]> {
@@ -32,12 +47,14 @@ export async function scanNodeModules(cwd: string): Promise<SkillInfo[]> {
       }
       for (const scopedEntry of scopedEntries) {
         const pkgDir = join(scopeDir, scopedEntry);
-        const skill = await tryReadSkill(pkgDir);
+        const symlink = await isSymlink(pkgDir);
+        const skill = await tryReadSkill(pkgDir, symlink);
         if (skill) skills.push(skill);
       }
     } else {
       const pkgDir = join(nodeModulesDir, entry);
-      const skill = await tryReadSkill(pkgDir);
+      const symlink = await isSymlink(pkgDir);
+      const skill = await tryReadSkill(pkgDir, symlink);
       if (skill) skills.push(skill);
     }
   }
@@ -54,7 +71,7 @@ async function hasDir(dir: string): Promise<boolean> {
   }
 }
 
-async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
+async function tryReadSkill(pkgDir: string, workspace = false): Promise<SkillInfo | null> {
   const pkg = await readPackageJson(pkgDir);
   if (!pkg) return null;
 
@@ -88,6 +105,7 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
       mcpServers: skillpm?.mcpServers ?? [],
       configsDir: hasConfigs ? configsDir : undefined,
       configPrefix: skillpm?.configPrefix,
+      workspace: workspace || undefined,
     };
   }
 
@@ -108,6 +126,7 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
     legacy: true,
     configsDir: hasConfigs ? configsDir : undefined,
     configPrefix: skillpm?.configPrefix,
+    workspace: workspace || undefined,
   };
 }
 

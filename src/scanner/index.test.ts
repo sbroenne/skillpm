@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, rm, symlink } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { scanNodeModules, collectMcpServers } from './index.js';
@@ -168,5 +168,100 @@ describe('configs/ directory scanning', () => {
     const result = await scanNodeModules(tmpDir);
     expect(result).toHaveLength(1);
     expect(result[0].configsDir).toBeUndefined();
+  });
+});
+
+describe('workspace package (symlink) detection', () => {
+  let tmpDir: string;
+
+  beforeEach(async () => {
+    tmpDir = await mkdtemp(join(tmpdir(), 'skillpm-workspace-'));
+  });
+
+  afterEach(async () => {
+    await rm(tmpDir, { recursive: true, force: true });
+  });
+
+  it('sets workspace: true for a symlinked (workspace) skill package', async () => {
+    // Simulate an npm workspace: real package lives outside node_modules,
+    // node_modules/<name> is a symlink pointing to it.
+    const realPkgDir = join(tmpDir, 'skills', 'my-skill');
+    const skillDir = join(realPkgDir, 'skills', 'my-skill');
+    await mkdir(skillDir, { recursive: true });
+    await writeFile(
+      join(realPkgDir, 'package.json'),
+      JSON.stringify({ name: 'my-skill', version: '1.0.0' }),
+    );
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: my-skill\ndescription: Test\n---\n');
+
+    const nodeModulesDir = join(tmpDir, 'node_modules');
+    await mkdir(nodeModulesDir, { recursive: true });
+    await symlink(realPkgDir, join(nodeModulesDir, 'my-skill'), 'junction');
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].name).toBe('my-skill');
+    expect(result[0].workspace).toBe(true);
+  });
+
+  it('does NOT set workspace: true for a regular (non-symlinked) package', async () => {
+    const pkgDir = join(tmpDir, 'node_modules', 'regular-skill');
+    const skillDir = join(pkgDir, 'skills', 'regular-skill');
+    await mkdir(skillDir, { recursive: true });
+    await writeFile(
+      join(pkgDir, 'package.json'),
+      JSON.stringify({ name: 'regular-skill', version: '1.0.0' }),
+    );
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: regular-skill\n---\n');
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].workspace).toBeUndefined();
+  });
+
+  it('sets workspace: true for a scoped symlinked package', async () => {
+    const realPkgDir = join(tmpDir, 'skills', 'skill-a');
+    const skillDir = join(realPkgDir, 'skills', 'skill-a');
+    await mkdir(skillDir, { recursive: true });
+    await writeFile(
+      join(realPkgDir, 'package.json'),
+      JSON.stringify({ name: '@org/skill-a', version: '1.0.0' }),
+    );
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: skill-a\n---\n');
+
+    const scopeDir = join(tmpDir, 'node_modules', '@org');
+    await mkdir(scopeDir, { recursive: true });
+    await symlink(realPkgDir, join(scopeDir, 'skill-a'), 'junction');
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].name).toBe('@org/skill-a');
+    expect(result[0].workspace).toBe(true);
+  });
+
+  it('syncs configs from a workspace symlinked package', async () => {
+    // Integration: symlinked skill with configs/ → configs are accessible via symlink
+    const realPkgDir = join(tmpDir, 'skills', 'wired-skill');
+    const skillDir = join(realPkgDir, 'skills', 'wired-skill');
+    const configsDir = join(realPkgDir, 'configs', '.github', 'agents');
+    await mkdir(skillDir, { recursive: true });
+    await mkdir(configsDir, { recursive: true });
+    await writeFile(
+      join(realPkgDir, 'package.json'),
+      JSON.stringify({ name: 'wired-skill', version: '1.0.0' }),
+    );
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: wired-skill\n---\n');
+    await writeFile(join(configsDir, 'agent.md'), '# Agent');
+
+    const nodeModulesDir = join(tmpDir, 'node_modules');
+    const linkPath = join(nodeModulesDir, 'wired-skill');
+    await mkdir(nodeModulesDir, { recursive: true });
+    await symlink(realPkgDir, linkPath, 'junction');
+
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].workspace).toBe(true);
+    // configsDir is resolved through the symlink path (node_modules/wired-skill/configs)
+    expect(result[0].configsDir).toBe(join(linkPath, 'configs'));
   });
 });

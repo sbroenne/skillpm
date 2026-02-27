@@ -9,7 +9,7 @@ import { sync } from './commands/sync.js';
 import { mcp } from './commands/mcp.js';
 import { log } from './utils/index.js';
 
-const VERSION = '0.0.4';
+const VERSION = '0.0.7';
 
 const HELP = `
 skillpm — Agent Skill package manager

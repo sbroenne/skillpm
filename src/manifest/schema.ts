@@ -36,4 +36,9 @@ export interface SkillInfo {
    * Declared via skillpm.configPrefix in package.json.
    */
   configPrefix?: string;
+  /**
+   * True when the package was found via a symlink in node_modules/ — typically
+   * an npm workspace package (first-party skill in the same monorepo).
+   */
+  workspace?: boolean;
 }

@@ -88,6 +88,16 @@ npx skillpm sync
 
 Re-scans `node_modules/` and re-links all skills into agent directories without reinstalling. Useful after manual changes.
 
+**Monorepo / npm workspace support:** If your repo uses npm workspaces, npm creates symlinks in `node_modules/` pointing to your first-party skill packages. `skillpm sync` detects these symlinks and copies their `configs/` files into the workspace root — same as for externally installed skills. Contributors run `skillpm sync` after editing a skill's source files, then commit the regenerated configs.
+
+```
+node_modules/
+  @org/
+    my-skill → ../../skills/my-skill   ← symlink (npm workspace)
+```
+
+Workspace packages appear in sync output as: `Linking workspace package @org/my-skill@1.0.0`.
+
 ### Configure MCP servers
 
 ```bash

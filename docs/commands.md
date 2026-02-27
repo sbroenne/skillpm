@@ -91,6 +91,29 @@ skillpm sync
 
 Useful after manual changes to `node_modules/` or when agent directories need refreshing.
 
+### Monorepo / npm workspace support
+
+When your repo uses **npm workspaces**, npm creates symlinks inside `node_modules/` that point to your first-party skill packages:
+
+```
+node_modules/
+  @org/
+    my-skill → ../../skills/my-skill   ← npm workspace symlink
+```
+
+`skillpm sync` detects these symlinks automatically. Each symlinked package is treated as a **workspace package** — its `configs/` directory is copied into the workspace root, regenerating all deployed agent definitions, prompts, and rules. Workspace packages are tagged in output:
+
+```
+ℹ Linking workspace package @org/my-skill@1.0.0 into agent directories
+ℹ Copying config files from workspace package @org/my-skill@1.0.0
+```
+
+**Contributor workflow for in-repo skill monorepos:**
+
+1. Edit source files in `skills/<name>/configs/`
+2. Run `skillpm sync` to regenerate deployed copies
+3. Commit the regenerated files
+
 ---
 
 ## `skillpm mcp add <source...>`
