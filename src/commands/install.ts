@@ -76,7 +76,7 @@ export async function wireSkills(cwd: string): Promise<void> {
     if (skill.configsDir) {
       log.info(`Copying config files from ${log.skill(skill.name, skill.version)}`);
       try {
-        const copied = await copyConfigs(skill.configsDir, cwd, skill.name);
+        const copied = await copyConfigs(skill.configsDir, cwd, skill.name, skill.configPrefix);
         log.success(`Copied ${copied.length} config file(s) from ${skill.name}`);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);

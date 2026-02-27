@@ -78,10 +78,10 @@ describe('wireSkills', () => {
     });
     await wireSkills(cwd);
 
-    const reviewer = await readFile(join(cwd, '.claude/agents/my-skill--reviewer.md'), 'utf-8');
+    const reviewer = await readFile(join(cwd, '.claude/agents/my-skill-reviewer.md'), 'utf-8');
     expect(reviewer).toBe('# Reviewer agent');
 
-    const conventions = await readFile(join(cwd, '.cursor/rules/my-skill--conventions.md'), 'utf-8');
+    const conventions = await readFile(join(cwd, '.cursor/rules/my-skill-conventions.md'), 'utf-8');
     expect(conventions).toBe('# Conventions');
   });
 
@@ -92,7 +92,7 @@ describe('wireSkills', () => {
     await wireSkills(cwd);
 
     const manifest = JSON.parse(await readFile(join(cwd, '.skillpm/manifest.json'), 'utf-8'));
-    expect(manifest['my-skill']).toEqual(['.claude/agents/my-skill--reviewer.md']);
+    expect(manifest['my-skill']).toEqual(['.claude/agents/my-skill-reviewer.md']);
   });
 
   it('skips configs for skills without configs/ directory', async () => {

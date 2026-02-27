@@ -47,7 +47,7 @@ describe('validatePublish', () => {
     const errors = await validatePublish(dir);
     expect(errors).toEqual([]);
     expect(mockNpx).toHaveBeenCalledWith(
-      ['skills-ref', 'validate', expect.stringContaining('skills/test-skill')],
+      ['skills-ref', 'validate', expect.stringContaining(join('skills', 'test-skill'))],
     );
     await rm(dir, { recursive: true, force: true });
   });

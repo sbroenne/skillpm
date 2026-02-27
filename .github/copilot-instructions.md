@@ -129,7 +129,7 @@ When a user runs `skillpm install refactor-react`:
 3. For each skill found, skillpm calls `npx skills add ./node_modules/<package>/skills/<name>/` to link it into agent directories
 4. skillpm reads the `skillpm` field from each installed skill's `package.json` (transitive walk):
    - `skillpm.mcpServers[]` → shells out to `npx add-mcp <source>` for each
-5. For each skill with a `configs/` directory, skillpm copies files to the workspace root with package-name prefixed filenames (tracked in `.skillpm/manifest.json`)
+5. For each skill with a `configs/` directory, skillpm copies files to the workspace root with auto-prefixed filenames (de-scoped package name, or `skillpm.configPrefix` if set) tracked in `.skillpm/manifest.json`
 6. Done — agents see the full skill tree with MCP servers configured
 
 ### Core CLI commands
@@ -203,6 +203,19 @@ npm run lint          # lint
 - Use **zod** for validating the `skillpm` field schema in `package.json`.
 - Use **gray-matter** for parsing YAML frontmatter from SKILL.md files.
 - Prefer explicit, actionable error messages — this is a CLI tool, not a library.
+
+### Examples and naming in docs, issues, and comments
+
+**Always use generic placeholder names** in all documentation, GitHub issues, PR descriptions, code comments, and test fixtures. Never use real project names, internal org names, or private package names from any specific user's environment.
+
+| Context | Use this | Never use |
+|---------|----------|-----------|
+| Scoped package name | `@org/my-skill`, `@acme/fullstack-react` | `@mcaps/spt-iq-consumption`, `@microsoft/internal-skill` |
+| Config prefix | `react`, `my-skill` | `spt-iq-consumption`, `consumption` |
+| Org / registry | `my-org`, `acme` | `mcaps`, `stbrnner`, any real org name |
+| Skill name | `my-skill`, `pdf-processing`, `refactor-react` | Any real customer or internal project name |
+
+This applies everywhere: inline code, tables, shell examples, test case descriptions, and issue bodies.
 
 ## Git workflow
 

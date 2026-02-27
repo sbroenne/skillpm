@@ -23,8 +23,8 @@ describe('copyConfigs', () => {
 
     const copied = await copyConfigs(configsDir, cwd, 'my-skill');
 
-    expect(copied).toEqual(['.claude/agents/my-skill--reviewer.md']);
-    const content = await readFile(join(cwd, '.claude', 'agents', 'my-skill--reviewer.md'), 'utf-8');
+    expect(copied).toEqual(['.claude/agents/my-skill-reviewer.md']);
+    const content = await readFile(join(cwd, '.claude', 'agents', 'my-skill-reviewer.md'), 'utf-8');
     expect(content).toBe('# Reviewer');
   });
 
@@ -39,9 +39,9 @@ describe('copyConfigs', () => {
     const copied = await copyConfigs(configsDir, cwd, 'pkg');
 
     expect(copied).toHaveLength(3);
-    expect(copied).toContain('.claude/agents/pkg--bot.md');
-    expect(copied).toContain('.cursor/rules/pkg--style.md');
-    expect(copied).toContain('.github/instructions/pkg--help.instructions.md');
+    expect(copied).toContain('.claude/agents/pkg-bot.md');
+    expect(copied).toContain('.cursor/rules/pkg-style.md');
+    expect(copied).toContain('.github/instructions/pkg-help.instructions.md');
   });
 
   it('writes manifest with copied files', async () => {
@@ -51,7 +51,7 @@ describe('copyConfigs', () => {
     await copyConfigs(configsDir, cwd, 'test-pkg');
 
     const manifest = JSON.parse(await readFile(join(cwd, '.skillpm', 'manifest.json'), 'utf-8'));
-    expect(manifest['test-pkg']).toEqual(['.claude/agents/test-pkg--a.md']);
+    expect(manifest['test-pkg']).toEqual(['.claude/agents/test-pkg-a.md']);
   });
 
   it('updates manifest for multiple packages', async () => {
@@ -66,8 +66,8 @@ describe('copyConfigs', () => {
     await copyConfigs(configs2, cwd, 'pkg-b');
 
     const manifest = JSON.parse(await readFile(join(cwd, '.skillpm', 'manifest.json'), 'utf-8'));
-    expect(manifest['pkg-a']).toEqual(['.claude/agents/pkg-a--a.md']);
-    expect(manifest['pkg-b']).toEqual(['.cursor/rules/pkg-b--b.md']);
+    expect(manifest['pkg-a']).toEqual(['.claude/agents/pkg-a-a.md']);
+    expect(manifest['pkg-b']).toEqual(['.cursor/rules/pkg-b-b.md']);
   });
 
   it('returns empty array for empty configs dir', async () => {
@@ -76,15 +76,48 @@ describe('copyConfigs', () => {
     expect(copied).toEqual([]);
   });
 
-  it('handles scoped package names in prefix', async () => {
+  it('strips npm scope from package name prefix', async () => {
     await mkdir(join(configsDir, '.claude', 'agents'), { recursive: true });
     await writeFile(join(configsDir, '.claude', 'agents', 'bot.md'), 'agent');
 
     const copied = await copyConfigs(configsDir, cwd, '@org/my-skill');
 
-    expect(copied).toEqual(['.claude/agents/@org/my-skill--bot.md']);
-    const content = await readFile(join(cwd, '.claude', 'agents', '@org/my-skill--bot.md'), 'utf-8');
+    // Scope is stripped: prefix is "my-skill", not "@org/my-skill"
+    expect(copied).toEqual(['.claude/agents/my-skill-bot.md']);
+    const content = await readFile(join(cwd, '.claude', 'agents', 'my-skill-bot.md'), 'utf-8');
     expect(content).toBe('agent');
+  });
+
+  it('uses configPrefix instead of package name when provided', async () => {
+    await mkdir(join(configsDir, '.claude', 'commands', 'spt-iq'), { recursive: true });
+    await writeFile(join(configsDir, '.claude', 'commands', 'spt-iq', 'briefing.md'), '# Briefing');
+
+    const copied = await copyConfigs(configsDir, cwd, '@mcaps/spt-iq-consumption', 'consumption');
+
+    expect(copied).toEqual(['.claude/commands/spt-iq/consumption-briefing.md']);
+    const content = await readFile(
+      join(cwd, '.claude', 'commands', 'spt-iq', 'consumption-briefing.md'),
+      'utf-8',
+    );
+    expect(content).toBe('# Briefing');
+  });
+
+  it('configPrefix overrides scope-stripped name', async () => {
+    await mkdir(join(configsDir, '.github', 'agents'), { recursive: true });
+    await writeFile(join(configsDir, '.github', 'agents', 'agent.md'), '# Agent');
+
+    // Without configPrefix: scope stripped → "spt-iq-consumption-agent.md"
+    const without = await copyConfigs(configsDir, cwd, '@mcaps/spt-iq-consumption');
+    expect(without).toEqual(['.github/agents/spt-iq-consumption-agent.md']);
+
+    // Cleanup
+    await rm(join(cwd, '.github'), { recursive: true, force: true });
+    await mkdir(join(configsDir, '.github', 'agents'), { recursive: true });
+    await writeFile(join(configsDir, '.github', 'agents', 'agent.md'), '# Agent');
+
+    // With configPrefix: → "consumption-agent.md"
+    const withPrefix = await copyConfigs(configsDir, cwd, '@mcaps/spt-iq-consumption', 'consumption');
+    expect(withPrefix).toEqual(['.github/agents/consumption-agent.md']);
   });
 });
 
@@ -102,17 +135,17 @@ describe('removeConfigs', () => {
   it('removes files listed in manifest', async () => {
     // Set up wired files + manifest
     await mkdir(join(cwd, '.claude', 'agents'), { recursive: true });
-    await writeFile(join(cwd, '.claude', 'agents', 'my-skill--reviewer.md'), '# Reviewer');
+    await writeFile(join(cwd, '.claude', 'agents', 'my-skill-reviewer.md'), '# Reviewer');
     await mkdir(join(cwd, '.skillpm'), { recursive: true });
     await writeFile(
       join(cwd, '.skillpm', 'manifest.json'),
-      JSON.stringify({ 'my-skill': ['.claude/agents/my-skill--reviewer.md'] }),
+      JSON.stringify({ 'my-skill': ['.claude/agents/my-skill-reviewer.md'] }),
     );
 
     const removed = await removeConfigs(cwd, 'my-skill');
 
-    expect(removed).toEqual(['.claude/agents/my-skill--reviewer.md']);
-    await expect(access(join(cwd, '.claude', 'agents', 'my-skill--reviewer.md'))).rejects.toThrow();
+    expect(removed).toEqual(['.claude/agents/my-skill-reviewer.md']);
+    await expect(access(join(cwd, '.claude', 'agents', 'my-skill-reviewer.md'))).rejects.toThrow();
   });
 
   it('removes package entry from manifest', async () => {
@@ -120,13 +153,13 @@ describe('removeConfigs', () => {
     await writeFile(
       join(cwd, '.skillpm', 'manifest.json'),
       JSON.stringify({
-        'pkg-a': ['.claude/agents/pkg-a--a.md'],
-        'pkg-b': ['.cursor/rules/pkg-b--b.md'],
+        'pkg-a': ['.claude/agents/pkg-a-a.md'],
+        'pkg-b': ['.cursor/rules/pkg-b-b.md'],
       }),
     );
     // Create files
     await mkdir(join(cwd, '.claude', 'agents'), { recursive: true });
-    await writeFile(join(cwd, '.claude', 'agents', 'pkg-a--a.md'), 'a');
+    await writeFile(join(cwd, '.claude', 'agents', 'pkg-a-a.md'), 'a');
 
     await removeConfigs(cwd, 'pkg-a');
 
@@ -144,7 +177,7 @@ describe('removeConfigs', () => {
     await mkdir(join(cwd, '.skillpm'), { recursive: true });
     await writeFile(
       join(cwd, '.skillpm', 'manifest.json'),
-      JSON.stringify({ 'ghost': ['.claude/agents/ghost--a.md'] }),
+      JSON.stringify({ 'ghost': ['.claude/agents/ghost-a.md'] }),
     );
 
     // File doesn't exist — should not throw
@@ -173,14 +206,14 @@ describe('copyConfigs + removeConfigs roundtrip', () => {
 
     await copyConfigs(configsDir, cwd, 'my-skill');
     // Verify files exist
-    await expect(readFile(join(cwd, '.claude', 'agents', 'my-skill--bot.md'), 'utf-8')).resolves.toBe('agent');
+    await expect(readFile(join(cwd, '.claude', 'agents', 'my-skill-bot.md'), 'utf-8')).resolves.toBe('agent');
 
     const removed = await removeConfigs(cwd, 'my-skill');
     expect(removed).toHaveLength(2);
 
     // Verify files are gone
-    await expect(access(join(cwd, '.claude', 'agents', 'my-skill--bot.md'))).rejects.toThrow();
-    await expect(access(join(cwd, '.cursor', 'rules', 'my-skill--style.md'))).rejects.toThrow();
+    await expect(access(join(cwd, '.claude', 'agents', 'my-skill-bot.md'))).rejects.toThrow();
+    await expect(access(join(cwd, '.cursor', 'rules', 'my-skill-style.md'))).rejects.toThrow();
 
     // Manifest should have empty entry for my-skill
     const manifest = JSON.parse(await readFile(join(cwd, '.skillpm', 'manifest.json'), 'utf-8'));
