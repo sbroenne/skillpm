@@ -28,10 +28,22 @@ jobs:
       - run: npm test
 
       - name: Publish skillpm to npm
-        run: npm publish --provenance --access public
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if npm view skillpm@$PKG_VERSION version 2>/dev/null | grep -qF "$PKG_VERSION"; then
+            echo "skillpm@$PKG_VERSION already published, skipping"
+          else
+            npm publish --provenance --access public
+          fi
 
       - name: Publish skillpm-skill to npm
-        run: npm publish -w packages/skillpm-skill --provenance --access public
+        run: |
+          PKG_VERSION=$(node -p "require('./packages/skillpm-skill/package.json').version")
+          if npm view skillpm-skill@$PKG_VERSION version 2>/dev/null | grep -qF "$PKG_VERSION"; then
+            echo "skillpm-skill@$PKG_VERSION already published, skipping"
+          else
+            npm publish -w packages/skillpm-skill --provenance --access public
+          fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
