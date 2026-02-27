@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { mkdtemp, writeFile, mkdir, rm, readFile } from 'node:fs/promises';
+import { mkdtemp, writeFile, mkdir, rm, readFile, symlink } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
@@ -107,5 +107,65 @@ describe('wireSkills', () => {
       // No manifest file created — expected
     }
     expect(manifest).not.toHaveProperty('plain-skill');
+  });
+
+  it('copies config files from a workspace symlinked package', async () => {
+    // Real package lives outside node_modules/ — simulates npm workspace symlink
+    const realPkgDir = join(cwd, 'skills', 'workspace-skill');
+    const skillDir = join(realPkgDir, 'skills', 'workspace-skill');
+    const configsDir = join(realPkgDir, 'configs');
+    await mkdir(skillDir, { recursive: true });
+    await mkdir(join(configsDir, '.github', 'agents'), { recursive: true });
+    await writeFile(
+      join(realPkgDir, 'package.json'),
+      JSON.stringify({ name: 'workspace-skill', version: '1.0.0' }),
+    );
+    await writeFile(
+      join(skillDir, 'SKILL.md'),
+      '---\nname: workspace-skill\ndescription: Test\n---\n',
+    );
+    await writeFile(join(configsDir, '.github', 'agents', 'agent.md'), '# Workspace Agent');
+
+    // Create symlink in node_modules/ (like npm workspaces does)
+    const nodeModulesDir = join(cwd, 'node_modules');
+    await mkdir(nodeModulesDir, { recursive: true });
+    await symlink(realPkgDir, join(nodeModulesDir, 'workspace-skill'), 'junction');
+
+    await wireSkills(cwd);
+
+    const content = await readFile(join(cwd, '.github', 'agents', 'workspace-skill-agent.md'), 'utf-8');
+    expect(content).toBe('# Workspace Agent');
+
+    const manifest = JSON.parse(await readFile(join(cwd, '.skillpm', 'manifest.json'), 'utf-8'));
+    expect(manifest['workspace-skill']).toEqual(['.github/agents/workspace-skill-agent.md']);
+  });
+
+  it('handles a mix of workspace and regular skill packages', async () => {
+    // Regular published skill
+    await setupSkillPackage(join(cwd, 'node_modules'), 'published-skill', {
+      configs: { '.claude/agents/bot.md': '# Published bot' },
+    });
+
+    // Workspace skill via symlink
+    const realPkgDir = join(cwd, 'skills', 'local-skill');
+    const skillDir = join(realPkgDir, 'skills', 'local-skill');
+    const configsDir = join(realPkgDir, 'configs');
+    await mkdir(skillDir, { recursive: true });
+    await mkdir(join(configsDir, '.claude', 'agents'), { recursive: true });
+    await writeFile(
+      join(realPkgDir, 'package.json'),
+      JSON.stringify({ name: 'local-skill', version: '1.0.0' }),
+    );
+    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: local-skill\n---\n');
+    await writeFile(join(configsDir, '.claude', 'agents', 'local.md'), '# Local bot');
+    await symlink(realPkgDir, join(cwd, 'node_modules', 'local-skill'), 'junction');
+
+    await wireSkills(cwd);
+
+    const published = await readFile(join(cwd, '.claude', 'agents', 'published-skill-bot.md'), 'utf-8');
+    expect(published).toBe('# Published bot');
+
+    const local = await readFile(join(cwd, '.claude', 'agents', 'local-skill-local.md'), 'utf-8');
+    expect(local).toBe('# Local bot');
   });
 });

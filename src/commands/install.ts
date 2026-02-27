@@ -40,7 +40,8 @@ export async function wireSkills(cwd: string): Promise<void> {
 
   // Wire each skill into agent directories via skills CLI
   for (const skill of skills) {
-    log.info(`Linking ${log.skill(skill.name, skill.version)} into agent directories`);
+    const label = skill.workspace ? `workspace package ${log.skill(skill.name, skill.version)}` : log.skill(skill.name, skill.version);
+    log.info(`Linking ${label} into agent directories`);
     try {
       await npx(['skills', 'add', skill.skillDir, '--all', '-y'], { cwd });
       log.success(`Linked ${skill.name}`);
@@ -74,7 +75,8 @@ export async function wireSkills(cwd: string): Promise<void> {
   // Copy configs/ files (agents, prompts, rules) into workspace
   for (const skill of skills) {
     if (skill.configsDir) {
-      log.info(`Copying config files from ${log.skill(skill.name, skill.version)}`);
+      const label = skill.workspace ? `workspace package ${log.skill(skill.name, skill.version)}` : log.skill(skill.name, skill.version);
+      log.info(`Copying config files from ${label}`);
       try {
         const copied = await copyConfigs(skill.configsDir, cwd, skill.name, skill.configPrefix);
         log.success(`Copied ${copied.length} config file(s) from ${skill.name}`);

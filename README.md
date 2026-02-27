@@ -70,6 +70,29 @@ skillpm doesn't reinvent anything. It orchestrates three battle-tested tools: np
 
 Aliases: `i` for `install`, `rm`/`remove` for `uninstall`, `ls` for `list`.
 
+## Monorepo / npm workspace support
+
+If your repo is an **npm workspace monorepo** where each skill is a first-party package (e.g. `skills/<name>/` entries in the root `package.json` workspaces field), npm installs them as symlinks inside `node_modules/`:
+
+```
+node_modules/
+  @org/
+    my-skill → ../../skills/my-skill   ← symlink
+```
+
+`skillpm sync` (and `skillpm install`) automatically detects these symlinks and treats them as workspace packages:
+
+- Configs are copied from the symlinked skill's `configs/` directory into the workspace root, exactly as for externally installed skills.
+- Workspace packages are identified in log output: `Linking workspace package @org/my-skill@1.0.0`.
+
+This lets contributors regenerate deployed copies (agent definitions, prompts, rules) by running:
+
+```bash
+skillpm sync
+```
+
+No manual copy steps needed. Commit the regenerated files as usual.
+
 ## Creating a skill
 
 ```bash

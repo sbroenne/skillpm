@@ -1,6 +1,6 @@
 {
   "name": "skillpm",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Package manager for Agent Skills. Built on npm.",
   "type": "module",
   "bin": {
