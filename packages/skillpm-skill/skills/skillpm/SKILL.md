@@ -151,6 +151,18 @@ my-skill/
 
 `SKILL.md` teaches agents *what to do* — instructions read at runtime. The `configs/` directory lets you also ship **config files** (subagent definitions, rules, instructions) in the native format of each agent system. It mirrors the workspace layout — files get copied to the workspace root on install, auto-prefixed with the package name to avoid conflicts.
 
+Each agent system uses different names and directories:
+
+| Agent system | Agents | Agent directory | Rules/Prompts | Rules directory |
+|---|---|---|---|---|
+| Claude Code | Subagents | `.claude/agents/*.md` | Rules | `.claude/rules/*.md` |
+| Cursor | Custom agents | `.cursor/agents/*.md` | Rules | `.cursor/rules/*.md` |
+| GitHub Copilot | Custom agents | `.github/agents/*.md` | Instructions | `.github/instructions/*.md` |
+| Codex | — | `AGENTS.md` | — | `AGENTS.md` |
+| Gemini CLI | — | `GEMINI.md` | — | `GEMINI.md` |
+
+To ship config files, create a `configs/` directory that mirrors the workspace layout for each target system:
+
 | Source in package | Destination in workspace |
 |---|---|
 | `configs/.claude/agents/reviewer.md` | `.claude/agents/my-skill--reviewer.md` |
