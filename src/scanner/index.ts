@@ -87,6 +87,7 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
       skillDir,
       mcpServers: skillpm?.mcpServers ?? [],
       configsDir: hasConfigs ? configsDir : undefined,
+      configPrefix: skillpm?.configPrefix,
     };
   }
 
@@ -106,6 +107,7 @@ async function tryReadSkill(pkgDir: string): Promise<SkillInfo | null> {
     mcpServers: skillpm?.mcpServers ?? [],
     legacy: true,
     configsDir: hasConfigs ? configsDir : undefined,
+    configPrefix: skillpm?.configPrefix,
   };
 }
 

@@ -24,7 +24,7 @@ Use this skill when the user wants to:
 - **One skill per npm package.** The skill lives in `skills/<name>/SKILL.md` inside the package.
 - **Transitive dependency resolution.** skillpm walks the full dependency tree to discover all skills and MCP server requirements.
 - **Agent directory wiring.** skillpm uses the `skills` CLI to link installed skills into 37+ agent directories (Claude, Cursor, VS Code, Codex, Gemini CLI, etc.).
-- **Config files.** Skills can include a `configs/` directory to ship native agent config files (subagent definitions, rules, prompts). The directory mirrors the workspace layout — files are copied on install with package-name prefixes to prevent conflicts.
+- **Config files.** Skills can include a `configs/` directory to ship native agent config files (subagent definitions, rules, prompts). The directory mirrors the workspace layout — files are copied on install with an auto-prefix (de-scoped package name, or a shorter `skillpm.configPrefix` override) to prevent conflicts.
 - **MCP server configuration.** Skills can declare MCP servers in `package.json` under `skillpm.mcpServers[]`. skillpm configures them via `add-mcp`.
 
 ## Commands
@@ -149,7 +149,9 @@ my-skill/
 
 ### Bundling agent configs, rules, and prompts
 
-`SKILL.md` teaches agents *what to do* — instructions read at runtime. The `configs/` directory lets you also ship **config files** (subagent definitions, rules, instructions) in the native format of each agent system. It mirrors the workspace layout — files get copied to the workspace root on install, auto-prefixed with the package name to avoid conflicts.
+`SKILL.md` teaches agents *what to do* — instructions read at runtime. The `configs/` directory lets you also ship **config files** (subagent definitions, rules, instructions) in the native format of each agent system. It mirrors the workspace layout — files get copied to the workspace root on install, auto-prefixed to avoid conflicts.
+
+The prefix used is: `configPrefix` (if set in `skillpm` field) → de-scoped package name (e.g. `@acme/fullstack-react` → `fullstack-react`). Set `configPrefix` to a short name when the package name is long.
 
 Each agent system uses different names and directories:
 
@@ -165,9 +167,9 @@ To ship config files, create a `configs/` directory that mirrors the workspace l
 
 | Source in package | Destination in workspace |
 |---|---|
-| `configs/.claude/agents/reviewer.md` | `.claude/agents/my-skill--reviewer.md` |
-| `configs/.cursor/rules/conventions.md` | `.cursor/rules/my-skill--conventions.md` |
-| `configs/.github/instructions/help.instructions.md` | `.github/instructions/my-skill--help.instructions.md` |
+| `configs/.claude/agents/reviewer.md` | `.claude/agents/my-skill-reviewer.md` |
+| `configs/.cursor/rules/conventions.md` | `.cursor/rules/my-skill-conventions.md` |
+| `configs/.github/instructions/help.instructions.md` | `.github/instructions/my-skill-help.instructions.md` |
 
 On uninstall, all copied files are removed automatically (tracked via `.skillpm/manifest.json`).
 

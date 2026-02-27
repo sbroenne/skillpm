@@ -4,6 +4,11 @@ import { join, relative, dirname, basename } from 'node:path';
 const MANIFEST_DIR = '.skillpm';
 const MANIFEST_FILE = 'manifest.json';
 
+/** Normalize path separators to forward slashes for cross-platform consistency. */
+function normalizePath(p: string): string {
+  return p.replace(/\\/g, '/');
+}
+
 interface ConfigsManifest {
   [packageName: string]: string[];
 }
@@ -41,37 +46,64 @@ async function walkDir(dir: string, root?: string): Promise<string[]> {
     if (s.isDirectory()) {
       files.push(...(await walkDir(full, root)));
     } else {
-      files.push(relative(root, full));
+      files.push(normalizePath(relative(root, full)));
     }
   }
   return files;
 }
 
 /**
- * Auto-prefix a filename with the package name to avoid conflicts.
- * e.g. "reviewer.md" with package "my-skill" → "my-skill--reviewer.md"
+ * Strip npm scope from a package name.
+ * e.g. "@mcaps/spt-iq-consumption" → "spt-iq-consumption"
+ *      "spt-iq-consumption"       → "spt-iq-consumption"
  */
-function prefixFilename(relPath: string, packageName: string): string {
+function stripScope(packageName: string): string {
+  if (packageName.startsWith('@')) {
+    const slash = packageName.indexOf('/');
+    return slash >= 0 ? packageName.slice(slash + 1) : packageName;
+  }
+  return packageName;
+}
+
+/**
+ * Auto-prefix a filename with the resolved prefix to avoid conflicts.
+ * e.g. "reviewer.md" with prefix "my-skill" → "my-skill-reviewer.md"
+ */
+function prefixFilename(relPath: string, prefix: string): string {
   const dir = dirname(relPath);
   const file = basename(relPath);
-  const prefixed = `${packageName}--${file}`;
-  return dir === '.' ? prefixed : join(dir, prefixed);
+  const prefixed = `${prefix}-${file}`;
+  return normalizePath(dir === '.' ? prefixed : join(dir, prefixed));
 }
 
 /**
  * Copy all files from a skill's configs/ directory to the workspace,
- * auto-prefixing filenames with the package name.
+ * auto-prefixing filenames to avoid conflicts between installed skills.
+ *
+ * The prefix used is, in priority order:
+ *   1. `configPrefix` argument (from skillpm.configPrefix in package.json)
+ *   2. De-scoped package name (strips "@scope/" from scoped packages)
+ *
+ * Examples:
+ *   packageName="@mcaps/spt-iq-consumption", configPrefix="consumption"
+ *     → "consumption-briefing.md"
+ *   packageName="@mcaps/spt-iq-consumption", no configPrefix
+ *     → "spt-iq-consumption-briefing.md"
+ *   packageName="my-skill", no configPrefix
+ *     → "my-skill-briefing.md"
  */
 export async function copyConfigs(
   configsDir: string,
   cwd: string,
   packageName: string,
+  configPrefix?: string,
 ): Promise<string[]> {
+  const prefix = configPrefix ?? stripScope(packageName);
   const files = await walkDir(configsDir);
   const copied: string[] = [];
 
   for (const relPath of files) {
-    const prefixed = prefixFilename(relPath, packageName);
+    const prefixed = prefixFilename(relPath, prefix);
     const src = join(configsDir, relPath);
     const dest = join(cwd, prefixed);
     await mkdir(dirname(dest), { recursive: true });

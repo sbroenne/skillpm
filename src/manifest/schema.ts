@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const SkillpmFieldSchema = z
   .object({
     mcpServers: z.array(z.string()).optional(),
+    configPrefix: z.string().optional(),
   })
   .strict()
   .optional();
@@ -28,4 +29,11 @@ export interface SkillInfo {
   legacy?: boolean;
   /** Path to configs/ directory if present (mirrors workspace layout) */
   configsDir?: string;
+  /**
+   * Optional prefix override for config file naming.
+   * When set, used instead of the (de-scoped) package name.
+   * e.g. configPrefix: "consumption" → "consumption--briefing.md"
+   * Declared via skillpm.configPrefix in package.json.
+   */
+  configPrefix?: string;
 }

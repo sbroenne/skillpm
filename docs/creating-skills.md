@@ -119,15 +119,35 @@ my-skill/
 
 ### How it works
 
-On `skillpm install`, files from `configs/` are copied to the workspace root with an auto-prefix to prevent conflicts between skills:
+On `skillpm install`, files from `configs/` are copied to the workspace root with an auto-prefix to prevent conflicts between skills.
+
+The prefix is determined in this order:
+
+1. **`skillpm.configPrefix`** in `package.json` — explicit short name (e.g. `react`)
+2. **De-scoped package name** — `@scope/` is stripped automatically (e.g. `@acme/fullstack-react` → `fullstack-react`)
 
 | Source | Destination |
 |--------|-------------|
-| `configs/.claude/agents/reviewer.md` | `.claude/agents/my-skill--reviewer.md` |
-| `configs/.cursor/rules/conventions.md` | `.cursor/rules/my-skill--conventions.md` |
-| `configs/.github/instructions/help.instructions.md` | `.github/instructions/my-skill--help.instructions.md` |
+| `configs/.claude/agents/reviewer.md` | `.claude/agents/my-skill-reviewer.md` |
+| `configs/.cursor/rules/conventions.md` | `.cursor/rules/my-skill-conventions.md` |
+| `configs/.github/instructions/help.instructions.md` | `.github/instructions/my-skill-help.instructions.md` |
 
 On `skillpm uninstall`, all copied files are removed automatically using the manifest at `.skillpm/manifest.json`.
+
+### Shortening the prefix with `configPrefix`
+
+For scoped packages or packages with long names, set `configPrefix` in the `skillpm` field to use a shorter prefix:
+
+```json
+{
+  "name": "@acme/fullstack-react",
+  "skillpm": {
+    "configPrefix": "react"
+  }
+}
+```
+
+This gives `react-reviewer.md` instead of `fullstack-react-reviewer.md`.
 
 ### Supported targets
 
@@ -172,6 +192,13 @@ If your skill requires MCP servers, declare them in the `skillpm` field:
   }
 }
 ```
+
+The `skillpm` field supports these options:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `mcpServers` | `string[]` | MCP servers to configure via `add-mcp` on install |
+| `configPrefix` | `string` | Override the prefix used for deployed `configs/` filenames. Defaults to the de-scoped package name. |
 
 skillpm collects MCP server requirements from the entire dependency tree (transitively, deduplicated) and configures them via [`add-mcp`](https://github.com/neondatabase/add-mcp).
 
