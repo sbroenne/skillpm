@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { createRequire } from 'node:module';
 import { install } from './commands/install.js';
 import { uninstall } from './commands/uninstall.js';
 import { list } from './commands/list.js';
@@ -9,7 +10,8 @@ import { sync } from './commands/sync.js';
 import { mcp } from './commands/mcp.js';
 import { log } from './utils/index.js';
 
-const VERSION = '0.0.7';
+const require = createRequire(import.meta.url);
+const { version: VERSION } = require('../package.json') as { version: string };
 
 const HELP = `
 skillpm — Agent Skill package manager
