@@ -49,7 +49,7 @@ export async function wireSkills(cwd: string): Promise<void> {
       const msg = err instanceof Error ? err.message : String(err);
       log.warn(`Failed to link ${skill.name}: ${msg}`);
     }
-    if (skill.legacy) {
+    if (skill.legacy && !skill.workspace) {
       log.warn(
         `${skill.name}: SKILL.md is at package root. Move to skills/<name>/SKILL.md for full compatibility. See https://skillpm.dev/creating-skills/`,
       );

@@ -3,6 +3,9 @@ import { promisify } from 'node:util';
 
 const execFileAsync = promisify(execFile);
 
+// On Windows, npm/npx are .cmd files and require shell resolution
+const isWindows = process.platform === 'win32';
+
 export interface ExecResult {
   stdout: string;
   stderr: string;
@@ -16,6 +19,7 @@ export async function run(
   const { stdout, stderr } = await execFileAsync(command, args, {
     cwd: opts?.cwd,
     maxBuffer: 10 * 1024 * 1024,
+    shell: isWindows,
   });
   return { stdout, stderr };
 }
