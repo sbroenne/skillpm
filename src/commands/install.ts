@@ -63,7 +63,7 @@ export async function wireSkills(cwd: string): Promise<void> {
     for (const server of mcpServers) {
       log.info(`Configuring MCP server: ${server}`);
       try {
-        await npx(['add-mcp', server, '-y'], { cwd });
+        await npx(['@sbroenne/add-mcp', server, '-y'], { cwd });
         log.success(`Configured ${server}`);
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);

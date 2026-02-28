@@ -14,7 +14,7 @@ export async function mcp(
       for (const source of args) {
         log.info(`Configuring MCP server: ${source}`);
         try {
-          await npx(['add-mcp', source, '-y'], { cwd });
+          await npx(['@sbroenne/add-mcp', source, '-y'], { cwd });
           log.success(`Configured ${source}`);
         } catch (err: unknown) {
           const msg = err instanceof Error ? err.message : String(err);
