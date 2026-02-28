@@ -1,6 +1,6 @@
 {
   "name": "skillpm-skill",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "Agent Skill for managing skills with skillpm — install, publish, and wire Agent Skills into AI agent directories",
   "keywords": [
     "agent-skill",
