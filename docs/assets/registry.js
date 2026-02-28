@@ -1,4 +1,4 @@
-/* Skill Registry — client-side search, keyword filtering, sorting, and pagination */
+/* Skill Registry — client-side search, keyword filtering, category filtering, sorting, and pagination */
 (function () {
   "use strict";
 
@@ -18,6 +18,7 @@
   allCards.forEach(function (card, i) { card._originalIndex = i; });
 
   var activeKeyword = null;
+  var activeCategory = null;
   var currentPage = 1;
   var filteredCards = allCards;
 
@@ -41,9 +42,11 @@
       var name = (card.getAttribute("data-name") || "").toLowerCase();
       var desc = (card.getAttribute("data-description") || "").toLowerCase();
       var keywords = (card.getAttribute("data-keywords") || "").toLowerCase();
+      var category = (card.getAttribute("data-category") || "").toLowerCase();
       var matchesSearch = !query || name.indexOf(query) !== -1 || desc.indexOf(query) !== -1;
       var matchesKeyword = !activeKeyword || keywords.split(",").indexOf(activeKeyword) !== -1;
-      return matchesSearch && matchesKeyword;
+      var matchesCategory = !activeCategory || category === activeCategory.toLowerCase();
+      return matchesSearch && matchesKeyword && matchesCategory;
     });
 
     var sortKey = sortSelect ? sortSelect.value : "score";
@@ -138,14 +141,36 @@
     applyFilters();
   }
 
+  function setActiveCategory(cat) {
+    // "all" resets category filter
+    activeCategory = (cat === "all" || activeCategory === cat) ? null : cat;
+
+    document.querySelectorAll(".registry-category-btn").forEach(function (btn) {
+      var btnCat = btn.getAttribute("data-category");
+      if (btnCat === "all") {
+        btn.classList.toggle("active", !activeCategory);
+      } else {
+        btn.classList.toggle("active", btnCat === activeCategory);
+      }
+    });
+
+    applyFilters();
+  }
+
   // Search input
   search.addEventListener("input", applyFilters);
 
   // Sort dropdown
   if (sortSelect) sortSelect.addEventListener("change", applyFilters);
 
-  // Click delegation for filter buttons, tags, and pagination
+  // Click delegation for category buttons, filter buttons, tags, and pagination
   document.addEventListener("click", function (e) {
+    var catBtn = e.target.closest(".registry-category-btn");
+    if (catBtn) {
+      setActiveCategory(catBtn.getAttribute("data-category"));
+      return;
+    }
+
     var btn = e.target.closest(".registry-filter-btn");
     if (btn) {
       setActiveKeyword(btn.getAttribute("data-keyword"));
