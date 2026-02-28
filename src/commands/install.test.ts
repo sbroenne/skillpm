@@ -58,7 +58,7 @@ describe('wireSkills', () => {
     await rm(cwd, { recursive: true, force: true });
   });
 
-  it('calls skills add with cwd', async () => {
+  it('calls skills add with -y and cwd (no --all)', async () => {
     await setupSkillPackage(join(cwd, 'node_modules'), 'test-skill');
     await wireSkills(cwd);
 
@@ -66,6 +66,10 @@ describe('wireSkills', () => {
       (call) => call[0][0] === 'skills' && call[0][1] === 'add',
     );
     expect(skillsAddCall).toBeDefined();
+    // Must NOT pass --all — that would install to all 37+ agent directories regardless of what's installed
+    expect(skillsAddCall![0]).not.toContain('--all');
+    // Must pass -y to skip prompts
+    expect(skillsAddCall![0]).toContain('-y');
     expect(skillsAddCall![1]).toEqual({ cwd });
   });
 

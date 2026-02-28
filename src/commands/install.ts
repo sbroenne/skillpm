@@ -43,7 +43,7 @@ export async function wireSkills(cwd: string): Promise<void> {
     const label = skill.workspace ? `workspace package ${log.skill(skill.name, skill.version)}` : log.skill(skill.name, skill.version);
     log.info(`Linking ${label} into agent directories`);
     try {
-      await npx(['skills', 'add', skill.skillDir, '--all', '-y'], { cwd });
+      await npx(['skills', 'add', skill.skillDir, '-y'], { cwd });
       log.success(`Linked ${skill.name}`);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
