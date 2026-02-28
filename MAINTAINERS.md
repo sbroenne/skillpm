@@ -22,39 +22,15 @@ Both `skillpm` and `skillpm-skill` are configured to trust `release.yml`.
 
 ## Releasing
 
-Releases are automated via GitHub Actions. When a version tag is pushed, the [release workflow](.github/workflows/release.yml) runs lint, build, tests, publishes both packages to npm, and creates a GitHub Release.
+Releases are automated via GitHub Actions. When a version tag is pushed, the [release workflow](.github/workflows/release.yml) sets both package versions from the tag, then runs lint, build, tests, publishes both packages to npm, and creates a GitHub Release.
 
-Both `skillpm` and `skillpm-skill` are released in lockstep with the same version.
+Both `skillpm` and `skillpm-skill` are released in lockstep. **No version bump PR is needed** — the workflow derives the version from the tag.
 
 ### How to release
 
-1. **Create a release branch and bump the version:**
+1. **Merge all PRs for this release** via the normal PR review process.
 
-   ```bash
-   git checkout -b chore/release-0.2.0
-   npm version minor --no-git-tag-version   # or patch, or major
-   ```
-
-2. **Update the `VERSION` constant** in `src/cli.ts` to match:
-
-   ```typescript
-   const VERSION = '0.2.0';  // must match package.json
-   ```
-
-3. **Update `packages/skillpm-skill/package.json`** version to match.
-
-4. **Commit, push, and merge via PR:**
-
-   ```bash
-   git add -A
-   git commit -m "chore: release v0.2.0"
-   git push -u origin chore/release-0.2.0
-   gh pr create --title "chore: release v0.2.0" --body ""
-   ```
-
-   Wait for CI, then squash merge.
-
-5. **Tag and push from `main`:**
+2. **Push a tag from `main`:**
 
    ```bash
    git checkout main && git pull
@@ -62,7 +38,8 @@ Both `skillpm` and `skillpm-skill` are released in lockstep with the same versio
    git push origin v0.2.0
    ```
 
-6. **GitHub Actions does the rest:**
+3. **GitHub Actions does the rest:**
+   - Sets `version` in `package.json` and `packages/skillpm-skill/package.json` to match the tag
    - Runs lint, build, and tests
    - Publishes `skillpm` and `skillpm-skill` to npm with provenance
    - Creates a GitHub Release with auto-generated release notes

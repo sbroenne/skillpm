@@ -178,7 +178,9 @@ skillpm/
 
 ### Release strategy
 
-Both packages are released in **lockstep** — same version, single tag trigger (`v*`). The release workflow publishes `skillpm` first, then `skillpm-skill`.
+Both packages are released in **lockstep** — same version, single tag trigger (`v*`). The release workflow **sets the version from the tag** (no version bump PR required), then publishes `skillpm` first, then `skillpm-skill`.
+
+To release: merge all PRs, then `git tag vX.Y.Z && git push origin vX.Y.Z` from `main`.
 
 **npm publishing uses OIDC trusted publishing** — no `NPM_TOKEN` secret. The workflow needs `id-token: write` permission. Trusted publishers must be configured on npmjs.com for both `skillpm` and `skillpm-skill` packages (Settings → Trusted Publisher → GitHub Actions, workflow: `release.yml`). Provenance attestations are generated automatically. Do not use stored npm tokens.
 
