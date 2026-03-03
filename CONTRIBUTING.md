@@ -38,6 +38,9 @@ src/
 ├── scanner/                # Scans node_modules/ for skills
 │   ├── index.ts
 │   └── index.test.ts
+├── configs/                # Copy configs/ files to workspace, manifest tracking
+│   ├── index.ts
+│   └── index.test.ts
 ├── manifest/               # package.json + SKILL.md parsing
 │   ├── schema.ts
 │   ├── index.ts

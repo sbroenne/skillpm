@@ -12,6 +12,7 @@ Install one or more skills and wire them into agent directories.
 skillpm install my-skill                   # install a specific skill
 skillpm install                            # install all deps from package.json
 skillpm i skill-a skill-b                  # alias, multiple skills
+skillpm add my-skill                       # alias (matches npm add)
 ```
 
 **What happens:**
@@ -38,16 +39,19 @@ Runs `npm uninstall`, then re-wires agent directories to remove stale links.
 
 ---
 
-## `skillpm list`
+## `skillpm list [--json]`
 
 List all installed skill packages.
 
 ```bash
 skillpm list
-skillpm ls      # alias
+skillpm ls          # alias
+skillpm list --json # machine-readable JSON output
 ```
 
 Shows each skill's name, version (from `package.json`), description (from SKILL.md), and MCP server requirements.
+
+Use `--json` for machine-readable output suitable for scripting and tooling.
 
 ---
 
@@ -139,3 +143,19 @@ skillpm mcp list
 
 !!! note
     This currently directs you to check agent config files directly (`.cursor/mcp.json`, etc.) as `add-mcp` doesn't yet support listing.
+
+---
+
+## npm passthrough
+
+Any command not listed above is passed through to npm:
+
+```bash
+skillpm outdated          # → npm outdated
+skillpm audit             # → npm audit
+skillpm update            # → npm update
+skillpm why my-skill      # → npm why my-skill
+skillpm view my-skill     # → npm view my-skill
+```
+
+This means skillpm is a superset of npm — all npm commands work transparently.

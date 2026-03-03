@@ -16,7 +16,7 @@ The project is developed in TypeScript.
 |---|---|---|---|
 | npm | CLI (shell out) | Package management, dependency resolution, registry, lockfiles, caching | All package operations — `skillpm install` calls `npm install` under the hood |
 | [`skills`](https://www.npmjs.com/package/skills) (Vercel) | CLI (shell out) | Links skills into 37+ agent directories | `npx skills add <path>` — wires npm-installed skills into agent dirs |
-| [`add-mcp`](https://github.com/neondatabase/add-mcp) | CLI (shell out) | Configures MCP servers across agents (Cursor, Claude, VS Code, Codex, etc.) | `npx add-mcp <source>` for MCP server configuration |
+| [`add-mcp`](https://github.com/neondatabase/add-mcp) | CLI (shell out) | Configures MCP servers across agents (Cursor, Claude, VS Code, Codex, etc.) | `npx @sbroenne/add-mcp <source>` for MCP server configuration |
 | [`skills-ref`](https://www.npmjs.com/package/skills-ref) | CLI (shell out) | Validates SKILL.md against the Agent Skills spec | `npx skills-ref validate <path>` during `skillpm publish` |
 
 Before writing any new code, check whether one of these tools already does it.
@@ -138,12 +138,15 @@ When a user runs `skillpm install refactor-react`:
 |---|---|
 | `skillpm install [skill]` | Install a skill + its full dependency tree, wire into agent dirs |
 | `skillpm uninstall <skill>` | Remove a skill and prune unused dependencies |
-| `skillpm list` | Show installed skills and their dependency tree |
+| `skillpm list [--json]` | Show installed skills and their dependency tree |
 | `skillpm init` | Scaffold a new skill package (`package.json` + `skills/<name>/SKILL.md`) |
 | `skillpm publish` | Publish a skill to npmjs.org (validates `"agent-skill"` keyword, wraps `npm publish`) |
 | `skillpm sync` | Re-scan and re-wire agent directories without reinstalling |
 | `skillpm mcp add <source>` | Configure an MCP server across agents (delegates to `add-mcp`) |
 | `skillpm mcp list` | List configured MCP servers |
+| `skillpm <npm-command> [args]` | Any other command is passed through to npm |
+
+Aliases: `i`/`add` for `install`, `rm`/`remove` for `uninstall`, `ls` for `list`.
 
 ## Architecture
 
@@ -165,7 +168,6 @@ skillpm/
 │   ├── scanner/              # Scan node_modules/ for packages containing skills/*/SKILL.md
 │   ├── configs/               # Copy configs/ files to workspace, manifest tracking
 │   ├── manifest/             # package.json `skillpm` field parsing + SKILL.md parsing
-│   ├── config/               # Config loading (supported agents, preferences)
 │   └── utils/                # Shared helpers (logging, errors, child_process wrappers)
 └── packages/
     └── skillpm-skill/        # Agent Skill package (published separately as "skillpm-skill")

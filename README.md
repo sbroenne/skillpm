@@ -61,14 +61,15 @@ skillpm doesn't reinvent anything. It orchestrates three battle-tested tools: np
 |---|---|
 | `skillpm install [skill...]` | Install skill(s) + full dependency tree, wire into agent dirs |
 | `skillpm uninstall <skill...>` | Remove skill(s) and clean up |
-| `skillpm list` | List installed skill packages |
+| `skillpm list [--json]` | List installed skill packages |
 | `skillpm init` | Scaffold a new skill package |
 | `skillpm publish` | Publish to npmjs.org (validates `"agent-skill"` keyword) |
 | `skillpm sync` | Re-wire agent directories without reinstalling |
 | `skillpm mcp add <source...>` | Configure MCP server(s) across agents |
 | `skillpm mcp list` | List configured MCP servers |
+| `skillpm <npm-command> [args]` | Any other command is passed through to npm |
 
-Aliases: `i` for `install`, `rm`/`remove` for `uninstall`, `ls` for `list`.
+Aliases: `i`/`add` for `install`, `rm`/`remove` for `uninstall`, `ls` for `list`.
 
 ## Monorepo / npm workspace support
 

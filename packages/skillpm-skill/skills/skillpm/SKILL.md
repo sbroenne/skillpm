@@ -35,7 +35,7 @@ All commands can be run without global install via `npx skillpm <command>`.
 
 ```bash
 npx skillpm install <skill-name>
-# Aliases: skillpm i
+# Aliases: skillpm i, skillpm add
 ```
 
 This runs `npm install`, scans `node_modules/` for skill packages, links them into agent directories, copies config files, and configures any required MCP servers.
@@ -60,9 +60,10 @@ npx skillpm uninstall <skill-name>
 ```bash
 npx skillpm list
 # Aliases: skillpm ls
+npx skillpm list --json   # machine-readable JSON output
 ```
 
-Shows all installed skill packages with descriptions and MCP server requirements.
+Shows all installed skill packages with descriptions and MCP server requirements. Use `--json` for scripting.
 
 ### Scaffold a new skill
 
@@ -104,6 +105,19 @@ Workspace packages appear in sync output as: `Linking workspace package @org/my-
 npx skillpm mcp add <source>    # Add an MCP server (delegates to add-mcp)
 npx skillpm mcp list            # List configured MCP servers
 ```
+
+### npm passthrough
+
+Any command not handled by skillpm is passed through to npm:
+
+```bash
+npx skillpm outdated            # → npm outdated
+npx skillpm audit               # → npm audit
+npx skillpm update              # → npm update
+npx skillpm why <skill>         # → npm why <skill>
+```
+
+This means skillpm is a superset of npm — all npm commands work transparently.
 
 ## Creating a skill package
 
