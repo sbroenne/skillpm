@@ -2,8 +2,26 @@ import { scanNodeModules } from '../scanner/index.js';
 import { readSkillMd } from '../manifest/index.js';
 import { log } from '../utils/index.js';
 
-export async function list(cwd: string): Promise<void> {
+export async function list(args: string[], cwd: string): Promise<void> {
+  const jsonOutput = args.includes('--json');
   const skills = await scanNodeModules(cwd);
+
+  if (jsonOutput) {
+    const items = [];
+    for (const skill of skills) {
+      const frontmatter = await readSkillMd(skill.skillDir);
+      items.push({
+        name: skill.name,
+        version: skill.version,
+        description: frontmatter?.description ?? '',
+        ...(skill.legacy ? { legacy: true } : {}),
+        ...(skill.mcpServers.length > 0 ? { mcpServers: skill.mcpServers } : {}),
+        ...(skill.workspace ? { workspace: true } : {}),
+      });
+    }
+    console.log(JSON.stringify(items, null, 2));
+    return;
+  }
 
   if (skills.length === 0) {
     log.info('No skill packages installed');
