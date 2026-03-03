@@ -1,6 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { npm, log } from '../utils/index.js';
+import { readPackageJson } from '../manifest/index.js';
 
 export async function init(cwd: string): Promise<void> {
   // Run npm init
@@ -15,7 +16,6 @@ export async function init(cwd: string): Promise<void> {
 
   // Read the generated package.json to add "agent-skill" keyword
   const pkgPath = join(cwd, 'package.json');
-  const { readPackageJson } = await import('../manifest/index.js');
   const pkg = await readPackageJson(cwd);
   const name = pkg?.name ?? 'my-skill';
 

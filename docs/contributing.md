@@ -33,6 +33,7 @@ src/
 ├── cli.test.ts             # CLI integration tests
 ├── commands/               # One file per command
 ├── scanner/                # Scans node_modules/ for skills
+├── configs/                # Copy configs/ files to workspace, manifest tracking
 ├── manifest/               # package.json + SKILL.md parsing
 └── utils/                  # Logging, shell helpers
 ```

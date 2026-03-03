@@ -32,7 +32,7 @@ export interface SkillInfo {
   /**
    * Optional prefix override for config file naming.
    * When set, used instead of the (de-scoped) package name.
-   * e.g. configPrefix: "consumption" → "consumption--briefing.md"
+   * e.g. configPrefix: "react" → "react-briefing.md"
    * Declared via skillpm.configPrefix in package.json.
    */
   configPrefix?: string;

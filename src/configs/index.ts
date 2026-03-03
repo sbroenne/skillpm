@@ -54,8 +54,8 @@ async function walkDir(dir: string, root?: string): Promise<string[]> {
 
 /**
  * Strip npm scope from a package name.
- * e.g. "@mcaps/spt-iq-consumption" → "spt-iq-consumption"
- *      "spt-iq-consumption"       → "spt-iq-consumption"
+ * e.g. "@org/my-skill" → "my-skill"
+ *      "my-skill"       → "my-skill"
  */
 function stripScope(packageName: string): string {
   if (packageName.startsWith('@')) {
@@ -85,10 +85,10 @@ function prefixFilename(relPath: string, prefix: string): string {
  *   2. De-scoped package name (strips "@scope/" from scoped packages)
  *
  * Examples:
- *   packageName="@mcaps/spt-iq-consumption", configPrefix="consumption"
- *     → "consumption-briefing.md"
- *   packageName="@mcaps/spt-iq-consumption", no configPrefix
- *     → "spt-iq-consumption-briefing.md"
+ *   packageName="@org/my-skill", configPrefix="short"
+ *     → "short-briefing.md"
+ *   packageName="@org/my-skill", no configPrefix
+ *     → "my-skill-briefing.md"
  *   packageName="my-skill", no configPrefix
  *     → "my-skill-briefing.md"
  */

@@ -79,7 +79,7 @@ Skill dependencies go in standard `package.json` `dependencies` — npm handles 
 | Field | What goes here | Resolved by |
 |---|---|---|
 | `dependencies` | Skill packages on npm | npm — standard semver, lockfile, `node_modules/` |
-| `skillpm.mcpServers[]` | MCP servers to configure for agents | `npx add-mcp <source>` |
+| `skillpm.mcpServers[]` | MCP servers to configure for agents | `npx @sbroenne/add-mcp <source>` |
 
 All dependencies resolve transitively — skillpm walks each installed skill's `package.json` for further deps and MCP server requirements.
 
@@ -128,7 +128,7 @@ When a user runs `skillpm install refactor-react`:
 2. skillpm scans `node_modules/` for installed packages containing `skills/*/SKILL.md`
 3. For each skill found, skillpm calls `npx skills add ./node_modules/<package>/skills/<name>/` to link it into agent directories
 4. skillpm reads the `skillpm` field from each installed skill's `package.json` (transitive walk):
-   - `skillpm.mcpServers[]` → shells out to `npx add-mcp <source>` for each
+   - `skillpm.mcpServers[]` → shells out to `npx @sbroenne/add-mcp <source>` for each
 5. For each skill with a `configs/` directory, skillpm copies files to the workspace root with auto-prefixed filenames (de-scoped package name, or `skillpm.configPrefix` if set) tracked in `.skillpm/manifest.json`
 6. Done — agents see the full skill tree with MCP servers configured
 
