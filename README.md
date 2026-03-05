@@ -107,6 +107,15 @@ See the full [Creating Skills](https://skillpm.dev/creating-skills/) guide for p
 
 Agent Skills are modular, reusable packages of instructions, scripts, and resources that AI agents can dynamically load to extend their capabilities. They follow an [open standard](https://agentskills.io) adopted by Claude, Codex, Cursor, Gemini CLI, Augment, and others.
 
+## How this relates to plugin specs (GitHub CLI / Claude Code)
+
+Plugin specs and Agent Skills solve different layers:
+
+- **Plugin specs** define host-specific runtime integrations (for example, how one tool can load an extension).
+- **Agent Skills** define reusable instruction packages that can be shared across agent systems.
+
+For skillpm, this does **not** change the core approach: skills remain npm packages, dependency resolution stays in npm, and wiring/config is still handled by `skills` + `add-mcp`.
+
 ## Development
 
 ```bash
