@@ -57,6 +57,15 @@ That's it. Agents see the full skill tree with MCP servers configured.
 
 Explore available skills in the [Agent Skills Registry](registry.md), or search directly on [npmjs.org](https://www.npmjs.com/search?q=keywords:agent-skill).
 
+## How this relates to plugin specs
+
+GitHub CLI/Claude plugin specs and Agent Skills are complementary, not replacements:
+
+- Plugin specs define host-specific extension/runtime hooks.
+- Agent Skills define portable instruction packages that can be reused across agent systems.
+
+For skillpm, the model stays the same: npm for dependency management, plus `skills` and `add-mcp` for wiring and MCP configuration.
+
 ## Create your own skill
 
 Ready to build and share a skill? See the [Creating Skills](creating-skills.md) guide — or just run:
