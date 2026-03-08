@@ -1,0 +1,1904 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Browse and search all agent skills published on npm. Find skills for Claude, Cursor, VS Code, Codex, and other AI agents.">
+      
+      
+        <meta name="author" content="sbroenne">
+      
+      
+        <link rel="canonical" href="https://skillpm.dev/registry/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../getting-started/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>Agent Skills Registry - skillpm</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/registry.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Agent Skills Registry" />
+  <meta property="og:description" content="Browse and search all agent skills published on npm. Find skills for Claude, Cursor, VS Code, Codex, and other AI agents." />
+  <meta property="og:url" content="https://skillpm.dev/registry/" />
+  <meta property="og:site_name" content="skillpm" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Agent Skills Registry" />
+  <meta name="twitter:description" content="Browse and search all agent skills published on npm. Find skills for Claude, Cursor, VS Code, Codex, and other AI agents." />
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#agent-skills-registry" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="skillpm" class="md-header__button md-logo" aria-label="skillpm" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            skillpm
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Agent Skills Registry
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/sbroenne/skillpm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sbroenne/skillpm
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="skillpm" class="md-nav__button md-logo" aria-label="skillpm" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    skillpm
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/sbroenne/skillpm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    sbroenne/skillpm
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agent Skills Registry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../creating-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+  
+  
+
+
+<h1 id="agent-skills-registry">Agent Skills Registry</h1>
+<p>Browse agent skills published on npm with the <code>agent-skill</code> keyword.</p>
+<div class="registry-header">
+  <div class="registry-controls">
+    <div class="registry-search-bar">
+      <input type="text" id="registry-search" placeholder="Search skills..." autocomplete="off" />
+    </div>
+    <div class="registry-sort">
+      <select id="registry-sort-select">
+        <option value="score">Relevance</option>
+        <option value="downloads">Downloads</option>
+        <option value="updated">Recently updated</option>
+        <option value="name">Name</option>
+      </select>
+    </div>
+  </div>
+  <div class="registry-filters" id="registry-filters">
+    <button class="registry-filter-btn" data-keyword="claude-code">claude-code</button><button class="registry-filter-btn" data-keyword="claude">claude</button><button class="registry-filter-btn" data-keyword="ai-agent">ai-agent</button><button class="registry-filter-btn" data-keyword="mcp">mcp</button><button class="registry-filter-btn" data-keyword="cli">cli</button><button class="registry-filter-btn" data-keyword="cursor">cursor</button><button class="registry-filter-btn" data-keyword="ai">ai</button><button class="registry-filter-btn" data-keyword="claude-skill">claude-skill</button><button class="registry-filter-btn" data-keyword="codex">codex</button><button class="registry-filter-btn" data-keyword="ai-coding">ai-coding</button><button class="registry-filter-btn" data-keyword="mcp-server">mcp-server</button><button class="registry-filter-btn" data-keyword="code-review">code-review</button>
+  </div>
+  <div class="registry-meta">
+    <span id="registry-count">107 skills</span> · Updated 2026-03-08 10:44 UTC
+  </div>
+</div>
+
+<div class="registry-grid" id="registry-grid">
+<div class="registry-card" data-name="ucn" data-description="Code intelligence toolkit for AI agents — extract functions, trace call chains, find callers, detect dead code without reading entire files. Works as MCP server, CLI, or agent skill. Supports JS/TS, Python, Go, Rust, Java." data-keywords="mcp,mcp-server,model-context-protocol,ai-agent,ai-coding,code-intelligence,code-navigation,code-analysis,code-extraction,call-graph,callers,impact-analysis,dead-code,deadcode,cli,tree-sitter,ast,static-analysis,javascript,typescript,python,go,rust,java" data-downloads="2588" data-updated="2026-03-08T08:52:36.295Z" data-score="51.972073">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/ucn" target="_blank" rel="noopener" class="registry-card-name">ucn</a>
+    <span class="registry-card-version">v3.7.47</span>
+  </div>
+  <p class="registry-card-desc">Code intelligence toolkit for AI agents — extract functions, trace call chains, find callers, detect dead code without reading entire files. Works as MCP server, CLI, or agent skill. Supports JS/TS, Python, Go, Rust, Java.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="mcp">mcp</span><span class="registry-tag" data-keyword="mcp-server">mcp-server</span><span class="registry-tag" data-keyword="model-context-protocol">model-context-protocol</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span><span class="registry-tag" data-keyword="ai-coding">ai-coding</span><span class="registry-tag" data-keyword="code-intelligence">code-intelligence</span><span class="registry-tag" data-keyword="code-navigation">code-navigation</span><span class="registry-tag" data-keyword="code-analysis">code-analysis</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 2.6k/wk</span>
+    <span class="registry-card-author" title="Publisher">mleoca</span>
+  </div>
+</div>
+<div class="registry-card" data-name="agent-reviews" data-description="CLI and agent skills for managing GitHub PR review comments. List, filter, reply, and watch for bot findings." data-keywords="github,pull-request,code-review,cli,ai-agent,pr-comments,review-bot" data-downloads="1866" data-updated="2026-03-06T20:53:59.052Z" data-score="46.12181">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/agent-reviews" target="_blank" rel="noopener" class="registry-card-name">agent-reviews</a>
+    <span class="registry-card-version">v1.0.1</span>
+  </div>
+  <p class="registry-card-desc">CLI and agent skills for managing GitHub PR review comments. List, filter, reply, and watch for bot findings.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="github">github</span><span class="registry-tag" data-keyword="pull-request">pull-request</span><span class="registry-tag" data-keyword="code-review">code-review</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span><span class="registry-tag" data-keyword="pr-comments">pr-comments</span><span class="registry-tag" data-keyword="review-bot">review-bot</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1.9k/wk</span>
+    <span class="registry-card-author" title="Publisher">paulbakaus</span>
+  </div>
+</div>
+<div class="registry-card" data-name="aba-payway-sdk" data-description="Official PayWay Cambodia API SDK for Node.js" data-keywords="payway,cambodia,payment,aba,khqr,qr,payment-gateway,ai-agent" data-downloads="12" data-updated="2026-02-11T03:21:21.014Z" data-score="45.85247">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/aba-payway-sdk" target="_blank" rel="noopener" class="registry-card-name">aba-payway-sdk</a>
+    <span class="registry-card-version">v0.2.35</span>
+  </div>
+  <p class="registry-card-desc">Official PayWay Cambodia API SDK for Node.js</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="payway">payway</span><span class="registry-tag" data-keyword="cambodia">cambodia</span><span class="registry-tag" data-keyword="payment">payment</span><span class="registry-tag" data-keyword="aba">aba</span><span class="registry-tag" data-keyword="khqr">khqr</span><span class="registry-tag" data-keyword="qr">qr</span><span class="registry-tag" data-keyword="payment-gateway">payment-gateway</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 12/wk</span>
+    <span class="registry-card-author" title="Publisher">navin_seab</span>
+  </div>
+</div>
+<div class="registry-card" data-name="human-browser" data-description="Stealth browser for AI agents. Bypasses Cloudflare, DataDome, PerimeterX. Residential IPs from 10+ countries. iPhone 15 Pro fingerprint. Drop-in Playwright replacement — launchHuman() just works." data-keywords="browser-automation,stealth-browser,residential-proxy,playwright,cloudflare-bypass,anti-bot,scraping,ai-agent,human-browser,multi-country,instagram-scraping,web-scraping,bypass-cloudflare,bypass-datadome,bypass-perimeterx,fingerprint-spoofing,iphone-fingerprint,headless-detection,proxy-rotation,agent-browser,playwright-stealth,bot-detection-bypass,openclaw-skill,openai-agent" data-downloads="210" data-updated="2026-02-27T16:49:00.027Z" data-score="42.51164">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/human-browser" target="_blank" rel="noopener" class="registry-card-name">human-browser</a>
+    <span class="registry-card-version">v4.0.1</span>
+  </div>
+  <p class="registry-card-desc">Stealth browser for AI agents. Bypasses Cloudflare, DataDome, PerimeterX. Residential IPs from 10+ countries. iPhone 15 Pro fingerprint. Drop-in Playwright replacement — launchHuman() just works.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="browser-automation">browser-automation</span><span class="registry-tag" data-keyword="stealth-browser">stealth-browser</span><span class="registry-tag" data-keyword="residential-proxy">residential-proxy</span><span class="registry-tag" data-keyword="playwright">playwright</span><span class="registry-tag" data-keyword="cloudflare-bypass">cloudflare-bypass</span><span class="registry-tag" data-keyword="anti-bot">anti-bot</span><span class="registry-tag" data-keyword="scraping">scraping</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 210/wk</span>
+    <span class="registry-card-author" title="Publisher">virix-labs</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@thierryteisseire/leadgenius-skill" data-description="LeadGenius Pro API Skill — B2B lead and client management with Cognito JWT auth (cookies + Bearer + API key). Includes E2E test suite." data-keywords="leadgenius,ai-agent,abm,lead-generation,b2b,lead-enrichment,sales-automation" data-downloads="27" data-updated="2026-02-12T10:19:50.397Z" data-score="40.738213">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@thierryteisseire/leadgenius-skill" target="_blank" rel="noopener" class="registry-card-name">@thierryteisseire/leadgenius-skill</a>
+    <span class="registry-card-version">v2.0.7</span>
+  </div>
+  <p class="registry-card-desc">LeadGenius Pro API Skill — B2B lead and client management with Cognito JWT auth (cookies + Bearer + API key). Includes E2E test suite.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="leadgenius">leadgenius</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span><span class="registry-tag" data-keyword="abm">abm</span><span class="registry-tag" data-keyword="lead-generation">lead-generation</span><span class="registry-tag" data-keyword="b2b">b2b</span><span class="registry-tag" data-keyword="lead-enrichment">lead-enrichment</span><span class="registry-tag" data-keyword="sales-automation">sales-automation</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 27/wk</span>
+    <span class="registry-card-author" title="Publisher">thierryteisseire</span>
+  </div>
+</div>
+<div class="registry-card" data-name="skillpm-skill" data-description="Agent Skill for managing skills with skillpm — install, publish, and wire Agent Skills into AI agent directories" data-keywords="skillpm,agent-skills,ai-agents" data-downloads="943" data-updated="2026-03-03T09:09:43.621Z" data-score="40.11703">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/skillpm-skill" target="_blank" rel="noopener" class="registry-card-name">skillpm-skill</a>
+    <span class="registry-card-version">v0.0.12</span>
+  </div>
+  <p class="registry-card-desc">Agent Skill for managing skills with skillpm — install, publish, and wire Agent Skills into AI agent directories</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="skillpm">skillpm</span><span class="registry-tag" data-keyword="agent-skills">agent-skills</span><span class="registry-tag" data-keyword="ai-agents">ai-agents</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 943/wk</span>
+    <span class="registry-card-author" title="Publisher">GitHub Actions</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@mrsf/mcp" data-description="MCP server for the Markdown Review Sidecar Format (MRSF)" data-keywords="mcp,model-context-protocol,markdown,review,sidecar,mrsf,sidemark,ai,llm,copilot,claude,cursor,agent" data-downloads="872" data-updated="2026-03-07T14:49:28.946Z" data-score="39.608215">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@mrsf/mcp" target="_blank" rel="noopener" class="registry-card-name">@mrsf/mcp</a>
+    <span class="registry-card-version">v0.5.0</span>
+  </div>
+  <p class="registry-card-desc">MCP server for the Markdown Review Sidecar Format (MRSF)</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="mcp">mcp</span><span class="registry-tag" data-keyword="model-context-protocol">model-context-protocol</span><span class="registry-tag" data-keyword="markdown">markdown</span><span class="registry-tag" data-keyword="review">review</span><span class="registry-tag" data-keyword="sidecar">sidecar</span><span class="registry-tag" data-keyword="mrsf">mrsf</span><span class="registry-tag" data-keyword="sidemark">sidemark</span><span class="registry-tag" data-keyword="ai">ai</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 872/wk</span>
+    <span class="registry-card-author" title="Publisher">wictorwilen</span>
+  </div>
+</div>
+<div class="registry-card" data-name="codebase-context-skill" data-description="Programming-first context engine for Claude Code — TypeScript-powered codebase indexing, dependency graphing, symbol-level search, and zero-token context injection via hooks." data-keywords="claude-code,context-engineering,codebase-indexing,token-optimization,dependency-graph,symbol-search,programming-first,zero-token,mcp,ai-coding,claude,anthropic" data-downloads="47" data-updated="2026-03-06T08:35:40.098Z" data-score="39.58875">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/codebase-context-skill" target="_blank" rel="noopener" class="registry-card-name">codebase-context-skill</a>
+    <span class="registry-card-version">v2.0.0</span>
+  </div>
+  <p class="registry-card-desc">Programming-first context engine for Claude Code — TypeScript-powered codebase indexing, dependency graphing, symbol-level search, and zero-token context injection via hooks.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="context-engineering">context-engineering</span><span class="registry-tag" data-keyword="codebase-indexing">codebase-indexing</span><span class="registry-tag" data-keyword="token-optimization">token-optimization</span><span class="registry-tag" data-keyword="dependency-graph">dependency-graph</span><span class="registry-tag" data-keyword="symbol-search">symbol-search</span><span class="registry-tag" data-keyword="programming-first">programming-first</span><span class="registry-tag" data-keyword="zero-token">zero-token</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 47/wk</span>
+    <span class="registry-card-author" title="Publisher">thinqmesh</span>
+  </div>
+</div>
+<div class="registry-card" data-name="x-collect-skill" data-description="X/Twitter topic intelligence skill for Claude Code" data-keywords="claude-code,claude-skill,twitter,x-com,actionbook" data-downloads="8" data-updated="2026-02-11T02:33:17.566Z" data-score="36.71918">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/x-collect-skill" target="_blank" rel="noopener" class="registry-card-name">x-collect-skill</a>
+    <span class="registry-card-version">v2.1.1</span>
+  </div>
+  <p class="registry-card-desc">X/Twitter topic intelligence skill for Claude Code</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="claude-skill">claude-skill</span><span class="registry-tag" data-keyword="twitter">twitter</span><span class="registry-tag" data-keyword="x-com">x-com</span><span class="registry-tag" data-keyword="actionbook">actionbook</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 8/wk</span>
+    <span class="registry-card-author" title="Publisher">samcui</span>
+  </div>
+</div>
+<div class="registry-card" data-name="8004skill" data-description="AI agent skill for ERC-8004 agent economy interactions" data-keywords="claude-code,claude-skill,erc-8004,ai-agent,walletconnect,ethereum,on-chain-agents" data-downloads="7" data-updated="2026-03-02T09:55:25.089Z" data-score="35.124073">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/8004skill" target="_blank" rel="noopener" class="registry-card-name">8004skill</a>
+    <span class="registry-card-version">v2.0.0</span>
+  </div>
+  <p class="registry-card-desc">AI agent skill for ERC-8004 agent economy interactions</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="claude-skill">claude-skill</span><span class="registry-tag" data-keyword="erc-8004">erc-8004</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span><span class="registry-tag" data-keyword="walletconnect">walletconnect</span><span class="registry-tag" data-keyword="ethereum">ethereum</span><span class="registry-tag" data-keyword="on-chain-agents">on-chain-agents</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 7/wk</span>
+    <span class="registry-card-author" title="Publisher">matteoscurati</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@ogulcancelik/pi-web-browse" data-description="Web search and content extraction skill for pi-coding-agent. Search the web and fetch pages via a real headless browser (CDP). Works on Linux, macOS, and Windows." data-keywords="pi-package,pi-skill,web-search,web-scraping,browser-automation,cdp,headless-browser,playwright" data-downloads="172" data-updated="2026-02-28T00:48:06.760Z" data-score="33.96518">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@ogulcancelik/pi-web-browse" target="_blank" rel="noopener" class="registry-card-name">@ogulcancelik/pi-web-browse</a>
+    <span class="registry-card-version">v1.0.3</span>
+  </div>
+  <p class="registry-card-desc">Web search and content extraction skill for pi-coding-agent. Search the web and fetch pages via a real headless browser (CDP). Works on Linux, macOS, and Windows.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="pi-package">pi-package</span><span class="registry-tag" data-keyword="pi-skill">pi-skill</span><span class="registry-tag" data-keyword="web-search">web-search</span><span class="registry-tag" data-keyword="web-scraping">web-scraping</span><span class="registry-tag" data-keyword="browser-automation">browser-automation</span><span class="registry-tag" data-keyword="cdp">cdp</span><span class="registry-tag" data-keyword="headless-browser">headless-browser</span><span class="registry-tag" data-keyword="playwright">playwright</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 172/wk</span>
+    <span class="registry-card-author" title="Publisher">ogulcancelik</span>
+  </div>
+</div>
+<div class="registry-card" data-name="rvue-cli" data-description="Team intelligence for AI coding agents. Extract conventions, anti-patterns, and domain knowledge from your codebase and PR history." data-keywords="ai,code-review,conventions,cursor,mcp,cli,team-intelligence" data-downloads="198" data-updated="2026-02-22T14:33:18.658Z" data-score="33.76169">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/rvue-cli" target="_blank" rel="noopener" class="registry-card-name">rvue-cli</a>
+    <span class="registry-card-version">v0.2.1</span>
+  </div>
+  <p class="registry-card-desc">Team intelligence for AI coding agents. Extract conventions, anti-patterns, and domain knowledge from your codebase and PR history.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="ai">ai</span><span class="registry-tag" data-keyword="code-review">code-review</span><span class="registry-tag" data-keyword="conventions">conventions</span><span class="registry-tag" data-keyword="cursor">cursor</span><span class="registry-tag" data-keyword="mcp">mcp</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="team-intelligence">team-intelligence</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 198/wk</span>
+    <span class="registry-card-author" title="Publisher">sriramfullstack</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@trustless-work/skill" data-description="AI skill installer and integration verifier for Trustless Work (Escrow-as-a-Service on Stellar)" data-keywords="trustless-work,escrow,stellar,soroban,claude-code,gemini-cli,gemini" data-downloads="121" data-updated="2026-02-25T20:18:26.009Z" data-score="33.367542">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@trustless-work/skill" target="_blank" rel="noopener" class="registry-card-name">@trustless-work/skill</a>
+    <span class="registry-card-version">v1.2.0</span>
+  </div>
+  <p class="registry-card-desc">AI skill installer and integration verifier for Trustless Work (Escrow-as-a-Service on Stellar)</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="trustless-work">trustless-work</span><span class="registry-tag" data-keyword="escrow">escrow</span><span class="registry-tag" data-keyword="stellar">stellar</span><span class="registry-tag" data-keyword="soroban">soroban</span><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="gemini-cli">gemini-cli</span><span class="registry-tag" data-keyword="gemini">gemini</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 121/wk</span>
+    <span class="registry-card-author" title="Publisher">armandocodecr</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@thierryteisseire/0crm-skill" data-description="Comprehensive Zero CRM API skill for managing contacts, deals, tasks and user profiles via REST API. Simple, fast, and powerful CRM automation with bulk operations and comprehensive documentation." data-keywords="crm,zero-crm,contacts,deals,tasks,sales,customer-management,api,rest-api,bulk-import,sales-automation,contact-management" data-downloads="11" data-updated="2026-02-13T18:18:49.398Z" data-score="33.34127">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@thierryteisseire/0crm-skill" target="_blank" rel="noopener" class="registry-card-name">@thierryteisseire/0crm-skill</a>
+    <span class="registry-card-version">v1.1.0</span>
+  </div>
+  <p class="registry-card-desc">Comprehensive Zero CRM API skill for managing contacts, deals, tasks and user profiles via REST API. Simple, fast, and powerful CRM automation with bulk operations and comprehensive documentation.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="crm">crm</span><span class="registry-tag" data-keyword="zero-crm">zero-crm</span><span class="registry-tag" data-keyword="contacts">contacts</span><span class="registry-tag" data-keyword="deals">deals</span><span class="registry-tag" data-keyword="tasks">tasks</span><span class="registry-tag" data-keyword="sales">sales</span><span class="registry-tag" data-keyword="customer-management">customer-management</span><span class="registry-tag" data-keyword="api">api</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 11/wk</span>
+    <span class="registry-card-author" title="Publisher">thierryteisseire</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@jackjackstudios/ambiance-cli" data-description="CLI for code context with semantic search, AI analysis and summary" data-keywords="rag,cli,code-analysis,context,semantic-search,ast,embeddings,ai,offline,token-compression,typescript" data-downloads="172" data-updated="2026-02-25T20:43:20.557Z" data-score="32.069164">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@jackjackstudios/ambiance-cli" target="_blank" rel="noopener" class="registry-card-name">@jackjackstudios/ambiance-cli</a>
+    <span class="registry-card-version">v0.3.3</span>
+  </div>
+  <p class="registry-card-desc">CLI for code context with semantic search, AI analysis and summary</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="rag">rag</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="code-analysis">code-analysis</span><span class="registry-tag" data-keyword="context">context</span><span class="registry-tag" data-keyword="semantic-search">semantic-search</span><span class="registry-tag" data-keyword="ast">ast</span><span class="registry-tag" data-keyword="embeddings">embeddings</span><span class="registry-tag" data-keyword="ai">ai</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 172/wk</span>
+    <span class="registry-card-author" title="Publisher">spencerbarron</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@thierryteisseire/goals-and-kpis" data-description="Consultative goal-setting and KPI design assistant for Claude Code using discovery-first approach. Asks qualifying questions before recommending frameworks (OKR, SMART, BSC, V2MOM, 4DX, EOS Rocks). Includes KPI libraries, dashboard blueprints, review cade" data-keywords="claude,claude-code,goals,kpis,okr,objectives-key-results,smart-goals,balanced-scorecard,v2mom,4dx,eos-rocks,metrics,dashboards,performance-management,strategy,alignment,business-planning,quarterly-planning,review-cadence" data-downloads="14" data-updated="2026-02-16T20:57:45.111Z" data-score="31.906254">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@thierryteisseire/goals-and-kpis" target="_blank" rel="noopener" class="registry-card-name">@thierryteisseire/goals-and-kpis</a>
+    <span class="registry-card-version">v1.3.0</span>
+  </div>
+  <p class="registry-card-desc">Consultative goal-setting and KPI design assistant for Claude Code using discovery-first approach. Asks qualifying questions before recommending frameworks (OKR, SMART, BSC, V2MOM, 4DX, EOS Rocks). Includes KPI libraries, dashboard blueprints, review cade</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="goals">goals</span><span class="registry-tag" data-keyword="kpis">kpis</span><span class="registry-tag" data-keyword="okr">okr</span><span class="registry-tag" data-keyword="objectives-key-results">objectives-key-results</span><span class="registry-tag" data-keyword="smart-goals">smart-goals</span><span class="registry-tag" data-keyword="balanced-scorecard">balanced-scorecard</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 14/wk</span>
+    <span class="registry-card-author" title="Publisher">thierryteisseire</span>
+  </div>
+</div>
+<div class="registry-card" data-name="freeman-browser" data-description="Stealth browser for AI agents. iPhone 15 Pro fingerprint. Drop-in Playwright replacement." data-keywords="browser-automation,stealth-browser,playwright,cloudflare-bypass,anti-bot,scraping,ai-agent,freeman-browser,instagram-scraping,web-scraping,bypass-cloudflare,bypass-datadome,bypass-perimeterx,fingerprint-spoofing,iphone-fingerprint,headless-detection,agent-browser,playwright-stealth,bot-detection-bypass,openclaw-skill,openai-agent" data-downloads="252" data-updated="2026-02-25T20:29:10.383Z" data-score="31.557846">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/freeman-browser" target="_blank" rel="noopener" class="registry-card-name">freeman-browser</a>
+    <span class="registry-card-version">v1.0.2</span>
+  </div>
+  <p class="registry-card-desc">Stealth browser for AI agents. iPhone 15 Pro fingerprint. Drop-in Playwright replacement.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="browser-automation">browser-automation</span><span class="registry-tag" data-keyword="stealth-browser">stealth-browser</span><span class="registry-tag" data-keyword="playwright">playwright</span><span class="registry-tag" data-keyword="cloudflare-bypass">cloudflare-bypass</span><span class="registry-tag" data-keyword="anti-bot">anti-bot</span><span class="registry-tag" data-keyword="scraping">scraping</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span><span class="registry-tag" data-keyword="freeman-browser">freeman-browser</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 252/wk</span>
+    <span class="registry-card-author" title="Publisher">m.ilin</span>
+  </div>
+</div>
+<div class="registry-card" data-name="byocb-arb-injection" data-description="BYOCB ArbInjectionSkill - Smart contract vulnerability scanner for arbitrary call injection. Educational tool for security research." data-keywords="security,bytecode,scanner,evm,smart-contract,vulnerability,ethereum,bsc,base,openclaw,byocb" data-downloads="7" data-updated="2026-02-07T16:34:49.780Z" data-score="31.305443">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/byocb-arb-injection" target="_blank" rel="noopener" class="registry-card-name">byocb-arb-injection</a>
+    <span class="registry-card-version">v1.1.0</span>
+  </div>
+  <p class="registry-card-desc">BYOCB ArbInjectionSkill - Smart contract vulnerability scanner for arbitrary call injection. Educational tool for security research.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="security">security</span><span class="registry-tag" data-keyword="bytecode">bytecode</span><span class="registry-tag" data-keyword="scanner">scanner</span><span class="registry-tag" data-keyword="evm">evm</span><span class="registry-tag" data-keyword="smart-contract">smart-contract</span><span class="registry-tag" data-keyword="vulnerability">vulnerability</span><span class="registry-tag" data-keyword="ethereum">ethereum</span><span class="registry-tag" data-keyword="bsc">bsc</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 7/wk</span>
+    <span class="registry-card-author" title="Publisher">byob_owner</span>
+  </div>
+</div>
+<div class="registry-card" data-name="epsimo-agent" data-description="AI Agent Skill - Build production-ready AI applications with multi-agent orchestration, Virtual Database, streaming conversations, and React UI Kit. For Claude Code, Cursor, Windsurf, and 30+ AI coding agents." data-keywords="epsimo,ai-agent,ai-framework,virtual-database,threads,assistants,conversation-ai,persistent-state,react-ui,chatbot,agent-sdk,llm-framework,multi-agent" data-downloads="8" data-updated="2026-02-13T06:40:27.866Z" data-score="30.717794">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/epsimo-agent" target="_blank" rel="noopener" class="registry-card-name">epsimo-agent</a>
+    <span class="registry-card-version">v0.2.1</span>
+  </div>
+  <p class="registry-card-desc">AI Agent Skill - Build production-ready AI applications with multi-agent orchestration, Virtual Database, streaming conversations, and React UI Kit. For Claude Code, Cursor, Windsurf, and 30+ AI coding agents.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="epsimo">epsimo</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span><span class="registry-tag" data-keyword="ai-framework">ai-framework</span><span class="registry-tag" data-keyword="virtual-database">virtual-database</span><span class="registry-tag" data-keyword="threads">threads</span><span class="registry-tag" data-keyword="assistants">assistants</span><span class="registry-tag" data-keyword="conversation-ai">conversation-ai</span><span class="registry-tag" data-keyword="persistent-state">persistent-state</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 8/wk</span>
+    <span class="registry-card-author" title="Publisher">thierryteisseire</span>
+  </div>
+</div>
+<div class="registry-card" data-name="workflowy-triage" data-description="Claude Code skill that triages Workflowy nodes by proposing locations based on rules" data-keywords="claude-code,workflowy,triage,organization" data-downloads="6" data-updated="2026-02-10T19:26:58.710Z" data-score="30.698235">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/workflowy-triage" target="_blank" rel="noopener" class="registry-card-name">workflowy-triage</a>
+    <span class="registry-card-version">v0.1.2</span>
+  </div>
+  <p class="registry-card-desc">Claude Code skill that triages Workflowy nodes by proposing locations based on rules</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="workflowy">workflowy</span><span class="registry-tag" data-keyword="triage">triage</span><span class="registry-tag" data-keyword="organization">organization</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 6/wk</span>
+    <span class="registry-card-author" title="Publisher">mholzen</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@tapdb/tapdb-data-analysis" data-description="TapDB 游戏数据分析 AI Agent Skill - 查询和分析 TapDB 中的游戏运营数据（活跃/留存/付费/来源/LTV 等）" data-keywords="tapdb,data-analysis,gaming,cursor-skill" data-downloads="271" data-updated="2026-03-03T09:38:27.255Z" data-score="30.646297">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@tapdb/tapdb-data-analysis" target="_blank" rel="noopener" class="registry-card-name">@tapdb/tapdb-data-analysis</a>
+    <span class="registry-card-version">v0.1.31</span>
+  </div>
+  <p class="registry-card-desc">TapDB 游戏数据分析 AI Agent Skill - 查询和分析 TapDB 中的游戏运营数据（活跃/留存/付费/来源/LTV 等）</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="tapdb">tapdb</span><span class="registry-tag" data-keyword="data-analysis">data-analysis</span><span class="registry-tag" data-keyword="gaming">gaming</span><span class="registry-tag" data-keyword="cursor-skill">cursor-skill</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 271/wk</span>
+    <span class="registry-card-author" title="Publisher">jk625x</span>
+  </div>
+</div>
+<div class="registry-card" data-name="refactoring-kit" data-description="Universal refactoring skill for AI coding tools — supports 14 tools including Claude Code, Cursor, Windsurf, Copilot, and more" data-keywords="claude-code,claude-skill,refactoring,code-smell,code-quality,clean-code,testing,ai-coding,cursor,windsurf,copilot,gemini,codex,multi-tool" data-downloads="6" data-updated="2026-02-09T05:46:25.480Z" data-score="29.531761">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/refactoring-kit" target="_blank" rel="noopener" class="registry-card-name">refactoring-kit</a>
+    <span class="registry-card-version">v7.0.0</span>
+  </div>
+  <p class="registry-card-desc">Universal refactoring skill for AI coding tools — supports 14 tools including Claude Code, Cursor, Windsurf, Copilot, and more</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="claude-skill">claude-skill</span><span class="registry-tag" data-keyword="refactoring">refactoring</span><span class="registry-tag" data-keyword="code-smell">code-smell</span><span class="registry-tag" data-keyword="code-quality">code-quality</span><span class="registry-tag" data-keyword="clean-code">clean-code</span><span class="registry-tag" data-keyword="testing">testing</span><span class="registry-tag" data-keyword="ai-coding">ai-coding</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 6/wk</span>
+    <span class="registry-card-author" title="Publisher">bienhoang</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@thierryteisseire/sales-operations-setup" data-description="Comprehensive sales operations setup assistant for Claude Code - implements lead management, forecasting, sales enablement, data analysis, process optimization, and team building" data-keywords="claude,claude-code,sales-operations,sales-ops,lead-management,sales-forecasting,sales-enablement,crm,pipeline-management,sales-metrics,kpi,b2b-sales,saas,revenue-operations,revops,sales-playbook,bant,meddic,champ" data-downloads="5" data-updated="2026-02-13T05:49:23.757Z" data-score="28.957724">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@thierryteisseire/sales-operations-setup" target="_blank" rel="noopener" class="registry-card-name">@thierryteisseire/sales-operations-setup</a>
+    <span class="registry-card-version">v1.0.1</span>
+  </div>
+  <p class="registry-card-desc">Comprehensive sales operations setup assistant for Claude Code - implements lead management, forecasting, sales enablement, data analysis, process optimization, and team building</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="sales-operations">sales-operations</span><span class="registry-tag" data-keyword="sales-ops">sales-ops</span><span class="registry-tag" data-keyword="lead-management">lead-management</span><span class="registry-tag" data-keyword="sales-forecasting">sales-forecasting</span><span class="registry-tag" data-keyword="sales-enablement">sales-enablement</span><span class="registry-tag" data-keyword="crm">crm</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 5/wk</span>
+    <span class="registry-card-author" title="Publisher">thierryteisseire</span>
+  </div>
+</div>
+<div class="registry-card" data-name="prompt-engineer-skill" data-description="Claude Code skill: transform rough prompts/ideas into production-ready LLM prompts with CoT, Constitutional AI, RAG optimization, and multi-model support" data-keywords="claude-code,prompt-engineering,llm,claude,gpt,ai-prompts,chain-of-thought,rag" data-downloads="14" data-updated="2026-02-10T03:42:18.796Z" data-score="28.952444">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/prompt-engineer-skill" target="_blank" rel="noopener" class="registry-card-name">prompt-engineer-skill</a>
+    <span class="registry-card-version">v1.0.3</span>
+  </div>
+  <p class="registry-card-desc">Claude Code skill: transform rough prompts/ideas into production-ready LLM prompts with CoT, Constitutional AI, RAG optimization, and multi-model support</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="prompt-engineering">prompt-engineering</span><span class="registry-tag" data-keyword="llm">llm</span><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="gpt">gpt</span><span class="registry-tag" data-keyword="ai-prompts">ai-prompts</span><span class="registry-tag" data-keyword="chain-of-thought">chain-of-thought</span><span class="registry-tag" data-keyword="rag">rag</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 14/wk</span>
+    <span class="registry-card-author" title="Publisher">repo-phuocdt</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@thierryteisseire/woodpecker-skill" data-description="Skill for setting up and managing Woodpecker campaigns correctly using API V2 and V1. Includes correctly linked prospect enrollment and signature automation." data-keywords="woodpecker,cold-email,sales-automation,email-campaign,prospecting" data-downloads="8" data-updated="2026-02-16T17:57:29.066Z" data-score="28.498514">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@thierryteisseire/woodpecker-skill" target="_blank" rel="noopener" class="registry-card-name">@thierryteisseire/woodpecker-skill</a>
+    <span class="registry-card-version">v1.0.1</span>
+  </div>
+  <p class="registry-card-desc">Skill for setting up and managing Woodpecker campaigns correctly using API V2 and V1. Includes correctly linked prospect enrollment and signature automation.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="woodpecker">woodpecker</span><span class="registry-tag" data-keyword="cold-email">cold-email</span><span class="registry-tag" data-keyword="sales-automation">sales-automation</span><span class="registry-tag" data-keyword="email-campaign">email-campaign</span><span class="registry-tag" data-keyword="prospecting">prospecting</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 8/wk</span>
+    <span class="registry-card-author" title="Publisher">thierryteisseire</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@local-falcon/local-visibility-skill" data-description="Expert AI Visibility and Local SEO guidance from Local Falcon - the pioneer of geo-grid rank tracking" data-keywords="claude-skill,local-seo,ai-visibility,local-falcon,mcp,geo-grid,google-business-profile,saiv,solv,share-of-local-voice,share-of-ai-visibility,local-search,map-pack,chatgpt-visibility,gemini-visibility,ai-overviews,ai-mode" data-downloads="3" data-updated="2026-02-02T23:01:28.921Z" data-score="27.903196">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@local-falcon/local-visibility-skill" target="_blank" rel="noopener" class="registry-card-name">@local-falcon/local-visibility-skill</a>
+    <span class="registry-card-version">v1.0.1</span>
+  </div>
+  <p class="registry-card-desc">Expert AI Visibility and Local SEO guidance from Local Falcon - the pioneer of geo-grid rank tracking</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-skill">claude-skill</span><span class="registry-tag" data-keyword="local-seo">local-seo</span><span class="registry-tag" data-keyword="ai-visibility">ai-visibility</span><span class="registry-tag" data-keyword="local-falcon">local-falcon</span><span class="registry-tag" data-keyword="mcp">mcp</span><span class="registry-tag" data-keyword="geo-grid">geo-grid</span><span class="registry-tag" data-keyword="google-business-profile">google-business-profile</span><span class="registry-tag" data-keyword="saiv">saiv</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 3/wk</span>
+    <span class="registry-card-author" title="Publisher">wearelocalfalcon</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@k2wanko/secrets-cli" data-description="CLI for managing secrets in OS-native credential storage. Includes Agent Skill for AI coding assistants." data-keywords="secrets,credentials,keychain,credential-storage,security,cli,agent-skills,claude-code,claude-skill,cursor,codex,gemini-cli,github-copilot,windsurf,goose,opencode,ai-agents" data-downloads="9" data-updated="2026-02-13T08:18:24.151Z" data-score="27.841166">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@k2wanko/secrets-cli" target="_blank" rel="noopener" class="registry-card-name">@k2wanko/secrets-cli</a>
+    <span class="registry-card-version">v0.1.2</span>
+  </div>
+  <p class="registry-card-desc">CLI for managing secrets in OS-native credential storage. Includes Agent Skill for AI coding assistants.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="secrets">secrets</span><span class="registry-tag" data-keyword="credentials">credentials</span><span class="registry-tag" data-keyword="keychain">keychain</span><span class="registry-tag" data-keyword="credential-storage">credential-storage</span><span class="registry-tag" data-keyword="security">security</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="agent-skills">agent-skills</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 9/wk</span>
+    <span class="registry-card-author" title="Publisher">GitHub Actions</span>
+  </div>
+</div>
+<div class="registry-card" data-name="perkoon-transfer" data-description="Agent skill for P2P file transfer — send files between agents and humans with zero configuration" data-keywords="p2p,file-transfer,perkoon,webrtc,ai-agent" data-downloads="173" data-updated="2026-02-28T20:57:30.712Z" data-score="27.789848">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/perkoon-transfer" target="_blank" rel="noopener" class="registry-card-name">perkoon-transfer</a>
+    <span class="registry-card-version">v1.0.2</span>
+  </div>
+  <p class="registry-card-desc">Agent skill for P2P file transfer — send files between agents and humans with zero configuration</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="p2p">p2p</span><span class="registry-tag" data-keyword="file-transfer">file-transfer</span><span class="registry-tag" data-keyword="perkoon">perkoon</span><span class="registry-tag" data-keyword="webrtc">webrtc</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 173/wk</span>
+    <span class="registry-card-author" title="Publisher">perkunas-vienas</span>
+  </div>
+</div>
+<div class="registry-card" data-name="skill-forge-mcp" data-description="MCP server for staged access to the Agent Skill creation process document" data-keywords="mcp,mcp-server,skill-creation,ai-agent" data-downloads="9" data-updated="2026-02-17T00:30:27.586Z" data-score="26.277523">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/skill-forge-mcp" target="_blank" rel="noopener" class="registry-card-name">skill-forge-mcp</a>
+    <span class="registry-card-version">v1.1.0</span>
+  </div>
+  <p class="registry-card-desc">MCP server for staged access to the Agent Skill creation process document</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="mcp">mcp</span><span class="registry-tag" data-keyword="mcp-server">mcp-server</span><span class="registry-tag" data-keyword="skill-creation">skill-creation</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 9/wk</span>
+    <span class="registry-card-author" title="Publisher">GitHub Actions</span>
+  </div>
+</div>
+<div class="registry-card" data-name="workflowy-driver" data-description="Claude Code skill that uses Workflowy as a live task board for Claude" data-keywords="claude-code,workflowy,task-management" data-downloads="3" data-updated="2026-02-02T20:20:27.185Z" data-score="25.450771">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/workflowy-driver" target="_blank" rel="noopener" class="registry-card-name">workflowy-driver</a>
+    <span class="registry-card-version">v0.1.2</span>
+  </div>
+  <p class="registry-card-desc">Claude Code skill that uses Workflowy as a live task board for Claude</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="workflowy">workflowy</span><span class="registry-tag" data-keyword="task-management">task-management</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 3/wk</span>
+    <span class="registry-card-author" title="Publisher">mholzen</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@ai-aaaaa/share-skill-pro" data-description="A skill that creates new Claude skills and automatically shares them on Slack using Rube for seamless team collaboration and skill discovery." data-keywords="claude-code,ai-assistant,claude,YOUR-KEYWORDS-HERE" data-downloads="102" data-updated="2026-02-26T08:26:34.813Z" data-score="25.04507">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@ai-aaaaa/share-skill-pro" target="_blank" rel="noopener" class="registry-card-name">@ai-aaaaa/share-skill-pro</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">A skill that creates new Claude skills and automatically shares them on Slack using Rube for seamless team collaboration and skill discovery.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="ai-assistant">ai-assistant</span><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="YOUR-KEYWORDS-HERE">YOUR-KEYWORDS-HERE</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 102/wk</span>
+    <span class="registry-card-author" title="Publisher">no-org</span>
+  </div>
+</div>
+<div class="registry-card" data-name="docmcp-skill" data-description="Claude Code skill for Google Docs, Sheets, Drive, and Apps Script operations" data-keywords="claude-code,google-docs,google-sheets,google-drive,apps-script" data-downloads="1" data-updated="2026-02-13T12:34:43.472Z" data-score="24.555756">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/docmcp-skill" target="_blank" rel="noopener" class="registry-card-name">docmcp-skill</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Claude Code skill for Google Docs, Sheets, Drive, and Apps Script operations</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="google-docs">google-docs</span><span class="registry-tag" data-keyword="google-sheets">google-sheets</span><span class="registry-tag" data-keyword="google-drive">google-drive</span><span class="registry-tag" data-keyword="apps-script">apps-script</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">lanmower</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@dork-labs/loop-skill" data-description="Agent skill for Loop — the autonomous improvement engine. Teaches AI agents how to use Loop&#x27;s REST API." data-keywords="agentskills,loop,ai-agent,mcp,claude-code,cursor,codex" data-downloads="98" data-updated="2026-02-23T19:45:13.738Z" data-score="24.31201">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@dork-labs/loop-skill" target="_blank" rel="noopener" class="registry-card-name">@dork-labs/loop-skill</a>
+    <span class="registry-card-version">v0.2.0</span>
+  </div>
+  <p class="registry-card-desc">Agent skill for Loop — the autonomous improvement engine. Teaches AI agents how to use Loop&#x27;s REST API.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="agentskills">agentskills</span><span class="registry-tag" data-keyword="loop">loop</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span><span class="registry-tag" data-keyword="mcp">mcp</span><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="cursor">cursor</span><span class="registry-tag" data-keyword="codex">codex</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 98/wk</span>
+    <span class="registry-card-author" title="Publisher">dorkian</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@thierryteisseire/salesforce-leadgenius" data-description="Salesforce ↔ LeadGenius Skill — Export leads from LeadGenius and import them into Salesforce with custom AI fields, FLS deployment, and automated scripts." data-keywords="salesforce,leadgenius,ai-agent,lead-import,crm,data-migration" data-downloads="4" data-updated="2026-02-14T05:45:57.012Z" data-score="24.26713">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@thierryteisseire/salesforce-leadgenius" target="_blank" rel="noopener" class="registry-card-name">@thierryteisseire/salesforce-leadgenius</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Salesforce ↔ LeadGenius Skill — Export leads from LeadGenius and import them into Salesforce with custom AI fields, FLS deployment, and automated scripts.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="salesforce">salesforce</span><span class="registry-tag" data-keyword="leadgenius">leadgenius</span><span class="registry-tag" data-keyword="ai-agent">ai-agent</span><span class="registry-tag" data-keyword="lead-import">lead-import</span><span class="registry-tag" data-keyword="crm">crm</span><span class="registry-tag" data-keyword="data-migration">data-migration</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 4/wk</span>
+    <span class="registry-card-author" title="Publisher">thierryteisseire</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@lbajsarowicz/warden-skill" data-description="Agent Skill for Warden Docker development environments" data-keywords="warden,docker,magento,laravel,php,cursor,ai" data-downloads="3" data-updated="2026-02-02T13:27:36.813Z" data-score="24.135614">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@lbajsarowicz/warden-skill" target="_blank" rel="noopener" class="registry-card-name">@lbajsarowicz/warden-skill</a>
+    <span class="registry-card-version">v1.2.0</span>
+  </div>
+  <p class="registry-card-desc">Agent Skill for Warden Docker development environments</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="warden">warden</span><span class="registry-tag" data-keyword="docker">docker</span><span class="registry-tag" data-keyword="magento">magento</span><span class="registry-tag" data-keyword="laravel">laravel</span><span class="registry-tag" data-keyword="php">php</span><span class="registry-tag" data-keyword="cursor">cursor</span><span class="registry-tag" data-keyword="ai">ai</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 3/wk</span>
+    <span class="registry-card-author" title="Publisher">lbajsarowicz</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@luziadev/skill" data-description="Claude Code skill for real-time cryptocurrency prices from multiple exchanges via Luzia API" data-keywords="claude-code,cryptocurrency,crypto,prices,bitcoin,ethereum,trading,exchanges,binance,coinbase,kraken,bybit,okx,api,websocket,real-time" data-downloads="1" data-updated="2026-02-10T15:57:36.957Z" data-score="23.948948">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@luziadev/skill" target="_blank" rel="noopener" class="registry-card-name">@luziadev/skill</a>
+    <span class="registry-card-version">v1.0.0-beta.3</span>
+  </div>
+  <p class="registry-card-desc">Claude Code skill for real-time cryptocurrency prices from multiple exchanges via Luzia API</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="cryptocurrency">cryptocurrency</span><span class="registry-tag" data-keyword="crypto">crypto</span><span class="registry-tag" data-keyword="prices">prices</span><span class="registry-tag" data-keyword="bitcoin">bitcoin</span><span class="registry-tag" data-keyword="ethereum">ethereum</span><span class="registry-tag" data-keyword="trading">trading</span><span class="registry-tag" data-keyword="exchanges">exchanges</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">helder_luzia</span>
+  </div>
+</div>
+<div class="registry-card" data-name="taste-ink-skill" data-description="Install the Taste skill into Claude Code with one command." data-keywords="claude-code,taste,installer" data-downloads="84" data-updated="2026-02-28T17:31:15.459Z" data-score="23.771523">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/taste-ink-skill" target="_blank" rel="noopener" class="registry-card-name">taste-ink-skill</a>
+    <span class="registry-card-version">v0.1.0</span>
+  </div>
+  <p class="registry-card-desc">Install the Taste skill into Claude Code with one command.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="taste">taste</span><span class="registry-tag" data-keyword="installer">installer</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 84/wk</span>
+    <span class="registry-card-author" title="Publisher">kyriecai</span>
+  </div>
+</div>
+<div class="registry-card" data-name="explain-my-error" data-description="AI-powered CLI to explain programming errors with fixes and ELI5 output." data-keywords="cli,errors,debugging,ai,groq" data-downloads="83" data-updated="2026-03-08T01:13:09.553Z" data-score="23.60291">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/explain-my-error" target="_blank" rel="noopener" class="registry-card-name">explain-my-error</a>
+    <span class="registry-card-version">v1.0.12</span>
+  </div>
+  <p class="registry-card-desc">AI-powered CLI to explain programming errors with fixes and ELI5 output.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="errors">errors</span><span class="registry-tag" data-keyword="debugging">debugging</span><span class="registry-tag" data-keyword="ai">ai</span><span class="registry-tag" data-keyword="groq">groq</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 83/wk</span>
+    <span class="registry-card-author" title="Publisher">awaisaly</span>
+  </div>
+</div>
+<div class="registry-card" data-name="excel-mcp-skill" data-description="Agent Skill for automating Microsoft Excel via MCP Server — 225 operations including Power Query, DAX, PivotTables, Charts, and more" data-keywords="excel,mcp,mcp-server,spreadsheet,power-query,dax,pivottable" data-downloads="80" data-updated="2026-02-25T13:42:25.613Z" data-score="23.470505">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/excel-mcp-skill" target="_blank" rel="noopener" class="registry-card-name">excel-mcp-skill</a>
+    <span class="registry-card-version">v1.7.0</span>
+  </div>
+  <p class="registry-card-desc">Agent Skill for automating Microsoft Excel via MCP Server — 225 operations including Power Query, DAX, PivotTables, Charts, and more</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="excel">excel</span><span class="registry-tag" data-keyword="mcp">mcp</span><span class="registry-tag" data-keyword="mcp-server">mcp-server</span><span class="registry-tag" data-keyword="spreadsheet">spreadsheet</span><span class="registry-tag" data-keyword="power-query">power-query</span><span class="registry-tag" data-keyword="dax">dax</span><span class="registry-tag" data-keyword="pivottable">pivottable</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 80/wk</span>
+    <span class="registry-card-author" title="Publisher">sbroenne</span>
+  </div>
+</div>
+<div class="registry-card" data-name="excel-cli-skill" data-description="Agent Skill for automating Microsoft Excel via CLI — Power Query, DAX, PivotTables, Charts, VBA, and more from scripts and coding agents" data-keywords="excel,cli,spreadsheet,power-query,dax,pivottable,automation" data-downloads="76" data-updated="2026-02-25T13:42:33.061Z" data-score="22.837101">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/excel-cli-skill" target="_blank" rel="noopener" class="registry-card-name">excel-cli-skill</a>
+    <span class="registry-card-version">v1.7.0</span>
+  </div>
+  <p class="registry-card-desc">Agent Skill for automating Microsoft Excel via CLI — Power Query, DAX, PivotTables, Charts, VBA, and more from scripts and coding agents</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="excel">excel</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="spreadsheet">spreadsheet</span><span class="registry-tag" data-keyword="power-query">power-query</span><span class="registry-tag" data-keyword="dax">dax</span><span class="registry-tag" data-keyword="pivottable">pivottable</span><span class="registry-tag" data-keyword="automation">automation</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 76/wk</span>
+    <span class="registry-card-author" title="Publisher">sbroenne</span>
+  </div>
+</div>
+<div class="registry-card" data-name="magicslides" data-description="Create stunning AI-powered presentations from your terminal" data-keywords="presentation,slides,ai,cli,magicslides,powerpoint,google-slides,ppt,pitch-deck,claude,cursor,codex" data-downloads="4" data-updated="2026-01-26T18:02:01.012Z" data-score="21.440603">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/magicslides" target="_blank" rel="noopener" class="registry-card-name">magicslides</a>
+    <span class="registry-card-version">v1.0.3</span>
+  </div>
+  <p class="registry-card-desc">Create stunning AI-powered presentations from your terminal</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="presentation">presentation</span><span class="registry-tag" data-keyword="slides">slides</span><span class="registry-tag" data-keyword="ai">ai</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="magicslides">magicslides</span><span class="registry-tag" data-keyword="powerpoint">powerpoint</span><span class="registry-tag" data-keyword="google-slides">google-slides</span><span class="registry-tag" data-keyword="ppt">ppt</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 4/wk</span>
+    <span class="registry-card-author" title="Publisher">magicslides</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-learn-claude" data-description="An interactive, hands-on tutorial system that teaches users to become Claude Code power users through progressive exercises on a real practice project. v1.1.5 fixes model configuration and improves user experience." data-keywords="claude,claude-code,tutorial,learning,gamification" data-downloads="1" data-updated="2026-01-23T22:12:15.263Z" data-score="20.144184">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-learn-claude" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-learn-claude</a>
+    <span class="registry-card-version">v1.1.5</span>
+  </div>
+  <p class="registry-card-desc">An interactive, hands-on tutorial system that teaches users to become Claude Code power users through progressive exercises on a real practice project. v1.1.5 fixes model configuration and improves user experience.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="tutorial">tutorial</span><span class="registry-tag" data-keyword="learning">learning</span><span class="registry-tag" data-keyword="gamification">gamification</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="askvideo" data-description="Chat with any YouTube video from your terminal using AI" data-keywords="youtube,video,ai,chat,cli,askvideo,transcript,gpt,openai,llm,claude,cursor,codex" data-downloads="8" data-updated="2026-01-25T09:08:38.590Z" data-score="20.005663">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/askvideo" target="_blank" rel="noopener" class="registry-card-name">askvideo</a>
+    <span class="registry-card-version">v1.0.6</span>
+  </div>
+  <p class="registry-card-desc">Chat with any YouTube video from your terminal using AI</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="youtube">youtube</span><span class="registry-tag" data-keyword="video">video</span><span class="registry-tag" data-keyword="ai">ai</span><span class="registry-tag" data-keyword="chat">chat</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="askvideo">askvideo</span><span class="registry-tag" data-keyword="transcript">transcript</span><span class="registry-tag" data-keyword="gpt">gpt</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 8/wk</span>
+    <span class="registry-card-author" title="Publisher">indianappguy</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@affilino/ecommerce-seo-audit-skill" data-description="Professional ecommerce SEO audit skill for Claude Code with 7 specialized audit types. Developed by Affilino NZ - Auckland Shopify SEO Agency." data-keywords="claude-code,claude-skill,seo,ecommerce,shopify,seo-audit,technical-seo,ecommerce-seo,product-pages,collection-pages,competitor-analysis,keyword-research,log-file-analysis,crawl-budget,ai-agent,claude,affilino" data-downloads="6" data-updated="2026-01-30T23:32:39.270Z" data-score="19.952862">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@affilino/ecommerce-seo-audit-skill" target="_blank" rel="noopener" class="registry-card-name">@affilino/ecommerce-seo-audit-skill</a>
+    <span class="registry-card-version">v2.0.0</span>
+  </div>
+  <p class="registry-card-desc">Professional ecommerce SEO audit skill for Claude Code with 7 specialized audit types. Developed by Affilino NZ - Auckland Shopify SEO Agency.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="claude-skill">claude-skill</span><span class="registry-tag" data-keyword="seo">seo</span><span class="registry-tag" data-keyword="ecommerce">ecommerce</span><span class="registry-tag" data-keyword="shopify">shopify</span><span class="registry-tag" data-keyword="seo-audit">seo-audit</span><span class="registry-tag" data-keyword="technical-seo">technical-seo</span><span class="registry-tag" data-keyword="ecommerce-seo">ecommerce-seo</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 6/wk</span>
+    <span class="registry-card-author" title="Publisher">affilino</span>
+  </div>
+</div>
+<div class="registry-card" data-name="react-gradual-architecture" data-description="Incremental React architecture guidelines as an agent skill" data-keywords="react,architecture,cursor,ai,code-organization,best-practices,incremental,gradual" data-downloads="10" data-updated="2026-01-24T14:10:54.841Z" data-score="19.81065">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/react-gradual-architecture" target="_blank" rel="noopener" class="registry-card-name">react-gradual-architecture</a>
+    <span class="registry-card-version">v1.0.2</span>
+  </div>
+  <p class="registry-card-desc">Incremental React architecture guidelines as an agent skill</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="react">react</span><span class="registry-tag" data-keyword="architecture">architecture</span><span class="registry-tag" data-keyword="cursor">cursor</span><span class="registry-tag" data-keyword="ai">ai</span><span class="registry-tag" data-keyword="code-organization">code-organization</span><span class="registry-tag" data-keyword="best-practices">best-practices</span><span class="registry-tag" data-keyword="incremental">incremental</span><span class="registry-tag" data-keyword="gradual">gradual</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 10/wk</span>
+    <span class="registry-card-author" title="Publisher">vandriesh</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@agentskill/installer" data-description="CLI tool for installing and managing AI agent skills for Claude Code, Cursor, Windsurf and more" data-keywords="claude-code,cursor,windsurf,installer,cli,ai-assistant" data-downloads="12" data-updated="2026-01-16T03:13:13.692Z" data-score="18.978271">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@agentskill/installer" target="_blank" rel="noopener" class="registry-card-name">@agentskill/installer</a>
+    <span class="registry-card-version">v1.0.1</span>
+  </div>
+  <p class="registry-card-desc">CLI tool for installing and managing AI agent skills for Claude Code, Cursor, Windsurf and more</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="cursor">cursor</span><span class="registry-tag" data-keyword="windsurf">windsurf</span><span class="registry-tag" data-keyword="installer">installer</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="ai-assistant">ai-assistant</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 12/wk</span>
+    <span class="registry-card-author" title="Publisher">raohai</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@gravtice/nous-swapcloud" data-description="CLI + stdio MCP server + agent skill for uploading files to swap cloud storage (Tencent COS first)." data-keywords="mcp,tencent-cos,file-upload,signed-url,claude-code" data-downloads="6" data-updated="2026-01-27T03:05:59.228Z" data-score="15.7443285">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@gravtice/nous-swapcloud" target="_blank" rel="noopener" class="registry-card-name">@gravtice/nous-swapcloud</a>
+    <span class="registry-card-version">v0.1.4</span>
+  </div>
+  <p class="registry-card-desc">CLI + stdio MCP server + agent skill for uploading files to swap cloud storage (Tencent COS first).</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="mcp">mcp</span><span class="registry-tag" data-keyword="tencent-cos">tencent-cos</span><span class="registry-tag" data-keyword="file-upload">file-upload</span><span class="registry-tag" data-keyword="signed-url">signed-url</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 6/wk</span>
+    <span class="registry-card-author" title="Publisher">gravtice-agent</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@utoo/skills" data-description="utoo toolchain skills from ai" data-keywords="claude-code,ai-assistant,claude,utoo" data-downloads="1" data-updated="2026-01-20T04:08:20.889Z" data-score="13.546689">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@utoo/skills" target="_blank" rel="noopener" class="registry-card-name">@utoo/skills</a>
+    <span class="registry-card-version">v1.0.2</span>
+  </div>
+  <p class="registry-card-desc">utoo toolchain skills from ai</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="ai-assistant">ai-assistant</span><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="utoo">utoo</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">elrrrrrrr</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-slack-gif-creator-2" data-description="Toolkit for creating animated GIFs optimized for Slack, with validators for size constraints and composable animation primitives. This skill applies when users request animated GIFs or emoji animations for Slack from descriptions like &quot;make me a GIF for S" data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-22T07:50:27.612Z" data-score="13.126247">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-slack-gif-creator-2" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-slack-gif-creator-2</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Toolkit for creating animated GIFs optimized for Slack, with validators for size constraints and composable animation primitives. This skill applies when users request animated GIFs or emoji animations for Slack from descriptions like &quot;make me a GIF for S</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="inspecting-changes-skill" data-description="Pre-execution static analysis skill for AI-generated code changes" data-keywords="claude-code,claude,code-review,static-analysis,security" data-downloads="2" data-updated="2026-01-26T05:20:59.866Z" data-score="12.498882">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/inspecting-changes-skill" target="_blank" rel="noopener" class="registry-card-name">inspecting-changes-skill</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Pre-execution static analysis skill for AI-generated code changes</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="code-review">code-review</span><span class="registry-tag" data-keyword="static-analysis">static-analysis</span><span class="registry-tag" data-keyword="security">security</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 2/wk</span>
+    <span class="registry-card-author" title="Publisher">svp1105714</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@kampter/claude-skill" data-description="Global liquidity quantitative analysis skill for Claude Code - generates trading signals for Gold, Nasdaq, BTC based on Fed liquidity indicators" data-keywords="claude-code,claude,quantitative-analysis,liquidity,trading,fed,bitcoin,nasdaq,gold" data-downloads="3" data-updated="2026-01-22T06:28:27.577Z" data-score="11.63267">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@kampter/claude-skill" target="_blank" rel="noopener" class="registry-card-name">@kampter/claude-skill</a>
+    <span class="registry-card-version">v1.2.0</span>
+  </div>
+  <p class="registry-card-desc">Global liquidity quantitative analysis skill for Claude Code - generates trading signals for Gold, Nasdaq, BTC based on Fed liquidity indicators</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="quantitative-analysis">quantitative-analysis</span><span class="registry-tag" data-keyword="liquidity">liquidity</span><span class="registry-tag" data-keyword="trading">trading</span><span class="registry-tag" data-keyword="fed">fed</span><span class="registry-tag" data-keyword="bitcoin">bitcoin</span><span class="registry-tag" data-keyword="nasdaq">nasdaq</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 3/wk</span>
+    <span class="registry-card-author" title="Publisher">kampter</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-skill-share" data-description="A skill that creates new Claude skills and automatically shares them on Slack using Rube for seamless team collaboration and skill discovery." data-keywords="claude,claude-code" data-downloads="2" data-updated="2026-01-22T07:51:13.832Z" data-score="10.8922">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-skill-share" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-skill-share</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">A skill that creates new Claude skills and automatically shares them on Slack using Rube for seamless team collaboration and skill discovery.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 2/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-skill-creator-2" data-description="Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude&#x27;s capabilities with specialized knowledge, workflows, or tool integrations." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-22T07:50:44.695Z" data-score="10.774343">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-skill-creator-2" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-skill-creator-2</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude&#x27;s capabilities with specialized knowledge, workflows, or tool integrations.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-verification-before-completion" data-description="Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always" data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-22T07:52:14.868Z" data-score="10.774343">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-verification-before-completion" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-verification-before-completion</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-implement-complete-feature-fork-1765823904279" data-description="Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:30.160Z" data-score="10.5944805">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-implement-complete-feature-fork-1765823904279" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-implement-complete-feature-fork-1765823904279</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-service-method" data-description="Add a new method to an existing service layer file following the project&#x27;s patterns for data access, type safety, and mock fallback support." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:58.670Z" data-score="10.363254">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-service-method" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-service-method</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Add a new method to an existing service layer file following the project&#x27;s patterns for data access, type safety, and mock fallback support.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-social-feature" data-description="Implement a complete social feature (like, star, bookmark, follow) across all layers: database migration, types, service methods, and UI components." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:49.060Z" data-score="10.363254">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-social-feature" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-social-feature</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a complete social feature (like, star, bookmark, follow) across all layers: database migration, types, service methods, and UI components.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-content-research-writer" data-description="Assists in writing high-quality content by conducting research, adding citations, improving hooks, iterating on outlines, and providing real-time feedback on each section. Transforms your writing process from solo effort to collaborative partnership." data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:51:40.440Z" data-score="10.363254">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-content-research-writer" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-content-research-writer</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Assists in writing high-quality content by conducting research, adding citations, improving hooks, iterating on outlines, and providing real-time feedback on each section. Transforms your writing process from solo effort to collaborative partnership.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-internal-comms-2" data-description="A set of resources to help me write all kinds of internal communications, using the formats that my company likes to use. Claude should use this skill whenever asked to write some sort of internal communications (status reports, leadership updates, 3P upd" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:51:01.601Z" data-score="10.201468">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-internal-comms-2" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-internal-comms-2</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">A set of resources to help me write all kinds of internal communications, using the formats that my company likes to use. Claude should use this skill whenever asked to write some sort of internal communications (status reports, leadership updates, 3P upd</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-meeting-insights-analyzer" data-description="Analyzes meeting transcripts and recordings to uncover behavioral patterns, communication insights, and actionable feedback. Identifies when you avoid conflict, use filler words, dominate conversations, or miss opportunities to listen. Perfect for profess" data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:55:05.013Z" data-score="10.171964">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-meeting-insights-analyzer" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-meeting-insights-analyzer</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Analyzes meeting transcripts and recordings to uncover behavioral patterns, communication insights, and actionable feedback. Identifies when you avoid conflict, use filler words, dominate conversations, or miss opportunities to listen. Perfect for profess</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-mcp-builder-2" data-description="Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node" data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:55:08.962Z" data-score="10.171964">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-mcp-builder-2" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-mcp-builder-2</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-receiving-code-review" data-description="Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:52:24.263Z" data-score="10.171964">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-receiving-code-review" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-receiving-code-review</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-template-skill" data-description="Replace with description of the skill and when Claude should use it." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-22T07:51:25.872Z" data-score="10.131317">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-template-skill" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-template-skill</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Replace with description of the skill and when Claude should use it.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-brand-guidelines-2" data-description="Applies Anthropic&#x27;s official brand colors and typography to any sort of artifact that may benefit from having Anthropic&#x27;s look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:55:06.903Z" data-score="10.032558">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-brand-guidelines-2" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-brand-guidelines-2</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Applies Anthropic&#x27;s official brand colors and typography to any sort of artifact that may benefit from having Anthropic&#x27;s look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-new-page" data-description="Create a complete new page in the application with routing, layout, data fetching, and all necessary components following project patterns." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:38.408Z" data-score="10.032558">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-new-page" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-new-page</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Create a complete new page in the application with routing, layout, data fetching, and all necessary components following project patterns.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-invoice-organizer" data-description="Automatically organizes invoices and receipts for tax preparation by reading messy files, extracting key information, renaming them consistently, and sorting them into logical folders. Turns hours of manual bookkeeping into minutes of automated organizati" data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-22T07:50:32.798Z" data-score="10.002158">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-invoice-organizer" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-invoice-organizer</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Automatically organizes invoices and receipts for tax preparation by reading messy files, extracting key information, renaming them consistently, and sorting them into logical folders. Turns hours of manual bookkeeping into minutes of automated organizati</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-competitive-ads-extractor" data-description="Extracts and analyzes competitors&#x27; ads from ad libraries (Facebook, LinkedIn, etc.) to understand what messaging, problems, and creative approaches are working. Helps inspire and improve your own ad campaigns." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-22T07:50:16.562Z" data-score="10.002158">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-competitive-ads-extractor" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-competitive-ads-extractor</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Extracts and analyzes competitors&#x27; ads from ad libraries (Facebook, LinkedIn, etc.) to understand what messaging, problems, and creative approaches are working. Helps inspire and improve your own ad campaigns.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-subagent-driven-development" data-description="Use when executing implementation plans with independent tasks in the current session - dispatches fresh subagent for each task with code review between tasks, enabling fast iteration with quality gates" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:52:08.964Z" data-score="9.983694">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-subagent-driven-development" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-subagent-driven-development</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Use when executing implementation plans with independent tasks in the current session - dispatches fresh subagent for each task with code review between tasks, enabling fast iteration with quality gates</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-crud-entity" data-description="Create complete CRUD (Create, Read, Update, Delete) functionality for a new entity type, including database, types, service layer, and UI components." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:44.759Z" data-score="9.798433">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-crud-entity" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-crud-entity</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Create complete CRUD (Create, Read, Update, Delete) functionality for a new entity type, including database, types, service layer, and UI components.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-file-organizer" data-description="Intelligently organizes your files and folders across your computer by understanding context, finding duplicates, suggesting better structures, and automating cleanup tasks. Reduces cognitive load and keeps your digital workspace tidy without manual effor" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:50:03.467Z" data-score="9.798433">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-file-organizer" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-file-organizer</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Intelligently organizes your files and folders across your computer by understanding context, finding duplicates, suggesting better structures, and automating cleanup tasks. Reduces cognitive load and keeps your digital workspace tidy without manual effor</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-artifacts-builder" data-description="Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simpl" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:50:24.456Z" data-score="9.798433">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-artifacts-builder" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-artifacts-builder</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simpl</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-webapp-testing-2" data-description="Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs." data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:49:56.586Z" data-score="9.783858">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-webapp-testing-2" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-webapp-testing-2</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-filter-capability" data-description="Add filtering capability to an existing entity&#x27;s list view, extending service layer filters and adding UI controls for faceted navigation." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:46.916Z" data-score="9.506064">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-filter-capability" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-filter-capability</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Add filtering capability to an existing entity&#x27;s list view, extending service layer filters and adding UI controls for faceted navigation.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-implement-complete-feature-fork-1765823708898" data-description="Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:34.157Z" data-score="9.506064">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-implement-complete-feature-fork-1765823708898" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-implement-complete-feature-fork-1765823708898</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-domain-name-brainstormer" data-description="Generates creative domain name ideas for your project and checks availability across multiple TLDs (.com, .io, .dev, .ai, etc.). Saves hours of brainstorming and manual checking." data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:51:08.180Z" data-score="9.506064">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-domain-name-brainstormer" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-domain-name-brainstormer</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Generates creative domain name ideas for your project and checks availability across multiple TLDs (.com, .io, .dev, .ai, etc.). Saves hours of brainstorming and manual checking.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-theme-factory-2" data-description="Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-t" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:51:19.340Z" data-score="9.46808">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-theme-factory-2" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-theme-factory-2</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-t</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-relationship" data-description="Add a many-to-many relationship between two existing entities using a junction table, including migration, types, and service methods." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:42.171Z" data-score="9.375785">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-relationship" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-relationship</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Add a many-to-many relationship between two existing entities using a junction table, including migration, types, and service methods.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-video-downloader" data-description="Downloads videos from YouTube and other platforms for offline viewing, editing, or archival. Handles various formats and quality options." data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:51:23.252Z" data-score="9.375785">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-video-downloader" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-video-downloader</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Downloads videos from YouTube and other platforms for offline viewing, editing, or archival. Handles various formats and quality options.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-database-migration" data-description="Create Supabase database migrations with proper table structure, indexes, Row Level Security (RLS) policies, and triggers following project conventions." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:55:00.658Z" data-score="9.347375">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-database-migration" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-database-migration</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Create Supabase database migrations with proper table structure, indexes, Row Level Security (RLS) policies, and triggers following project conventions.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-implement-search-system-fork-1765945857121" data-description="Implement a comprehensive search system with full-text search, filtering, faceted navigation, and result highlighting across multiple entity types." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:09.115Z" data-score="9.347375">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-implement-search-system-fork-1765945857121" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-implement-search-system-fork-1765945857121</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a comprehensive search system with full-text search, filtering, faceted navigation, and result highlighting across multiple entity types.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-implement-complete-feature" data-description="Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:40.415Z" data-score="9.33012">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-implement-complete-feature" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-implement-complete-feature</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-dcoker-file-generator" data-description="Generate production ready dockerfiles using best practices" data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:12.971Z" data-score="9.33012">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-dcoker-file-generator" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-dcoker-file-generator</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Generate production ready dockerfiles using best practices</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-developer-growth-analysis" data-description="Analyzes your recent Claude Code chat history to identify coding patterns, development gaps, and areas for improvement, curates relevant learning resources from HackerNews, and automatically sends a personalized growth report to your Slack DMs." data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:51:11.369Z" data-score="9.33012">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-developer-growth-analysis" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-developer-growth-analysis</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Analyzes your recent Claude Code chat history to identify coding patterns, development gaps, and areas for improvement, curates relevant learning resources from HackerNews, and automatically sends a personalized growth report to your Slack DMs.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-image-enhancer" data-description="Improves the quality of images, especially screenshots, by enhancing resolution, sharpness, and clarity. Perfect for preparing images for presentations, documentation, or social media posts." data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:51:04.823Z" data-score="9.143366">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-image-enhancer" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-image-enhancer</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Improves the quality of images, especially screenshots, by enhancing resolution, sharpness, and clarity. Perfect for preparing images for presentations, documentation, or social media posts.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-writing-skills" data-description="Use when creating new skills, editing existing skills, or verifying skills work before deployment - applies TDD to process documentation by testing with subagents before writing, iterating until bulletproof against rationalization" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:52:19.098Z" data-score="9.143366">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-writing-skills" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-writing-skills</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Use when creating new skills, editing existing skills, or verifying skills work before deployment - applies TDD to process documentation by testing with subagents before writing, iterating until bulletproof against rationalization</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-implement-search-system-fork-1765945849694" data-description="Implement a comprehensive search system with full-text search, filtering, faceted navigation, and result highlighting across multiple entity types." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:10.804Z" data-score="9.031126">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-implement-search-system-fork-1765945849694" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-implement-search-system-fork-1765945849694</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a comprehensive search system with full-text search, filtering, faceted navigation, and result highlighting across multiple entity types.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-implement-complete-feature-fork-1765824342918" data-description="Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:28.130Z" data-score="9.031126">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-implement-complete-feature-fork-1765824342918" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-implement-complete-feature-fork-1765824342918</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-radix-component" data-description="Add a new Radix UI component to the project&#x27;s UI library with proper styling, accessibility, and variant support." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:52.755Z" data-score="8.787066">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-radix-component" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-radix-component</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Add a new Radix UI component to the project&#x27;s UI library with proper styling, accessibility, and variant support.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-changelog-generator" data-description="Automatically creates user-facing changelogs from git commits by analyzing commit history, categorizing changes, and transforming technical commits into clear, customer-friendly release notes. Turns hours of manual changelog writing into minutes of automa" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:50:30.219Z" data-score="8.787066">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-changelog-generator" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-changelog-generator</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Automatically creates user-facing changelogs from git commits by analyzing commit history, categorizing changes, and transforming technical commits into clear, customer-friendly release notes. Turns hours of manual changelog writing into minutes of automa</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-implement-search-system" data-description="Implement a comprehensive search system with full-text search, filtering, faceted navigation, and result highlighting across multiple entity types." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:36.288Z" data-score="8.726642">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-implement-search-system" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-implement-search-system</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a comprehensive search system with full-text search, filtering, faceted navigation, and result highlighting across multiple entity types.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="getskill" data-description="GetSkill CLI" data-keywords="" data-downloads="0" data-updated="2026-01-15T12:59:22.238Z" data-score="8.726642">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/getskill" target="_blank" rel="noopener" class="registry-card-name">getskill</a>
+    <span class="registry-card-version">v0.0.1</span>
+  </div>
+  <p class="registry-card-desc">GetSkill CLI</p>
+
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">nkuang</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-database-types" data-description="Extend TypeScript database types to include new tables, columns, or relation types, maintaining type safety across the application." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:55.913Z" data-score="8.641575">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-database-types" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-database-types</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Extend TypeScript database types to include new tables, columns, or relation types, maintaining type safety across the application.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-lead-research-assistant" data-description="Identifies high-quality leads for your product or service by analyzing your business, searching for target companies, and providing actionable contact strategies. Perfect for sales, business development, and marketing professionals." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:55:02.794Z" data-score="8.641575">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-lead-research-assistant" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-lead-research-assistant</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Identifies high-quality leads for your product or service by analyzing your business, searching for target companies, and providing actionable contact strategies. Perfect for sales, business development, and marketing professionals.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-implement-search-system-fork-1765945887128" data-description="Implement a comprehensive search system with full-text search, filtering, faceted navigation, and result highlighting across multiple entity types." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:07.370Z" data-score="8.61539">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-implement-search-system-fork-1765945887128" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-implement-search-system-fork-1765945887128</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a comprehensive search system with full-text search, filtering, faceted navigation, and result highlighting across multiple entity types.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-defense-in-depth" data-description="Use when invalid data causes failures deep in execution, requiring validation at multiple system layers - validates at every layer data passes through to make bugs structurally impossible" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:51:52.616Z" data-score="8.61539">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-defense-in-depth" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-defense-in-depth</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Use when invalid data causes failures deep in execution, requiring validation at multiple system layers - validates at every layer data passes through to make bugs structurally impossible</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-add-new-page-fork-1765950077813" data-description="Create a complete new page in the application with routing, layout, data fetching, and all necessary components following project patterns." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:05.527Z" data-score="8.599485">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-add-new-page-fork-1765950077813" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-add-new-page-fork-1765950077813</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Create a complete new page in the application with routing, layout, data fetching, and all necessary components following project patterns.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-raffle-winner-picker" data-description="Picks random winners from lists, spreadsheets, or Google Sheets for giveaways, raffles, and contests. Ensures fair, unbiased selection with transparency." data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:51:16.257Z" data-score="8.599485">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-raffle-winner-picker" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-raffle-winner-picker</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Picks random winners from lists, spreadsheets, or Google Sheets for giveaways, raffles, and contests. Ensures fair, unbiased selection with transparency.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-create-empty-component" data-description="Scaffold a new React component with TypeScript, following the project&#x27;s conventions for component structure, props, styling, and service integration." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:50.709Z" data-score="7.88607">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-create-empty-component" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-create-empty-component</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Scaffold a new React component with TypeScript, following the project&#x27;s conventions for component structure, props, styling, and service integration.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-implement-complete-feature-fork-1765823716455" data-description="Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability." data-keywords="claude,claude-code" data-downloads="1" data-updated="2026-01-12T07:54:32.266Z" data-score="7.809197">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-implement-complete-feature-fork-1765823716455" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-implement-complete-feature-fork-1765823716455</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Implement a complete, production-ready feature from database to UI, orchestrating multiple skills to deliver an end-to-end user-facing capability.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 1/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="@sunboylabs/oneskill-canvas-design-2" data-description="Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists&#x27; w" data-keywords="claude,claude-code" data-downloads="0" data-updated="2026-01-22T07:50:38.658Z" data-score="7.7711616">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/@sunboylabs/oneskill-canvas-design-2" target="_blank" rel="noopener" class="registry-card-name">@sunboylabs/oneskill-canvas-design-2</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists&#x27; w</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude">claude</span><span class="registry-tag" data-keyword="claude-code">claude-code</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">sandeep.thuthike</span>
+  </div>
+</div>
+<div class="registry-card" data-name="10x-code" data-description="Programming-first context engine for Claude Code — TypeScript-powered codebase indexing, dependency graphing, symbol-level search, and zero-token context injection via hooks." data-keywords="claude-code,context-engineering,codebase-indexing,token-optimization,dependency-graph,symbol-search,programming-first,zero-token,mcp,ai-coding,claude,anthropic" data-downloads="0" data-updated="2026-03-06T10:51:52.427Z" data-score="0">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/10x-code" target="_blank" rel="noopener" class="registry-card-name">10x-code</a>
+    <span class="registry-card-version">v2.0.0</span>
+  </div>
+  <p class="registry-card-desc">Programming-first context engine for Claude Code — TypeScript-powered codebase indexing, dependency graphing, symbol-level search, and zero-token context injection via hooks.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="context-engineering">context-engineering</span><span class="registry-tag" data-keyword="codebase-indexing">codebase-indexing</span><span class="registry-tag" data-keyword="token-optimization">token-optimization</span><span class="registry-tag" data-keyword="dependency-graph">dependency-graph</span><span class="registry-tag" data-keyword="symbol-search">symbol-search</span><span class="registry-tag" data-keyword="programming-first">programming-first</span><span class="registry-tag" data-keyword="zero-token">zero-token</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">thinqmesh</span>
+  </div>
+</div>
+<div class="registry-card" data-name="veed-fabric-skill" data-description="Claude Agent Skill for creating AI talking head videos with VEED Fabric" data-keywords="claude-skill,veed,fabric,video,mcp" data-downloads="0" data-updated="2026-03-04T14:46:45.392Z" data-score="0">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/veed-fabric-skill" target="_blank" rel="noopener" class="registry-card-name">veed-fabric-skill</a>
+    <span class="registry-card-version">v1.3.0</span>
+  </div>
+  <p class="registry-card-desc">Claude Agent Skill for creating AI talking head videos with VEED Fabric</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-skill">claude-skill</span><span class="registry-tag" data-keyword="veed">veed</span><span class="registry-tag" data-keyword="fabric">fabric</span><span class="registry-tag" data-keyword="video">video</span><span class="registry-tag" data-keyword="mcp">mcp</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">dmytrobaltak</span>
+  </div>
+</div>
+<div class="registry-card" data-name="figma-to-code-skill" data-description="Agent skill for 1:1 Figma-to-code implementation with self-correcting validation loops. Works with Claude Code, Codex CLI, and any Agent Skills-compatible tool." data-keywords="figma,design-to-code,figma-to-code,pixel-perfect,mcp,claude-code,codex-cli" data-downloads="0" data-updated="2026-03-07T19:24:45.978Z" data-score="0">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/figma-to-code-skill" target="_blank" rel="noopener" class="registry-card-name">figma-to-code-skill</a>
+    <span class="registry-card-version">v1.0.2</span>
+  </div>
+  <p class="registry-card-desc">Agent skill for 1:1 Figma-to-code implementation with self-correcting validation loops. Works with Claude Code, Codex CLI, and any Agent Skills-compatible tool.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="figma">figma</span><span class="registry-tag" data-keyword="design-to-code">design-to-code</span><span class="registry-tag" data-keyword="figma-to-code">figma-to-code</span><span class="registry-tag" data-keyword="pixel-perfect">pixel-perfect</span><span class="registry-tag" data-keyword="mcp">mcp</span><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="codex-cli">codex-cli</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">pawanpaudel93</span>
+  </div>
+</div>
+<div class="registry-card" data-name="defuddle-skill" data-description="Claude Code skill for defuddle - extract clean article content from web pages" data-keywords="claude-code,defuddle,web-extraction,content-extraction" data-downloads="0" data-updated="2026-03-03T17:56:14.507Z" data-score="0">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/defuddle-skill" target="_blank" rel="noopener" class="registry-card-name">defuddle-skill</a>
+    <span class="registry-card-version">v1.1.0</span>
+  </div>
+  <p class="registry-card-desc">Claude Code skill for defuddle - extract clean article content from web pages</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="defuddle">defuddle</span><span class="registry-tag" data-keyword="web-extraction">web-extraction</span><span class="registry-tag" data-keyword="content-extraction">content-extraction</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">xiangyangqiaomu</span>
+  </div>
+</div>
+<div class="registry-card" data-name="qiaomu-music-player-spotify" data-description="Claude Code skill for Spotify playback control + 5947 music genre database" data-keywords="claude-code,spotify,music,genre,music-player" data-downloads="0" data-updated="2026-03-04T15:48:46.912Z" data-score="0">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/qiaomu-music-player-spotify" target="_blank" rel="noopener" class="registry-card-name">qiaomu-music-player-spotify</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">Claude Code skill for Spotify playback control + 5947 music genre database</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="claude-code">claude-code</span><span class="registry-tag" data-keyword="spotify">spotify</span><span class="registry-tag" data-keyword="music">music</span><span class="registry-tag" data-keyword="genre">genre</span><span class="registry-tag" data-keyword="music-player">music-player</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">xiangyangqiaomu</span>
+  </div>
+</div>
+<div class="registry-card" data-name="leadgenius-cli-skill" data-description="AI agent skill for operating the LeadGenius Pro Automation API and lgp CLI. Covers ICP management, FSD pipeline automation, lead generation/enrichment/scoring, user provisioning, territory analysis, webhook management, and email platform integration." data-keywords="leadgenius,b2b-leads,lead-enrichment,lead-scoring,automation-api,cli,fsd-pipeline,icp,sales-intelligence,sdr-ai,claude-skill,ai-agent" data-downloads="0" data-updated="2026-03-05T17:52:29.305Z" data-score="0">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/leadgenius-cli-skill" target="_blank" rel="noopener" class="registry-card-name">leadgenius-cli-skill</a>
+    <span class="registry-card-version">v1.0.0</span>
+  </div>
+  <p class="registry-card-desc">AI agent skill for operating the LeadGenius Pro Automation API and lgp CLI. Covers ICP management, FSD pipeline automation, lead generation/enrichment/scoring, user provisioning, territory analysis, webhook management, and email platform integration.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="leadgenius">leadgenius</span><span class="registry-tag" data-keyword="b2b-leads">b2b-leads</span><span class="registry-tag" data-keyword="lead-enrichment">lead-enrichment</span><span class="registry-tag" data-keyword="lead-scoring">lead-scoring</span><span class="registry-tag" data-keyword="automation-api">automation-api</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="fsd-pipeline">fsd-pipeline</span><span class="registry-tag" data-keyword="icp">icp</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">thierryteisseire</span>
+  </div>
+</div>
+<div class="registry-card" data-name="seede-cli" data-description="The ultimate AI design CLI for Agents and Developers. Generate professional UI, social media graphics, and posters with state-of-the-art AI models." data-keywords="seede,ai,cli,ai-design,generative-ui,text-to-design,image-generation,design-automation,best-design-cli" data-downloads="0" data-updated="2026-03-06T09:43:48.159Z" data-score="0">
+  <div class="registry-card-header">
+    <a href="https://www.npmjs.com/package/seede-cli" target="_blank" rel="noopener" class="registry-card-name">seede-cli</a>
+    <span class="registry-card-version">v0.0.3</span>
+  </div>
+  <p class="registry-card-desc">The ultimate AI design CLI for Agents and Developers. Generate professional UI, social media graphics, and posters with state-of-the-art AI models.</p>
+  <div class="registry-tags"><span class="registry-tag" data-keyword="seede">seede</span><span class="registry-tag" data-keyword="ai">ai</span><span class="registry-tag" data-keyword="cli">cli</span><span class="registry-tag" data-keyword="ai-design">ai-design</span><span class="registry-tag" data-keyword="generative-ui">generative-ui</span><span class="registry-tag" data-keyword="text-to-design">text-to-design</span><span class="registry-tag" data-keyword="image-generation">image-generation</span><span class="registry-tag" data-keyword="design-automation">design-automation</span></div>
+  <div class="registry-card-meta">
+    <span class="registry-card-downloads" title="Weekly downloads">⬇ 0/wk</span>
+    <span class="registry-card-author" title="Publisher">imawe</span>
+  </div>
+</div>
+</div>
+
+<div class="registry-empty" id="registry-empty" style="display:none">
+  No skills match your search.
+</div>
+
+<div class="registry-pagination" id="registry-pagination"></div>
+
+<div class="admonition tip">
+<p class="admonition-title">Want to publish your own skill?</p>
+<p>See the <a href="../creating-skills/">Creating Skills</a> guide for the full packaging spec, or run <code>skillpm init</code> to scaffold a new skill package in seconds. Skills follow the open <a href="https://agentskills.io/specification">Agent Skills spec</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/sbroenne/skillpm" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.npmjs.com/package/skillpm" target="_blank" rel="noopener" title="www.npmjs.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M288 288h-32v-64h32zm288-128v192H288v32H160v-32H0V160zm-416 32H32v128h64v-96h32v96h32zm160 0H192v160h64v-32h64zm224 0H352v128h64v-96h32v96h32v-96h32v96h32z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "navigation.sections", "navigation.expand", "navigation.top"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../assets/registry.js"></script>
+      
+    
+  </body>
+</html>
