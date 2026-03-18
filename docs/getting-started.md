@@ -1,5 +1,5 @@
 ---
-description: Install skillpm and start using agent skills in your projects.
+description: Install skillpm and start using reusable Agent Skills in your projects.
 ---
 
 # Getting Started
@@ -28,7 +28,7 @@ Requires Node.js 18 or later.
 skillpm install <skill-name>
 ```
 
-skillpm handles everything: npm resolution, scanning for skills, wiring into agent directories, and configuring MCP servers. See [How it works](index.md#how-it-works) for details.
+skillpm runs `npm install`, scans for installed skills, and links discovered skills into agent directories.
 
 ## Verify it worked
 
@@ -36,11 +36,11 @@ skillpm handles everything: npm resolution, scanning for skills, wiring into age
 skillpm list
 ```
 
-You should see the installed skills with their descriptions and MCP server requirements.
+You should see the installed skills with their descriptions.
 
 ## Using skills in a project
 
-Skills can be project-local (like npm dependencies):
+Skills behave like npm dependencies:
 
 ```bash
 mkdir my-project && cd my-project
@@ -48,7 +48,11 @@ npm init -y
 skillpm install <skill-a> <skill-b>
 ```
 
-This adds the skills as standard npm dependencies in `package.json`. Anyone who clones the project can run `skillpm install` to get the same skill set wired into their agents.
+This adds the skills as standard npm dependencies in `package.json`. Anyone who clones the project can run `skillpm install` to get the same skill set installed and linked.
+
+## Where APM fits
+
+If you need full project agent configuration, use [APM](https://github.com/microsoft/apm). `skillpm` stays focused on npm-distributed skills.
 
 ## What's next?
 

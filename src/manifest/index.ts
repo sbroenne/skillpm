@@ -1,8 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import matter from 'gray-matter';
-import type { SkillPackageJson, SkillpmField } from './schema.js';
-import { SkillpmFieldSchema } from './schema.js';
+import type { SkillPackageJson } from './schema.js';
 
 export async function readPackageJson(
   pkgDir: string,
@@ -13,16 +12,6 @@ export async function readPackageJson(
   } catch {
     return null;
   }
-}
-
-export function parseSkillpmField(pkg: SkillPackageJson): SkillpmField {
-  const result = SkillpmFieldSchema.safeParse(pkg.skillpm);
-  if (!result.success) {
-    throw new Error(
-      `Invalid skillpm field in ${pkg.name}: ${result.error.message}`,
-    );
-  }
-  return result.data;
 }
 
 export interface SkillMdFrontmatter {

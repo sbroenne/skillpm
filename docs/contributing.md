@@ -33,7 +33,6 @@ src/
 ├── cli.test.ts             # CLI integration tests
 ├── commands/               # One file per command
 ├── scanner/                # Scans node_modules/ for skills
-├── configs/                # Copy configs/ files to workspace, manifest tracking
 ├── manifest/               # package.json + SKILL.md parsing
 └── utils/                  # Logging, shell helpers
 ```
@@ -43,7 +42,7 @@ src/
 - Co-locate tests next to source as `*.test.ts`
 - Use `catch (err: unknown)` — never `any`
 - One file per CLI command under `src/commands/`
-- Delegate to npm/skills/add-mcp — don't reimplement
+- Delegate to npm and `skills` — don't reimplement package management or agent linking
 
 ## Releasing
 

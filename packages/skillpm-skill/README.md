@@ -4,12 +4,12 @@ An [Agent Skill](https://agentskills.io) that teaches AI agents how to manage ot
 
 ## What this skill does
 
-When loaded by an AI agent (Claude, Codex, Cursor, Gemini CLI, etc.), this skill teaches the agent how to:
+When loaded by an AI agent, this skill teaches the agent how to:
 
-- **Install skills** from npm with full dependency resolution
+- **Install skills** from npm with dependency resolution
 - **Publish skills** to npmjs.org with spec validation
 - **Scaffold new skills** with the correct directory structure
-- **Wire skills** into agent directories and configure MCP servers
+- **Re-wire installed skills** into agent directories
 - **Wrap existing skills** for npm distribution
 
 ## Install
