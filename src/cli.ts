@@ -7,24 +7,21 @@ import { list } from './commands/list.js';
 import { init } from './commands/init.js';
 import { publish } from './commands/publish.js';
 import { sync } from './commands/sync.js';
-import { mcp } from './commands/mcp.js';
 import { npm, log } from './utils/index.js';
 
 const require = createRequire(import.meta.url);
 const { version: VERSION } = require('../package.json') as { version: string };
 
 const HELP = `
-skillpm — Agent Skill package manager
+skillpm — npm-native package manager for Agent Skills
 
 Usage:
   skillpm install [skill...]     Install skill(s) + wire into agent directories
-  skillpm uninstall <skill...>   Remove skill(s) and clean up
+  skillpm uninstall <skill...>   Remove skill(s)
   skillpm list [--json]          List installed skill packages
   skillpm init                   Scaffold a new skill package
   skillpm publish [args...]      Publish to npmjs.org (wraps npm publish)
   skillpm sync                   Re-wire agent directories without reinstalling
-  skillpm mcp add <source...>    Configure MCP server(s) across agents
-  skillpm mcp list               List configured MCP servers
   skillpm <npm-command> [args]   Any other command is passed through to npm
   skillpm --help                 Show this help
   skillpm --version              Show version
@@ -38,7 +35,6 @@ const SKILLPM_COMMANDS = new Set([
   'init',
   'publish',
   'sync',
-  'mcp',
 ]);
 
 async function main(): Promise<void> {
@@ -88,13 +84,6 @@ async function main(): Promise<void> {
       break;
     case 'sync':
       await sync(cwd);
-      break;
-    case 'mcp':
-      if (rest.length === 0) {
-        log.error('Usage: skillpm mcp <add|list> [args...]');
-        process.exit(1);
-      }
-      await mcp(rest[0], rest.slice(1), cwd);
       break;
     default: {
       // Pass unknown commands through to npm

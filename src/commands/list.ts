@@ -15,7 +15,6 @@ export async function list(args: string[], cwd: string): Promise<void> {
         version: skill.version,
         description: frontmatter?.description ?? '',
         ...(skill.legacy ? { legacy: true } : {}),
-        ...(skill.mcpServers.length > 0 ? { mcpServers: skill.mcpServers } : {}),
         ...(skill.workspace ? { workspace: true } : {}),
       });
     }
@@ -28,7 +27,9 @@ export async function list(args: string[], cwd: string): Promise<void> {
     return;
   }
 
-  console.log(`\n${skills.length} skill package(s) installed:\n`);
+  console.log(`
+${skills.length} skill package(s) installed:
+`);
 
   for (const skill of skills) {
     const frontmatter = await readSkillMd(skill.skillDir);
@@ -37,9 +38,6 @@ export async function list(args: string[], cwd: string): Promise<void> {
     console.log(`  ${log.skill(skill.name, skill.version)}${legacyTag}`);
     if (description) {
       console.log(`    ${description}`);
-    }
-    if (skill.mcpServers.length > 0) {
-      console.log(`    MCP servers: ${skill.mcpServers.join(', ')}`);
     }
   }
   console.log();

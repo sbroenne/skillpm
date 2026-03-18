@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { readPackageJson, parseSkillpmField, readSkillMd } from './index.js';
+import { readPackageJson, readSkillMd } from './index.js';
 import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -23,32 +23,6 @@ describe('readPackageJson', () => {
     const result = await readPackageJson(tmpDir);
     expect(result).toBeNull();
     await rm(tmpDir, { recursive: true, force: true });
-  });
-});
-
-describe('parseSkillpmField', () => {
-  it('returns undefined when no skillpm field', () => {
-    const result = parseSkillpmField({ name: 'x', version: '1.0.0' });
-    expect(result).toBeUndefined();
-  });
-
-  it('parses valid skillpm.mcpServers', () => {
-    const result = parseSkillpmField({
-      name: 'x',
-      version: '1.0.0',
-      skillpm: { mcpServers: ['server-a'] },
-    });
-    expect(result).toEqual({ mcpServers: ['server-a'] });
-  });
-
-  it('throws on invalid skillpm field', () => {
-    expect(() =>
-      parseSkillpmField({
-        name: 'x',
-        version: '1.0.0',
-        skillpm: { unknown: true } as never,
-      }),
-    ).toThrow('Invalid skillpm field');
   });
 });
 

@@ -1,6 +1,6 @@
 import { readdir, access, lstat } from 'node:fs/promises';
 import { join } from 'node:path';
-import { readPackageJson, parseSkillpmField } from '../manifest/index.js';
+import { readPackageJson } from '../manifest/index.js';
 import type { SkillInfo } from '../manifest/schema.js';
 
 /**
@@ -37,7 +37,6 @@ export async function scanNodeModules(cwd: string): Promise<SkillInfo[]> {
     if (entry.startsWith('.')) continue;
 
     if (entry.startsWith('@')) {
-      // Scoped package — scan one level deeper
       const scopeDir = join(nodeModulesDir, entry);
       let scopedEntries: string[];
       try {
@@ -62,24 +61,10 @@ export async function scanNodeModules(cwd: string): Promise<SkillInfo[]> {
   return skills;
 }
 
-async function hasDir(dir: string): Promise<boolean> {
-  try {
-    await access(dir);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 async function tryReadSkill(pkgDir: string, workspace = false): Promise<SkillInfo | null> {
   const pkg = await readPackageJson(pkgDir);
   if (!pkg) return null;
 
-  // Check for configs/ directory
-  const configsDir = join(pkgDir, 'configs');
-  const hasConfigs = await hasDir(configsDir);
-
-  // Preferred: look for skills/*/SKILL.md
   const skillsDir = join(pkgDir, 'skills');
   let skillSubdirs: string[];
   try {
@@ -96,50 +81,27 @@ async function tryReadSkill(pkgDir: string, workspace = false): Promise<SkillInf
       continue;
     }
 
-    const skillpm = parseSkillpmField(pkg);
     return {
       name: pkg.name,
       version: pkg.version,
       path: pkgDir,
       skillDir,
-      mcpServers: skillpm?.mcpServers ?? [],
-      configsDir: hasConfigs ? configsDir : undefined,
-      configPrefix: skillpm?.configPrefix,
       workspace: workspace || undefined,
     };
   }
 
-  // Fallback: root SKILL.md (legacy format)
   try {
     await access(join(pkgDir, 'SKILL.md'));
   } catch {
     return null;
   }
 
-  const skillpm = parseSkillpmField(pkg);
   return {
     name: pkg.name,
     version: pkg.version,
     path: pkgDir,
     skillDir: pkgDir,
-    mcpServers: skillpm?.mcpServers ?? [],
     legacy: true,
-    configsDir: hasConfigs ? configsDir : undefined,
-    configPrefix: skillpm?.configPrefix,
     workspace: workspace || undefined,
   };
-}
-
-/**
- * Collect all MCP server requirements from all discovered skills (transitive).
- * Deduplicates entries.
- */
-export function collectMcpServers(skills: SkillInfo[]): string[] {
-  const servers = new Set<string>();
-  for (const skill of skills) {
-    for (const server of skill.mcpServers) {
-      servers.add(server);
-    }
-  }
-  return [...servers];
 }

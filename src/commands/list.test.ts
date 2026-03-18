@@ -1,17 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { mkdtemp, writeFile, mkdir, rm } from 'node:fs/promises';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { mkdtemp, writeFile, mkdir, rm, symlink } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-
-vi.mock('../utils/index.js', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../utils/index.js')>();
-  return {
-    ...actual,
-    npm: vi.fn().mockResolvedValue({ stdout: '', stderr: '' }),
-    npx: vi.fn().mockResolvedValue({ stdout: '', stderr: '' }),
-  };
-});
-
 import { list } from './list.js';
 
 async function createTmpDir(): Promise<string> {
@@ -21,16 +11,12 @@ async function createTmpDir(): Promise<string> {
 async function setupSkillPackage(
   nodeModulesDir: string,
   name: string,
-  opts?: { description?: string; mcpServers?: string[] },
+  opts?: { description?: string; legacy?: boolean },
 ): Promise<void> {
   const pkgDir = join(nodeModulesDir, name);
-  const skillDir = join(pkgDir, 'skills', name);
+  const skillDir = opts?.legacy ? pkgDir : join(pkgDir, 'skills', name);
   await mkdir(skillDir, { recursive: true });
-  const pkg: Record<string, unknown> = { name, version: '1.0.0' };
-  if (opts?.mcpServers) {
-    pkg.skillpm = { mcpServers: opts.mcpServers };
-  }
-  await writeFile(join(pkgDir, 'package.json'), JSON.stringify(pkg));
+  await writeFile(join(pkgDir, 'package.json'), JSON.stringify({ name, version: '1.0.0' }));
   const desc = opts?.description ?? 'A test skill';
   await writeFile(
     join(skillDir, 'SKILL.md'),
@@ -85,11 +71,24 @@ describe('list --json', () => {
     expect(parsed).toEqual([]);
   });
 
-  it('includes mcpServers when present', async () => {
-    await setupSkillPackage(join(cwd, 'node_modules'), 'mcp-skill', {
-      description: 'Has MCP',
-      mcpServers: ['@anthropic/mcp-server-filesystem'],
+  it('includes legacy and workspace flags when present', async () => {
+    await setupSkillPackage(join(cwd, 'node_modules'), 'legacy-skill', {
+      description: 'Legacy skill',
+      legacy: true,
     });
+
+    const workspaceRealDir = join(cwd, 'workspace-src', 'workspace-skill');
+    const workspaceSkillDir = join(workspaceRealDir, 'skills', 'workspace-skill');
+    await mkdir(workspaceSkillDir, { recursive: true });
+    await writeFile(
+      join(workspaceRealDir, 'package.json'),
+      JSON.stringify({ name: 'workspace-skill', version: '1.0.0' }),
+    );
+    await writeFile(
+      join(workspaceSkillDir, 'SKILL.md'),
+      '---\nname: workspace-skill\ndescription: Workspace skill\n---\n# workspace-skill\n',
+    );
+    await symlink(workspaceRealDir, join(cwd, 'node_modules', 'workspace-skill'), 'junction');
 
     const output: string[] = [];
     const origLog = console.log;
@@ -101,6 +100,20 @@ describe('list --json', () => {
     }
 
     const parsed = JSON.parse(output.join('\n'));
-    expect(parsed[0].mcpServers).toEqual(['@anthropic/mcp-server-filesystem']);
+    const legacy = parsed.find((item: { name: string }) => item.name === 'legacy-skill');
+    const workspace = parsed.find((item: { name: string }) => item.name === 'workspace-skill');
+
+    expect(legacy).toMatchObject({
+      name: 'legacy-skill',
+      version: '1.0.0',
+      description: 'Legacy skill',
+      legacy: true,
+    });
+    expect(workspace).toMatchObject({
+      name: 'workspace-skill',
+      version: '1.0.0',
+      description: 'Workspace skill',
+      workspace: true,
+    });
   });
 });

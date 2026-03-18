@@ -33,12 +33,8 @@ src/
 │   ├── init.ts
 │   ├── publish.ts
 │   ├── list.ts
-│   ├── sync.ts
-│   └── mcp.ts
+│   └── sync.ts
 ├── scanner/                # Scans node_modules/ for skills
-│   ├── index.ts
-│   └── index.test.ts
-├── configs/                # Copy configs/ files to workspace, manifest tracking
 │   ├── index.ts
 │   └── index.test.ts
 ├── manifest/               # package.json + SKILL.md parsing
@@ -56,7 +52,7 @@ src/
 - Co-locate tests next to source as `*.test.ts`
 - Use `catch (err: unknown)` — never `any`
 - One file per CLI command under `src/commands/`
-- Delegate to npm/skills/add-mcp — don't reimplement
+- Delegate to npm and `skills` — don't reimplement package management or agent linking
 
 ## Workflow
 
@@ -103,4 +99,4 @@ The `main` branch is protected:
 
 ## Releasing
 
-Releases are automated via GitHub Actions. See the [Maintainer Guide](MAINTAINERS.md) for the full release process, npm setup, and token configuration.
+Releases are automated via GitHub Actions. See the [Maintainer Guide](MAINTAINERS.md) for the full release process, npm setup, and OIDC trusted publishing.
