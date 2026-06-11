@@ -126,6 +126,33 @@ describe('wireSkills', () => {
     expect(skillsAddCalls[0][1]).toEqual({ cwd });
   });
 
+
+  it('warns when a package contains multiple skills but links only one', async () => {
+    const pkgDir = join(cwd, 'node_modules', 'multi-skill-package');
+    const firstSkillDir = join(pkgDir, 'skills', 'first-skill');
+    const secondSkillDir = join(pkgDir, 'skills', 'second-skill');
+    await mkdir(firstSkillDir, { recursive: true });
+    await mkdir(secondSkillDir, { recursive: true });
+    await writeFile(
+      join(pkgDir, 'package.json'),
+      JSON.stringify({ name: 'multi-skill-package', version: '1.0.0' }),
+    );
+    await writeFile(join(firstSkillDir, 'SKILL.md'), '---\nname: first-skill\ndescription: Test\n---\n');
+    await writeFile(join(secondSkillDir, 'SKILL.md'), '---\nname: second-skill\ndescription: Test\n---\n');
+
+    await wireSkills(cwd);
+
+    const skillsAddCalls = mockNpx.mock.calls.filter(
+      (call) => call[0][0] === 'skills' && call[0][1] === 'add',
+    );
+    expect(skillsAddCalls).toHaveLength(1);
+    expect(skillsAddCalls[0][0][2]).toBe(firstSkillDir);
+    expect(mockWarn).toHaveBeenCalledWith(
+      expect.stringContaining('multi-skill-package: multiple skills were found in one package.'),
+    );
+    expect(mockWarn).toHaveBeenCalledWith(expect.stringContaining(secondSkillDir));
+  });
+
   it('warns for legacy root SKILL.md packages', async () => {
     const legacyDir = join(cwd, 'node_modules', 'legacy-skill');
     await mkdir(legacyDir, { recursive: true });
