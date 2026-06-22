@@ -43,7 +43,7 @@
     "packages/*"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
