@@ -7,9 +7,11 @@ on:
       - 'docs/**'
       - 'mkdocs.yml'
       - 'scripts/generate-registry.py'
-  schedule:
-    - cron: '15 * * * *'  # hourly at :15
   workflow_dispatch:
+
+# NOTE: The scheduled registry generation with AI-powered categorization is
+# handled by the generate-registry.md agentic workflow (gh-aw).
+# This workflow handles push-triggered deploys and manual dispatches.
 
 permissions:
   contents: write
