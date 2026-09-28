@@ -6,6 +6,11 @@ description: Set up a development environment for contributing to skillpm. Inclu
 
 ## Development setup
 
+Requires Node.js 22.20.0 or later. CI covers Node 22.20.0, 24, and 26 and
+validates the bundled skill using the official Python reference implementation.
+Node types target the minimum supported major; TypeScript remains on 5.9
+until the typescript-eslint peer range supports a newer major.
+
 ```bash
 git clone https://github.com/sbroenne/skillpm.git
 cd skillpm

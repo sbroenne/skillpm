@@ -14,6 +14,9 @@ When loaded by an AI agent, this skill teaches the agent how to:
 
 ## Install
 
+Requires Node.js 22.20.0 or later and npm. Publishing skills additionally requires
+the [official Python validator](https://skillpm.dev/creating-skills/#validate-before-publishing).
+
 ```bash
 npx skillpm install skillpm-skill
 ```
@@ -22,6 +25,7 @@ Or with npm directly:
 
 ```bash
 npm install skillpm-skill
+npx skillpm sync
 ```
 
 ## License

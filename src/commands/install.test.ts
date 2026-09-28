@@ -8,15 +8,16 @@ vi.mock('../utils/index.js', async (importOriginal) => {
   return {
     ...actual,
     npm: vi.fn().mockResolvedValue({ stdout: '', stderr: '' }),
-    npx: vi.fn().mockResolvedValue({ stdout: '', stderr: '' }),
+    npx: vi.fn(),
     log: {
       ...actual.log,
       warn: vi.fn(),
+      error: vi.fn(),
     },
   };
 });
 
-import { npx, log } from '../utils/index.js';
+import { npx, log, SKILLS_CLI } from '../utils/index.js';
 import { wireSkills } from './install.js';
 
 const mockNpx = vi.mocked(npx);
@@ -48,24 +49,30 @@ describe('wireSkills', () => {
 
   beforeEach(async () => {
     cwd = await createTmpDir();
-    mockNpx.mockClear();
+    mockNpx.mockReset();
+    mockNpx.mockResolvedValue({
+      stdout: JSON.stringify([{ status: 'installed', scope: 'project' }]),
+      stderr: '',
+    });
     mockWarn.mockClear();
+    vi.mocked(log.error).mockClear();
   });
 
   afterEach(async () => {
     await rm(cwd, { recursive: true, force: true });
   });
 
-  it('calls skills add with -y and cwd (no --all)', async () => {
+  it('calls the pinned skills CLI with -y, --json and cwd (no --all)', async () => {
     await setupSkillPackage(join(cwd, 'node_modules'), 'test-skill');
     await wireSkills(cwd);
 
     const skillsAddCall = mockNpx.mock.calls.find(
-      (call) => call[0][0] === 'skills' && call[0][1] === 'add',
+      (call) => call[0][0] === SKILLS_CLI && call[0][1] === 'add',
     );
     expect(skillsAddCall).toBeDefined();
     expect(skillsAddCall![0]).not.toContain('--all');
     expect(skillsAddCall![0]).toContain('-y');
+    expect(skillsAddCall![0]).toContain('--json');
     expect(skillsAddCall![1]).toEqual({ cwd });
   });
 
@@ -75,7 +82,7 @@ describe('wireSkills', () => {
     await wireSkills(cwd);
 
     const skillsAddCalls = mockNpx.mock.calls.filter(
-      (call) => call[0][0] === 'skills' && call[0][1] === 'add',
+      (call) => call[0][0] === SKILLS_CLI && call[0][1] === 'add',
     );
     expect(skillsAddCalls).toHaveLength(2);
     expect(skillsAddCalls.map((call) => call[0][2]).sort()).toEqual([
@@ -89,7 +96,7 @@ describe('wireSkills', () => {
     await wireSkills(cwd);
 
     const skillsAddCalls = mockNpx.mock.calls.filter(
-      (call) => call[0][0] === 'skills' && call[0][1] === 'add',
+      (call) => call[0][0] === SKILLS_CLI && call[0][1] === 'add',
     );
     expect(skillsAddCalls).toHaveLength(0);
   });
@@ -109,19 +116,24 @@ describe('wireSkills', () => {
 
     const nodeModulesDir = join(cwd, 'node_modules');
     await mkdir(nodeModulesDir, { recursive: true });
-    await symlink(realPkgDir, join(nodeModulesDir, 'workspace-skill'), 'junction');
+    await symlink(
+      realPkgDir,
+      join(nodeModulesDir, 'workspace-skill'),
+      'junction',
+    );
 
     await wireSkills(cwd);
 
     const skillsAddCalls = mockNpx.mock.calls.filter(
-      (call) => call[0][0] === 'skills' && call[0][1] === 'add',
+      (call) => call[0][0] === SKILLS_CLI && call[0][1] === 'add',
     );
     expect(skillsAddCalls).toHaveLength(1);
     expect(skillsAddCalls[0][0]).toEqual([
-      'skills',
+      SKILLS_CLI,
       'add',
       join(cwd, 'node_modules', 'workspace-skill', 'skills', 'workspace-skill'),
       '-y',
+      '--json',
     ]);
     expect(skillsAddCalls[0][1]).toEqual({ cwd });
   });
@@ -133,17 +145,82 @@ describe('wireSkills', () => {
       join(legacyDir, 'package.json'),
       JSON.stringify({ name: 'legacy-skill', version: '1.0.0' }),
     );
-    await writeFile(join(legacyDir, 'SKILL.md'), '---\nname: legacy-skill\n---\n');
+    await writeFile(
+      join(legacyDir, 'SKILL.md'),
+      '---\nname: legacy-skill\n---\n',
+    );
 
     await wireSkills(cwd);
 
     expect(
       mockNpx.mock.calls.some(
-        (call) => call[0][0] === 'skills' && call[0][2] === legacyDir,
+        (call) => call[0][0] === SKILLS_CLI && call[0][2] === legacyDir,
       ),
     ).toBe(true);
     expect(mockWarn).toHaveBeenCalledWith(
       expect.stringContaining('legacy-skill: SKILL.md is at package root.'),
     );
+  });
+
+  it('rejects colliding skill names before linking any package', async () => {
+    const nodeModulesDir = join(cwd, 'node_modules');
+    await setupSkillPackage(nodeModulesDir, 'first');
+    await setupSkillPackage(nodeModulesDir, 'second');
+    await writeFile(
+      join(nodeModulesDir, 'second', 'skills', 'second', 'SKILL.md'),
+      '---\nname: first\ndescription: Conflicting skill\n---\n',
+    );
+    await expect(wireSkills(cwd)).rejects.toThrow('Skill name "first"');
+    expect(mockNpx).not.toHaveBeenCalled();
+  });
+
+  it('rejects missing skill names before linking', async () => {
+    await setupSkillPackage(join(cwd, 'node_modules'), 'invalid');
+    await writeFile(
+      join(cwd, 'node_modules', 'invalid', 'skills', 'invalid', 'SKILL.md'),
+      '# No frontmatter\n',
+    );
+    await expect(wireSkills(cwd)).rejects.toThrow('non-empty name');
+    expect(mockNpx).not.toHaveBeenCalled();
+  });
+
+  it('continues linking other packages but rejects on any CLI failure', async () => {
+    await setupSkillPackage(join(cwd, 'node_modules'), 'first');
+    await setupSkillPackage(join(cwd, 'node_modules'), 'second');
+    mockNpx.mockRejectedValueOnce(new Error('Upstream failure'));
+    await expect(wireSkills(cwd)).rejects.toThrow(
+      'Failed to link 1 skill package(s): first',
+    );
+    expect(mockNpx).toHaveBeenCalledTimes(2);
+  });
+
+  it('reports upstream JSON diagnostics even on a nonzero exit', async () => {
+    await setupSkillPackage(join(cwd, 'node_modules'), 'test');
+    mockNpx.mockRejectedValue(
+      Object.assign(new Error('Command failed'), {
+        stdout:
+          '[{"status":"failed","error":"Cannot write canonical directory"}]',
+      }),
+    );
+    await expect(wireSkills(cwd)).rejects.toThrow('Failed to link');
+    expect(log.error).toHaveBeenCalledWith(
+      expect.stringContaining('Cannot write canonical directory'),
+    );
+  });
+
+  it.each([
+    '',
+    'not json',
+    '{}',
+    '[]',
+    '[null]',
+    '[{"status":"failed","error":"permission denied"}]',
+    '[{"status":"skipped","reason":"cancelled"}]',
+    '[{"status":"installed","scope":"global"}]',
+    '[{"status":"installed","scope":"project"},{"status":"installed","scope":"project"}]',
+  ])('rejects unconfirmed or unexpected CLI results: %s', async (stdout) => {
+    await setupSkillPackage(join(cwd, 'node_modules'), 'test');
+    mockNpx.mockResolvedValue({ stdout, stderr: '' });
+    await expect(wireSkills(cwd)).rejects.toThrow('Failed to link');
   });
 });

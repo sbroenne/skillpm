@@ -1,6 +1,6 @@
 import { readdir, access } from 'node:fs/promises';
 import { join } from 'node:path';
-import { npm, npx, log } from '../utils/index.js';
+import { npm, run, log, execErrorMessage } from '../utils/index.js';
 import { readPackageJson } from '../manifest/index.js';
 
 /**
@@ -34,31 +34,49 @@ export async function validatePublish(cwd: string): Promise<string[]> {
     return errors;
   }
 
-  let foundSkillDir: string | null = null;
+  const foundSkillDirs: string[] = [];
   for (const sub of skillSubdirs) {
     const candidate = join(skillsDir, sub);
     try {
       await access(join(candidate, 'SKILL.md'));
-      foundSkillDir = candidate;
-      break;
+      foundSkillDirs.push(candidate);
     } catch {
       continue;
     }
   }
 
-  if (!foundSkillDir) {
+  if (foundSkillDirs.length === 0) {
     errors.push(
       'No SKILL.md found in skills/ subdirectories. Create skills/<name>/SKILL.md.',
     );
     return errors;
   }
 
+  if (foundSkillDirs.length !== 1) {
+    errors.push(
+      'A skillpm package must contain exactly one skill in skills/. Split multiple skills into separate npm packages.',
+    );
+    return errors;
+  }
+
   // 3. Validate against the Agent Skills spec via skills-ref
   try {
-    await npx(['skills-ref', 'validate', foundSkillDir]);
+    await run('skills-ref', ['validate', foundSkillDirs[0]], { cwd });
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : String(err);
-    errors.push(`SKILL.md spec validation failed: ${msg}`);
+    if (
+      typeof err === 'object' &&
+      err !== null &&
+      'code' in err &&
+      err.code === 'ENOENT'
+    ) {
+      errors.push(
+        'Official skills-ref validator not found on PATH. Install the Python reference validator ' +
+          'from https://github.com/agentskills/agentskills/tree/main/skills-ref ' +
+          'and activate its environment before publishing. The npm package is a separate, third-party port.',
+      );
+      return errors;
+    }
+    errors.push(`SKILL.md spec validation failed: ${execErrorMessage(err)}`);
   }
 
   return errors;

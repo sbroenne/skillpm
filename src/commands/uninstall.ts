@@ -18,6 +18,10 @@ export async function uninstall(args: string[], cwd: string): Promise<void> {
     process.exit(1);
   }
 
-  // Re-wire to clean up stale symlinks
+  // Refresh remaining skills; upstream canonical copies are not live npm links.
   await wireSkills(cwd);
+  log.warn(
+    'Removed npm packages may still have copies in agent directories. ' +
+      'Review stale installations with "npx skills list" before removing them with "npx skills remove".',
+  );
 }

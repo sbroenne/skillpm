@@ -99,6 +99,55 @@ describe('scanNodeModules', () => {
     expect(result[0].skillDir).toBe(skillDir);
     expect(result[0].legacy).toBeUndefined();
   });
+
+  it('finds nested dependencies inside non-skill and scoped packages', async () => {
+    const parent = join(tmpDir, 'node_modules', '@org', 'parent');
+    const child = join(parent, 'node_modules', '@org', 'child');
+    const grandchild = join(child, 'node_modules', 'nested-skill');
+    await mkdir(grandchild, { recursive: true });
+    for (const [path, name] of [
+      [parent, '@org/parent'],
+      [child, '@org/child'],
+      [grandchild, 'nested-skill'],
+    ]) {
+      await writeFile(
+        join(path, 'package.json'),
+        JSON.stringify({ name, version: '1.0.0' }),
+      );
+    }
+    await writeFile(
+      join(grandchild, 'SKILL.md'),
+      '---\nname: nested-skill\n---\n',
+    );
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].path).toBe(grandchild);
+  });
+
+  it('deduplicates symlink targets and terminates dependency cycles', async () => {
+    const pkg = join(tmpDir, 'node_modules', 'cyclic');
+    await mkdir(join(pkg, 'node_modules'), { recursive: true });
+    await writeFile(
+      join(pkg, 'package.json'),
+      JSON.stringify({ name: 'cyclic', version: '1.0.0' }),
+    );
+    await writeFile(join(pkg, 'SKILL.md'), '---\nname: cyclic\n---\n');
+    await symlink(pkg, join(pkg, 'node_modules', 'self'), 'junction');
+    await symlink(pkg, join(tmpDir, 'node_modules', 'alias'), 'junction');
+    const result = await scanNodeModules(tmpDir);
+    expect(result).toHaveLength(1);
+    expect(result[0].name).toBe('cyclic');
+  });
+
+  it('skips dangling package links', async () => {
+    await mkdir(join(tmpDir, 'node_modules'));
+    await symlink(
+      join(tmpDir, 'missing'),
+      join(tmpDir, 'node_modules', 'dangling'),
+      'junction',
+    );
+    expect(await scanNodeModules(tmpDir)).toEqual([]);
+  });
 });
 
 describe('workspace package (symlink) detection', () => {
@@ -120,7 +169,10 @@ describe('workspace package (symlink) detection', () => {
       join(realPkgDir, 'package.json'),
       JSON.stringify({ name: 'my-skill', version: '1.0.0' }),
     );
-    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: my-skill\ndescription: Test\n---\n');
+    await writeFile(
+      join(skillDir, 'SKILL.md'),
+      '---\nname: my-skill\ndescription: Test\n---\n',
+    );
 
     const nodeModulesDir = join(tmpDir, 'node_modules');
     await mkdir(nodeModulesDir, { recursive: true });
@@ -140,7 +192,10 @@ describe('workspace package (symlink) detection', () => {
       join(pkgDir, 'package.json'),
       JSON.stringify({ name: 'regular-skill', version: '1.0.0' }),
     );
-    await writeFile(join(skillDir, 'SKILL.md'), '---\nname: regular-skill\n---\n');
+    await writeFile(
+      join(skillDir, 'SKILL.md'),
+      '---\nname: regular-skill\n---\n',
+    );
 
     const result = await scanNodeModules(tmpDir);
     expect(result).toHaveLength(1);

@@ -18,6 +18,8 @@ The [Agent Skills spec](https://agentskills.io) defines what a skill *is* — bu
 
 ## Quick start
 
+Requires Node.js 22.20.0 or later and npm.
+
 ```bash
 # Install a skill (no global install needed)
 npx skillpm install <skill-name>
@@ -42,10 +44,15 @@ npm install -g skillpm
 When you run `skillpm install <skill>`:
 
 1. **npm install** — npm handles resolution, download, lockfile, `node_modules/`
-2. **Scan** — skillpm scans `node_modules/` for packages containing `skills/*/SKILL.md`
-3. **Link** — for each skill found, skillpm calls [`skills`](https://www.npmjs.com/package/skills) to wire it into agent directories
+2. **Scan** — skillpm scans `node_modules/`, including nested dependencies, for packages containing `skills/*/SKILL.md`
+3. **Link** — for each skill found, skillpm calls [`skills@1.7.0`](https://github.com/vercel-labs/skills/releases/tag/v1.7.0) to wire it into agent directories
 
 That is the whole scope: package, install, publish, and link reusable skills.
+
+The upstream installer normally copies skill content into `.agents/skills/`
+and links agent directories to it. Run `skillpm sync` after npm updates or local
+edits. Publishing uses the official Python reference validator; see
+[validator setup](creating-skills.md#validate-before-publishing).
 
 ## Browse skills
 
