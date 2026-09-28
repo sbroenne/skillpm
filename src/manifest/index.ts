@@ -19,7 +19,7 @@ export interface SkillMdFrontmatter {
   description: string;
   license?: string;
   compatibility?: string;
-  metadata?: Record<string, unknown>;
+  metadata?: Record<string, string>;
   'allowed-tools'?: string;
 }
 

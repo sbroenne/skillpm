@@ -1,4 +1,4 @@
-import { readdir, access, lstat } from 'node:fs/promises';
+import { readdir, access, lstat, realpath } from 'node:fs/promises';
 import { join } from 'node:path';
 import { readPackageJson } from '../manifest/index.js';
 import type { SkillInfo } from '../manifest/schema.js';
@@ -23,45 +23,61 @@ async function isSymlink(p: string): Promise<boolean> {
  * Returns metadata for each discovered skill package.
  */
 export async function scanNodeModules(cwd: string): Promise<SkillInfo[]> {
-  const nodeModulesDir = join(cwd, 'node_modules');
   const skills: SkillInfo[] = [];
+  const visited = new Set<string>();
 
-  let entries: string[];
-  try {
-    entries = await readdir(nodeModulesDir);
-  } catch {
-    return skills;
+  async function scanPackage(pkgDir: string): Promise<void> {
+    let resolved: string;
+    try {
+      resolved = await realpath(pkgDir);
+    } catch (err: unknown) {
+      if (isMissingPath(err)) return;
+      throw err;
+    }
+    if (visited.has(resolved)) return;
+    visited.add(resolved);
+
+    const symlink = await isSymlink(pkgDir);
+    const skill = await tryReadSkill(pkgDir, symlink);
+    if (skill) skills.push(skill);
+    await scanDirectory(join(pkgDir, 'node_modules'));
   }
 
-  for (const entry of entries) {
-    if (entry.startsWith('.')) continue;
-
-    if (entry.startsWith('@')) {
-      const scopeDir = join(nodeModulesDir, entry);
-      let scopedEntries: string[];
-      try {
-        scopedEntries = await readdir(scopeDir);
-      } catch {
-        continue;
+  async function scanDirectory(dir: string, scope = false): Promise<void> {
+    let entries: string[];
+    try {
+      entries = await readdir(dir);
+    } catch (err: unknown) {
+      if (isMissingPath(err)) return;
+      throw err;
+    }
+    for (const entry of entries.sort()) {
+      if (entry.startsWith('.')) continue;
+      if (!scope && entry.startsWith('@')) {
+        await scanDirectory(join(dir, entry), true);
+      } else {
+        await scanPackage(join(dir, entry));
       }
-      for (const scopedEntry of scopedEntries) {
-        const pkgDir = join(scopeDir, scopedEntry);
-        const symlink = await isSymlink(pkgDir);
-        const skill = await tryReadSkill(pkgDir, symlink);
-        if (skill) skills.push(skill);
-      }
-    } else {
-      const pkgDir = join(nodeModulesDir, entry);
-      const symlink = await isSymlink(pkgDir);
-      const skill = await tryReadSkill(pkgDir, symlink);
-      if (skill) skills.push(skill);
     }
   }
 
+  await scanDirectory(join(cwd, 'node_modules'));
   return skills;
 }
 
-async function tryReadSkill(pkgDir: string, workspace = false): Promise<SkillInfo | null> {
+function isMissingPath(err: unknown): boolean {
+  return (
+    typeof err === 'object' &&
+    err !== null &&
+    'code' in err &&
+    (err.code === 'ENOENT' || err.code === 'ENOTDIR')
+  );
+}
+
+async function tryReadSkill(
+  pkgDir: string,
+  workspace = false,
+): Promise<SkillInfo | null> {
   const pkg = await readPackageJson(pkgDir);
   if (!pkg) return null;
 

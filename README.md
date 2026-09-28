@@ -12,6 +12,10 @@ For full project-wide agent configuration, use [APM](https://github.com/microsof
 
 ## Quick start
 
+Requires **Node.js 22.20.0 or later** and npm. Publishing also requires the
+[official Python `skills-ref` validator](https://skillpm.dev/creating-skills/#validate-before-publishing)
+on `PATH`; installing and syncing skills do not require Python.
+
 ```bash
 # Install a skill (no global install needed)
 npx skillpm install <skill-name>
@@ -36,10 +40,26 @@ npm install -g skillpm
 When you run `skillpm install <skill>`:
 
 1. **npm install** — npm handles resolution, download, lockfile, and `node_modules/`
-2. **Scan** — skillpm scans `node_modules/` for packages containing `skills/*/SKILL.md`
+2. **Scan** — skillpm scans `node_modules/`, including nested dependencies, for packages containing `skills/*/SKILL.md`
 3. **Link** — for each skill found, skillpm calls [`skills`](https://www.npmjs.com/package/skills) to wire it into supported agent directories
 
 That is the whole scope: package, install, publish, and link reusable skills.
+
+The linking integration uses **`skills@1.7.0`**, verified against the upstream
+[release](https://github.com/vercel-labs/skills/releases/tag/v1.7.0).
+It normally copies skill content into `.agents/skills/` and links agent-specific
+directories to that canonical copy. These are not live links to `node_modules`:
+run `skillpm sync` after `npm update`, `npm ci`, or local skill edits.
+Agent discovery and installation paths remain the responsibility of `skills`;
+skillpm does not install to every agent with `--all`.
+
+`package-lock.json` remains authoritative for npm package versions. Any
+`skills-lock.json` written by the upstream CLI describes agent installations,
+not npm dependency resolution. Use npm to update npm-distributed skills, then
+sync; do not substitute `skills update` for npm updates.
+
+Linking failures now cause a nonzero exit. Packages with colliding `SKILL.md`
+names are rejected before linking so nested versions cannot overwrite each other.
 
 ## What skillpm adds
 
@@ -89,6 +109,15 @@ See the full [Creating Skills](https://skillpm.dev/creating-skills/) guide for p
 ## What are Agent Skills?
 
 Agent Skills are modular, reusable packages of instructions, scripts, and resources that AI agents can dynamically load to extend their capabilities. They follow an [open standard](https://agentskills.io) adopted by Claude, Codex, Cursor, Gemini CLI, Augment, and others.
+
+The portable format is a directory containing `SKILL.md`. The `skills/<name>/`
+layout, npm keyword, and one-skill-per-package rule are **skillpm conventions**,
+not requirements imposed by the open standard. Host-specific frontmatter and
+tool permissions are not universally portable; see the [specification](https://agentskills.io/specification).
+
+For Git repositories, direct-download URLs, global installation, and other
+non-npm sources, use the [upstream `skills` CLI](https://github.com/vercel-labs/skills)
+or the host's own tooling. These are not new package sources for skillpm.
 
 ## Where APM fits
 

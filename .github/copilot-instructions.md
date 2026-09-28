@@ -15,10 +15,14 @@ The project is developed in TypeScript.
 | Package | Type | What it does | How skillpm uses it |
 |---|---|---|---|
 | npm | CLI (shell out) | Package management, dependency resolution, registry, lockfiles, caching | All package operations — `skillpm install` calls `npm install` under the hood |
-| [`skills`](https://www.npmjs.com/package/skills) | CLI (shell out) | Links skills into agent directories | `npx skills add <path>` — wires npm-installed skills into agent dirs |
-| [`skills-ref`](https://www.npmjs.com/package/skills-ref) | CLI (shell out) | Validates SKILL.md against the Agent Skills spec | `npx skills-ref validate <path>` during `skillpm publish` |
+| [`skills`](https://www.npmjs.com/package/skills) | CLI (shell out) | Installs canonical skill copies and agent links | `npx skills@1.7.0 add <path> -y --json` — checks structured project-install results |
+| [Official `skills-ref`](https://github.com/agentskills/agentskills/tree/main/skills-ref) | Python CLI (shell out) | Validates SKILL.md against the Agent Skills spec | `skills-ref validate <path>` from PATH during `skillpm publish`; not the third-party npm port |
 
 Before writing any new code, check whether one of these tools already does it.
+
+Requires Node.js 22.20.0 or later. Keep the upstream CLI version pinned in
+`src/utils/exec.ts` and recheck its JSON contract before upgrading.
+Publishing also requires Python 3.11+ and the official validator on PATH.
 
 ## What are Agent Skills?
 
@@ -42,6 +46,11 @@ my-skill/
 ```
 
 One skill per npm package. The skill directory name must match the `name` field in `SKILL.md` frontmatter. All skill packages must include `"agent-skill"` in `package.json` `keywords` for discoverability on npmjs.org. Use `git+https://` for `repository.url`.
+
+The npm layout and keyword are skillpm conventions, not open-standard requirements.
+Metadata is a string-to-string map. `allowed-tools` is experimental and
+host-dependent. Recommend fewer than 500 lines in SKILL.md with relative
+references to detailed resources; do not enforce this as a hard format limit.
 
 ### Dependency model
 
@@ -86,8 +95,15 @@ Version comes from `package.json` — do not duplicate it in SKILL.md metadata.
 When a user runs `skillpm install refactor-react`:
 
 1. skillpm runs `npm install refactor-react`
-2. skillpm scans `node_modules/` for installed packages containing `skills/*/SKILL.md`
-3. For each skill found, skillpm calls `npx skills add ./node_modules/<package>/skills/<name>/` to link it into agent directories
+2. skillpm scans `node_modules/` and nested dependencies for installed packages containing `skills/*/SKILL.md`, following each real package path once
+3. Reject colliding SKILL.md names before installation
+4. For each skill found, skillpm calls `npx skills@1.7.0 add <skillDir> -y --json` and verifies project installation
+
+Current upstream normally copies content to `.agents/skills/` and links agents
+to that copy, not to node_modules. Run sync after npm updates or workspace edits.
+`package-lock.json` owns npm resolution; upstream `skills-lock.json` is separate.
+Uninstall currently refreshes remaining skills but does not garbage-collect
+stale canonical copies. Do not claim that re-wiring removes them.
 
 ### Core CLI commands
 

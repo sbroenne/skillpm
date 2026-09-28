@@ -2,6 +2,11 @@
 
 ## Development
 
+Requires Node.js 22.20.0 or later. CI covers the minimum supported runtime,
+Node 24, and Node 26. Node type definitions follow the minimum supported major.
+TypeScript stays on 5.9 until the typescript-eslint peer range supports a newer
+major; do not upgrade it independently of the lint toolchain.
+
 ```bash
 git clone https://github.com/sbroenne/skillpm.git
 cd skillpm
@@ -62,7 +67,7 @@ The `main` branch is protected:
 
 - **All changes go through pull requests** — no direct pushes to `main`
 - **Squash merge only** — every PR becomes a single clean commit on `main`
-- **CI must pass** — build and tests on Node 18, 20, 22, and 24 are required before merging
+- **CI must pass** — build and tests on Node 22.20.0, 24, and 26, plus official bundled-skill validation, are required before merging
 - **Branches are auto-deleted** after merge
 
 ### Making changes

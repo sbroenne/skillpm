@@ -20,7 +20,9 @@ npm install -g skillpm
 
 > **Note:** Skills themselves are always workspace-local (per-project). The `-g` flag above installs the `skillpm` CLI tool globally — not skills.
 
-Requires Node.js 18 or later.
+Requires Node.js **22.20.0 or later** and npm. Publishing additionally requires
+the official Python `skills-ref` validator on `PATH`; see
+[validator setup](creating-skills.md#validate-before-publishing).
 
 ## Install a skill
 
@@ -49,6 +51,10 @@ skillpm install <skill-a> <skill-b>
 ```
 
 This adds the skills as standard npm dependencies in `package.json`. Anyone who clones the project can run `skillpm install` to get the same skill set installed and linked.
+
+After `npm ci`, `npm update`, or editing a local workspace skill, run `skillpm sync`.
+The upstream installer normally copies to `.agents/skills/` and links agent
+directories to that canonical copy, so source edits do not appear automatically.
 
 ## Where APM fits
 

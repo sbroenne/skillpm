@@ -19,6 +19,21 @@ export async function init(cwd: string): Promise<void> {
   const pkg = await readPackageJson(cwd);
   const name = pkg?.name ?? 'my-skill';
 
+  // npm names allow dots and underscores; skill names do not.
+  const skillName = name
+    .replace(/^@[^/]+\//, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 64)
+    .replace(/-$/, '');
+  if (!skillName) {
+    throw new Error(
+      'Cannot derive a skill name from package.json. Use a package name containing letters or numbers.',
+    );
+  }
+
   // Add "agent-skill" keyword to package.json
   const rawPkg = JSON.parse(await readFile(pkgPath, 'utf-8'));
   const keywords: string[] = rawPkg.keywords ?? [];
@@ -26,15 +41,17 @@ export async function init(cwd: string): Promise<void> {
     keywords.push('agent-skill');
   }
   rawPkg.keywords = keywords;
+  if (Array.isArray(rawPkg.files) && !rawPkg.files.includes('skills')) {
+    rawPkg.files.push('skills');
+  }
   await writeFile(pkgPath, JSON.stringify(rawPkg, null, 2) + '\n', 'utf-8');
 
   // Create skills/<name>/SKILL.md
-  const skillName = name.replace(/^@[^/]+\//, ''); // strip scope for dir name
   const skillDir = join(cwd, 'skills', skillName);
   await mkdir(skillDir, { recursive: true });
 
   const skillMd = `---
-name: ${skillName}
+name: ${JSON.stringify(skillName)}
 description: TODO — describe what this skill does and when to use it.
 ---
 
@@ -49,7 +66,25 @@ TODO
 TODO
 `;
 
-  await writeFile(join(skillDir, 'SKILL.md'), skillMd, 'utf-8');
+  try {
+    await writeFile(join(skillDir, 'SKILL.md'), skillMd, {
+      encoding: 'utf-8',
+      flag: 'wx',
+    });
+  } catch (err: unknown) {
+    if (
+      typeof err === 'object' &&
+      err !== null &&
+      'code' in err &&
+      err.code === 'EEXIST'
+    ) {
+      log.info(`Keeping existing skills/${skillName}/SKILL.md`);
+      return;
+    }
+    throw err;
+  }
   log.success(`Created skills/${skillName}/SKILL.md`);
-  log.success(`Skill package initialized. Edit skills/${skillName}/SKILL.md to define your skill.`);
+  log.success(
+    `Skill package initialized. Edit skills/${skillName}/SKILL.md to define your skill.`,
+  );
 }
