@@ -53,6 +53,50 @@
   margin-bottom: 0.75rem;
 }
 
+/* Category filter bar */
+.registry-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.registry-category-btn {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 1rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color--light);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.registry-category-btn:hover {
+  border-color: var(--md-primary-fg-color);
+  color: var(--md-primary-fg-color);
+}
+
+.registry-category-btn.active {
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  border-color: var(--md-primary-fg-color);
+}
+
+.registry-category-count {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+/* Category badge on cards */
+.registry-card-category {
+  display: inline-block;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 0.3rem;
+}
+
 .registry-filter-btn {
   padding: 0.25rem 0.6rem;
   font-size: 0.75rem;
