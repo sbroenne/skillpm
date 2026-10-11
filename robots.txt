@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://skillpm.dev/sitemap.xml
