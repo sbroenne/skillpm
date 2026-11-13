@@ -89,19 +89,25 @@ async function tryReadSkill(
     skillSubdirs = [];
   }
 
+  const discoveredSkillDirs: string[] = [];
   for (const sub of skillSubdirs) {
     const skillDir = join(skillsDir, sub);
     try {
       await access(join(skillDir, 'SKILL.md'));
+      discoveredSkillDirs.push(skillDir);
     } catch {
       continue;
     }
+  }
 
+  if (discoveredSkillDirs.length > 0) {
+    const [skillDir, ...ignoredSkillDirs] = discoveredSkillDirs;
     return {
       name: pkg.name,
       version: pkg.version,
       path: pkgDir,
       skillDir,
+      ...(ignoredSkillDirs.length > 0 ? { ignoredSkillDirs } : {}),
       workspace: workspace || undefined,
     };
   }

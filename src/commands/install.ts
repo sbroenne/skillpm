@@ -93,6 +93,11 @@ export async function wireSkills(cwd: string): Promise<void> {
       failures.push(skill.name);
       log.error(`Failed to link ${skill.name}: ${execErrorMessage(err)}`);
     }
+    if (skill.ignoredSkillDirs?.length) {
+      log.warn(
+        `${skill.name}: multiple skills were found in one package. skillpm links one skill per package; ignored ${skill.ignoredSkillDirs.join(', ')}.`,
+      );
+    }
     if (skill.legacy && !skill.workspace) {
       log.warn(
         `${skill.name}: SKILL.md is at package root. Move to skills/<name>/SKILL.md for full compatibility. See https://skillpm.dev/creating-skills/`,
